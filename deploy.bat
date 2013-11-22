@@ -1,0 +1,2 @@
+rake -f build/deploy.rb -t deploySite["buildArtifacts, C:/inetpub/wwwroot/baseline.web.mvc3_deploy"]
+rake -f build/smokeTests.rb -t CheckWebsiteAccess["http://localhost/, 200, baseline.web.mvc3_deploy"]
