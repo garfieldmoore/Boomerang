@@ -7,8 +7,8 @@
     <ProjectGuid>{D319B04C-384A-40F7-BAF9-12557EFCB29C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>boomerang.host</RootNamespace>
-    <AssemblyName>boomerang.host</AssemblyName>
+    <RootNamespace>Rainbow.Testing.Boomerang.Host</RootNamespace>
+    <AssemblyName>Boomerang.host</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FiddlerCore4">
+      <HintPath>..\..\packages_manual\Fiddler\DotNet4\FiddlerCore4.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,8 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Boomarang.cs" />
+    <Compile Include="Boomerang.cs" />
+    <Compile Include="IBoomerang.cs" />
+    <Compile Include="ISendBy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UniformInterfaceExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

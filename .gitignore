@@ -5,3 +5,5 @@ packages/
 
 [Dd]ebug
 [Rr]elease
+*.suo
+**.dotsettings
