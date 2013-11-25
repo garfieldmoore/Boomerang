@@ -6,20 +6,23 @@
 
     using Fiddler;
 
-    internal class Boomarang : IBoomerang, ISendBy
+    public class BoomarangImpl : IBoomerang, ISendBy
     {
+        private readonly IMasqarade proxy;
+
         private int listenPort;
 
         private string listenHost;
 
-        private readonly List<string> relativeAddresses;
+        public readonly List<string> RelativeAddresses;
 
-        private List<Response> responses;
+        public List<Response> Responses;
 
-        public Boomarang()
+        public BoomarangImpl(IMasqarade proxy)
         {
-            this.relativeAddresses = new List<string>();
-            this.responses = new List<Response>();
+            this.proxy = proxy;
+            this.RelativeAddresses = new List<string>();
+            this.Responses = new List<Response>();
         }
 
         public void Start(string host, int port)
@@ -27,9 +30,19 @@
             this.listenHost = host;
             this.listenPort = port;
             AppDomain.CurrentDomain.DomainUnload += CurrentDomain_DomainUnload;
-            var flags = FiddlerCoreStartupFlags.Default;
-            FiddlerApplication.Startup(port, flags);
-            FiddlerApplication.BeforeRequest += this.FiddlerApplication_BeforeRequest;
+            proxy.Start(host, port);
+            proxy.BeforeRequest += proxy_BeforeRequest;
+        }
+
+        private void proxy_BeforeRequest(object sender, EventArgs e)
+        {
+            var requesteventArgs = e as ProxyRequestEventArgs;
+            if (requesteventArgs == null)
+            {
+                return;
+            }
+
+            this.OnBeforeRequest(requesteventArgs.Session);
         }
 
         private void CurrentDomain_DomainUnload(object sender, EventArgs e)
@@ -37,13 +50,12 @@
             Stop();
         }
 
-        private void FiddlerApplication_BeforeRequest(Session session)
+        private void OnBeforeRequest(Session session)
         {
             if ((session.oRequest.pipeClient.LocalPort == this.listenPort) && (session.hostname == this.listenHost))
             {
                 SetResponse(session);
             }
-
         }
 
         private void SetResponse(Session session)
@@ -55,17 +67,13 @@
             responseString = "Boomerang interception";
             var cacheControl = "private, max-age=0";
             int responseCode = 200;
-            
-            if (relativeAddresses.Contains(session.PathAndQuery))
-            {
-                var loc = relativeAddresses.IndexOf(session.PathAndQuery);
-                if (loc <= responses.Count)
-                {
-                    responseString = responses[loc].Body;
-                    httpResponseStatus = responses[loc].StatusCode.ToString();
-                    responseCode = responses[loc].StatusCode;
-                }
-            }
+
+            var responseFinder = new RequestResponder();
+            var resonse = responseFinder.GetResponse(session.PathAndQuery, Responses, RelativeAddresses);
+
+            responseString = resonse.Body;
+            httpResponseStatus = resonse.StatusCode.ToString();
+            responseCode = resonse.StatusCode;
 
             session.utilCreateResponseAndBypassServer();
             session.oResponse.headers.HTTPResponseStatus = httpResponseStatus;
@@ -86,24 +94,24 @@
         {
             if (prefix.StartsWith(@"/"))
             {
-                relativeAddresses.Add(prefix);
+                this.RelativeAddresses.Add(prefix);
             }
             else
             {
-                relativeAddresses.Add(@"/" + prefix);
+                this.RelativeAddresses.Add(@"/" + prefix);
 
             }
         }
 
         public IBoomerang Returns(string body, int i)
         {
-            responses.Add(new Response() { Body = body, StatusCode = i });
+            this.Responses.Add(new Response() { Body = body, StatusCode = i });
 
             return this;
         }
     }
 
-    internal class Response
+    public class Response
     {
         public int StatusCode { get; set; }
 

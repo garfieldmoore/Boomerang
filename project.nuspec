@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+	<title>Boomerang</title>
+    <id>boomerang</id>
+    <version>1.0.0</version>
+    <authors>garfield.moore</authors>
+    <owners>garfield.moore</owners>
+    <licenseUrl>https://github.com/garfieldmoore/Boomerang/blob/master/license.txt</licenseUrl>
+    <projectUrl>https://github.com/garfieldmoore/Boomerang</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Acceptance testing tool for web servers</description>
+    <releaseNotes>Initial Version</releaseNotes>
+    <copyright>Copyright 2013</copyright>
+    <dependencies>
+    </dependencies>
+  </metadata>
+   <files>
+        <file src="source\boomerang.host\bin\Release\Boomerang.dll" target="lib\net45\Boomerang.dll" />
+		<file src="source\boomerang.host\bin\Release\FiddlerCore4.dll" target="lib\net45\FiddlerCore4.dll" />
+    </files>
+</package>

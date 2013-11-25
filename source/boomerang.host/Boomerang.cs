@@ -1,8 +1,17 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host
 {
+    using System.Threading;
+
     public class Boomerang
     {
-        private static Boomarang server;
+        private static IBoomerang server;
+
+        private static IBoomerangConfigurationFactory configurationFactory;
+
+        static Boomerang()
+        {
+            configurationFactory = new BoomerangConfigurationFactory();
+        }
 
         public static IBoomerang Server(int listeningOnPort)
         {
@@ -11,10 +20,15 @@
                 return server;
             }
 
-            server = new Boomarang();
+            server = configurationFactory.Create();
             server.Start("localhost", listeningOnPort);
 
             return server;
+        }
+
+        public static void Initialize(IBoomerangConfigurationFactory boomerangConfigurationFactory)
+        {
+            configurationFactory = boomerangConfigurationFactory;
         }
     }
 }

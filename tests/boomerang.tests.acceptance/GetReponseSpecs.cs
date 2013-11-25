@@ -48,5 +48,23 @@ namespace boomerang.tests.acceptance
             Spec.ResponseText.ShouldBe("body2");
             Spec.StatusCode.ShouldBe(HttpStatusCode.Unauthorized.ToString());
         }
+
+        [Test, Ignore]
+        public void Should_register_different_responses_against_same_address()
+        {
+            Spec.GivenADefaultServer().Get("address1").Returns("body1", 200).Get("address1").Returns("body2", 201);
+
+            Spec.WhenWebGetRequestSent(webHostAddress + "address1");
+
+            Spec.ResponseText.ShouldBe("body1");
+            Spec.StatusCode.ShouldBe(HttpStatusCode.OK.ToString());
+
+            Spec.WhenWebGetRequestSent(webHostAddress + "address1");
+
+            Spec.ResponseText.ShouldBe("body2");
+            Spec.StatusCode.ShouldBe(HttpStatusCode.Created.ToString());
+
+        }
+
     }
 }

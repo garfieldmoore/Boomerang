@@ -23,6 +23,7 @@ Register response to multiple addresses;
 
     Boomerang.Server(5100).Get("anaddress").Returns("response body", 200).Get("anotheraddress").Returns("another response body", 201);
 
+This registers the responses from the preceding address.  The address is relative to localhost on port 5100 in the examples (http://localhost:5100/myaddress in the first example).
 
 Aknowledgments
 --------------
