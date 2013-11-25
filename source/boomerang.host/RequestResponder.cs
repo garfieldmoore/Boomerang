@@ -8,12 +8,12 @@
         {
             if (!address.Contains(addressTarget))
             {
-                return new Response();
+                return Response.CreateNew();
             }
 
             if (address.IndexOf(addressTarget) >= responses.Count)
             {
-                return new Response();
+                return Response.CreateNew();
             }
 
             return responses[address.IndexOf(addressTarget)];
