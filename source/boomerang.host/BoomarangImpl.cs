@@ -6,7 +6,9 @@
 
     using Fiddler;
 
-    public class BoomarangImpl : IBoomerang, ISendBy
+    using System.Linq;
+
+    public class BoomarangImpl : IBoomerang
     {
         private readonly IMasqarade proxy;
 
@@ -14,15 +16,12 @@
 
         private string listenHost;
 
-        public readonly List<string> RelativeAddresses;
-
-        public List<Response> Responses;
+        public IList<RequestResponse> RequestResponses;
 
         public BoomarangImpl(IMasqarade proxy)
         {
             this.proxy = proxy;
-            this.RelativeAddresses = new List<string>();
-            this.Responses = new List<Response>();
+            RequestResponses=new List<RequestResponse>();
         }
 
         public void Start(string host, int port)
@@ -32,6 +31,21 @@
             AppDomain.CurrentDomain.DomainUnload += CurrentDomain_DomainUnload;
             proxy.Start(host, port);
             proxy.BeforeRequest += proxy_BeforeRequest;
+        }
+
+        public void AddAddress(RequestResponse request)
+        {
+            if (!request.Address.StartsWith("/"))
+            {
+                request.Address = "/" + request.Address;
+            }
+
+            RequestResponses.Add(request);
+        }
+
+        public void AddResponse(string body, int statusCode)
+        {
+            this.RequestResponses[RequestResponses.Count - 1].Response = new Response() { Body = body, StatusCode = statusCode };
         }
 
         private void proxy_BeforeRequest(object sender, EventArgs e)
@@ -60,21 +74,21 @@
 
         private void SetResponse(Session session)
         {
-            string httpResponseStatus;
-            string responseString;
+            string httpResponseStatus = "";
+            string responseString="";
             var contentType = "text/html; charset=UTF-8";
-            httpResponseStatus = "Ok";
-            responseString = "Boomerang interception";
             var cacheControl = "private, max-age=0";
-            int responseCode = 200;
+            int responseCode=0;
 
             var responseFinder = new RequestResponder();
-            var resonse = responseFinder.GetResponse(session.PathAndQuery, Responses, RelativeAddresses);
+            var resonse = responseFinder.GetResponse(session.PathAndQuery, RequestResponses);
 
-            responseString = resonse.Body;
-            httpResponseStatus = resonse.StatusCode.ToString();
-            responseCode = resonse.StatusCode;
-
+            if (resonse.Response != null)
+            {
+                responseString = resonse.Response.Body;
+                httpResponseStatus = resonse.Response.StatusCode.ToString();
+                responseCode = resonse.Response.StatusCode;
+            }
             session.utilCreateResponseAndBypassServer();
             session.oResponse.headers.HTTPResponseStatus = httpResponseStatus;
             session.oResponse.headers.HTTPResponseCode = responseCode;
@@ -88,26 +102,6 @@
             FiddlerApplication.oProxy.Detach();
             Thread.Sleep(500);
             FiddlerApplication.Shutdown();
-        }
-
-        public void AddAddress(string prefix)
-        {
-            if (prefix.StartsWith(@"/"))
-            {
-                this.RelativeAddresses.Add(prefix);
-            }
-            else
-            {
-                this.RelativeAddresses.Add(@"/" + prefix);
-
-            }
-        }
-
-        public IBoomerang Returns(string body, int i)
-        {
-            this.Responses.Add(new Response() { Body = body, StatusCode = i });
-
-            return this;
         }
     }
 }

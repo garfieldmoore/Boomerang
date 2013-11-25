@@ -6,7 +6,7 @@
 
         public string Body { get; set; }
 
-        public static Response CreateDefault()
+        public static Response CreateNew()
         {
             return new Response();
         }

@@ -2,8 +2,19 @@
 {
     public interface IBoomerang
     {
-        void AddAddress(string prefix);
-
-        void Start(string localhost, int listeningOnPort);
     }
+
+    public class RequestResponse
+    {
+        public string Address { get; set; }
+        public string Method { get; set; }
+        public int Instance { get; set; }
+        public Response Response { get; set; }
+
+        public override int GetHashCode()
+        {
+            return string.Format("{0}{1}", Method, Address).GetHashCode();
+        }
+    }
+
 }

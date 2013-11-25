@@ -2,21 +2,24 @@
 {
     using System.Collections.Generic;
 
+    using System.Linq;
+
     public class RequestResponder
     {
-        public Response GetResponse(string addressTarget, IList<Response> responses, IList<string> address)
+        public RequestResponse GetResponse(string method, string addressTarget, IList<RequestResponse> responses)
         {
-            if (!address.Contains(addressTarget))
+            var respone = responses.FirstOrDefault(x => x.Address == addressTarget && x.Method == method);
+            if (respone == null)
             {
-                return Response.CreateNew();
+                respone = new RequestResponse();
             }
 
-            if (address.IndexOf(addressTarget) >= responses.Count)
-            {
-                return Response.CreateNew();
-            }
+            return respone;
+        }
 
-            return responses[address.IndexOf(addressTarget)];
+        public RequestResponse GetResponse(string addressTarget, IList<RequestResponse> requestResponses)
+        {
+            return GetResponse("GET", addressTarget, requestResponses);
         }
     }
 }

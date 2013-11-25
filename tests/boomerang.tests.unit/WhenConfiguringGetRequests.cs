@@ -13,10 +13,12 @@
         [Test]
         public void Should_add_address()
         {
-            var boom = Substitute.For<IBoomerang>();
+            var boom = new BoomarangImpl(Substitute.For<IMasqarade>());
             boom.Get("address1");
 
-            boom.Received(1).AddAddress("address1");
+            boom.RequestResponses.Count.ShouldBe(1);
+            boom.RequestResponses[0].Address.ShouldBe("/address1");
+            boom.RequestResponses[0].Method.ShouldBe("GET");
         }
 
         [Test]
@@ -24,8 +26,8 @@
         {
             var boom = new BoomarangImpl(Substitute.For<IMasqarade>());
 
-            boom.AddAddress("address1");
-            boom.RelativeAddresses.ShouldContain("/address1");
+            boom.Get("address1");
+            boom.RequestResponses[0].Address.ShouldBe("/address1");
         }
 
         [Test]
@@ -33,8 +35,8 @@
         {
             var boom = new BoomarangImpl(Substitute.For<IMasqarade>());
 
-            boom.AddAddress("/address1");
-            boom.RelativeAddresses.ShouldContain("/address1");
+            boom.Get("/address1");
+            boom.RequestResponses[0].Address.ShouldContain("/address1");
         }
 
         [Test]
@@ -42,29 +44,20 @@
         {
             var boom = new BoomarangImpl(Substitute.For<IMasqarade>());
 
-            boom.AddAddress("/address1");
-            boom.AddAddress("/address1");
+            boom.Get("/address1");
+            boom.Get("/address1");
 
-            boom.RelativeAddresses.Count.ShouldBe(2);
+            boom.RequestResponses.Count.ShouldBe(2);
         }
 
         [Test]
         public void Should_add_response()
         {
             var boom = new BoomarangImpl(Substitute.For<IMasqarade>());
-            
-            boom.Returns("body", 200);
-            boom.Responses.ShouldContain(x=>x.StatusCode==200 && x.Body=="body");
-        }
 
-        [Test]
-        public void Should_be_able_to_add_duplicate_responses()
-        {
-            var boom = new BoomarangImpl(Substitute.For<IMasqarade>());
-
+            boom.Get("address");
             boom.Returns("body", 200);
-            boom.Returns("body", 200);
-            boom.Responses.Count.ShouldBe(2);
+            boom.RequestResponses.ShouldContain(x=>x.Response.StatusCode==200 && x.Response.Body=="body");
         }
     }
-}
+ }

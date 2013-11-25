@@ -21,7 +21,7 @@
             }
 
             server = configurationFactory.Create();
-            server.Start("localhost", listeningOnPort);
+            ((BoomarangImpl)server).Start("localhost", listeningOnPort);
 
             return server;
         }

@@ -17,12 +17,9 @@
         {
             var responder = new RequestResponder();
 
-            var address = new List<string>();
-            address.Add("address1");
+            var responses = Builder<RequestResponse>.CreateListOfSize(1).All().With(x => x.Method = "GET").TheFirst(1).With(x => x.Address = "address1").Build();
 
-            var responses = Builder<Response>.CreateListOfSize(1).Build();
-
-            var response = responder.GetResponse("address1", responses, address);
+            var response = responder.GetResponse("GET", "address1", responses);
             response.ShouldBeSameAs(responses[0]);
         }
 
@@ -31,16 +28,12 @@
         {
             var responder = new RequestResponder();
 
-            var address = new List<string>();
-            address.Add("address1");
-            address.Add("address2");
+            var responses = Builder<RequestResponse>.CreateListOfSize(2).All().With(x => x.Method = "GET").TheFirst(1).With(x => x.Address = "address1").TheNext(1).With(x => x.Address = "address2").Build();
 
-            var responses = Builder<Response>.CreateListOfSize(2).Build();
-
-            var response = responder.GetResponse("address1", responses, address);
+            var response = responder.GetResponse("address1", responses);
             response.ShouldBeSameAs(responses[0]);
 
-            response = responder.GetResponse("address2", responses, address);
+            response = responder.GetResponse("address2", responses);
             response.ShouldBeSameAs(responses[1]);
         }
 
@@ -49,12 +42,9 @@
         {
             var responder = new RequestResponder();
 
-            var address = new List<string>();
-            address.Add("address1");
+            var responses = Builder<RequestResponse>.CreateListOfSize(1).All().With(x => x.Method = "GET").Build();
 
-            var responses = Builder<Response>.CreateListOfSize(1).Build();
-
-            var response = responder.GetResponse("address2", responses, address);
+            var response = responder.GetResponse("GET", "address2", responses);
             response.ShouldNotBe(null);
             response.ShouldNotBe(responses[0]);
         }
@@ -64,15 +54,27 @@
         {
             var responder = new RequestResponder();
 
-            var address = new List<string>();
-            address.Add("address1");
-            address.Add("address2");
+            var responses = Builder<RequestResponse>.CreateListOfSize(1).All().With(x => x.Method = "GET").Build();
 
-            var responses = Builder<Response>.CreateListOfSize(1).Build();
-
-            var response = responder.GetResponse("address2", responses, address);
+            var response = responder.GetResponse("GET", "address2", responses);
             response.ShouldNotBe(null);
             response.ShouldNotBe(responses[0]);
         }
+
+        [Test]
+        public void Should_find_multiple_responses_for_same_address()
+        {
+            var responder = new RequestResponder();
+
+            var responses = Builder<RequestResponse>.CreateListOfSize(2).All().With(x => x.Method = "GET").With(x => x.Address = "address1").Build();
+
+            var response = responder.GetResponse("GET", "address1", responses);
+            response.ShouldBe(responses[0]);
+
+            response = responder.GetResponse("GET", "address1", responses);
+            response.ShouldBe(responses[1]);
+
+        }
+
     }
 }
