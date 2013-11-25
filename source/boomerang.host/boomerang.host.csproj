@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Rainbow.Testing.Boomerang.Host</RootNamespace>
-    <AssemblyName>Boomerang.host</AssemblyName>
+    <AssemblyName>Boomerang</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -1,6 +1,5 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host
 {
-    using System;
 
     public static class UniformInterfaceExtensions
     {

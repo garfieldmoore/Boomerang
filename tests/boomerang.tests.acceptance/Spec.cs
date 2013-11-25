@@ -1,6 +1,5 @@
 ﻿namespace boomerang.tests.acceptance
 {
-    using System;
     using System.IO;
     using System.Net;
 
@@ -8,6 +7,10 @@
 
     internal class Spec
     {
+        public static string StatusCode { get; set; }
+        public static string ResponseText { get; set; }
+        public static string StatusDescription { get; set; }
+
         internal static IBoomerang GivenADefaultServer()
         {
             return Boomerang.Server(5200);
@@ -20,49 +23,46 @@
                 var request = WebRequest.Create(webHostAddress);
                 request.Method = "Get";
 
-                var response = request.GetResponse();
-                var httpWebResponse = ((HttpWebResponse)response);
+                using (var response = request.GetResponse())
+                {
+                    SetResponseValuesFrom(response);
+                    response.Close();
+                }
 
-                StatusDescription = httpWebResponse.StatusDescription;
-                StatusCode = httpWebResponse.StatusCode.ToString();
-
-                var responeText = ReadFromStream(response.GetResponseStream());
-                response.Close();
-
-                ResponseText = responeText;
             }
             catch (WebException e)
             {
-                var httpWebResponse = e.Response as HttpWebResponse;
-                if (httpWebResponse != null)
-                {
-                    StatusCode = httpWebResponse.StatusCode.ToString();
-                    StatusDescription = httpWebResponse.StatusDescription;
-                }
-
                 if (e.Response != null)
                 {
-                    var responeText = ReadFromStream(e.Response.GetResponseStream());
-                    ResponseText = responeText;
+                    SetResponseValuesFrom(e.Response);
+                }
+                else
+                {
+                    throw;
                 }
             }
         }
 
+        private static void SetResponseValuesFrom(WebResponse response)
+        {
+            var httpWebResponse = ((HttpWebResponse)response);
+            StatusDescription = httpWebResponse.StatusDescription;
+            StatusCode = httpWebResponse.StatusCode.ToString();
+            var responeText = ReadFromStream(response.GetResponseStream());
+            response.Close();
+
+            ResponseText = responeText;
+        }
+
         private static string ReadFromStream(Stream response)
         {
-            var responseText = string.Empty;
-            using (StreamReader reader = new StreamReader(response))
+            string responseText;
+            using (var reader = new StreamReader(response))
             {
                 responseText = reader.ReadToEnd();
             }
 
             return responseText;
         }
-
-        public static string StatusCode { get; set; }
-
-        public static string ResponseText { get; set; }
-
-        public static string StatusDescription { get; set; }
     }
 }

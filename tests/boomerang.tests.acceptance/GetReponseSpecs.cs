@@ -7,27 +7,23 @@ namespace boomerang.tests.acceptance
     using Rainbow.Testing.Boomerang.Host;
     using Shouldly;
 
-    public class ExampleIInterfaceSpecs
+    public class GetReponseSpecs
     {
-        private string status;
-
-        private string responseFromServer;
-
         private string webHostAddress = "http://localhost:5200/";
 
         [Test]
-        public void Server_interface()
+        public void Should_allow_expectations_on_server_base_address()
         {
-            Spec.GivenADefaultServer().Get("any").Returns("Boomerang interception", 200);
+            Spec.GivenADefaultServer().Get("").Returns("Boomerang interception", 200);
 
-            Spec.WhenWebGetRequestSent(webHostAddress+"any");
+            Spec.WhenWebGetRequestSent(webHostAddress);
 
             Spec.ResponseText.ShouldBe("Boomerang interception");
             Spec.StatusCode.ShouldBe("OK");
         }
 
         [Test]
-        public void Simple_uniform_interface()
+        public void Should_use_address_body_and_statusCode()
         {
             Spec.GivenADefaultServer().Get("address1").Returns("body1", 200);
 
@@ -38,7 +34,7 @@ namespace boomerang.tests.acceptance
         }
 
         [Test]
-        public void Should_be_able_to_specify_multiple_addresses()
+        public void Should_use_correct_responses_for_multiple_addresss()
         {
             Spec.GivenADefaultServer().Get("address1").Returns("body1", 200).Get("address2").Returns("body2", 401);
 
@@ -51,8 +47,6 @@ namespace boomerang.tests.acceptance
 
             Spec.ResponseText.ShouldBe("body2");
             Spec.StatusCode.ShouldBe(HttpStatusCode.Unauthorized.ToString());
-
         }
-
     }
 }

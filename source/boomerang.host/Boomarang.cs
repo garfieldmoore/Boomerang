@@ -6,7 +6,7 @@
 
     using Fiddler;
 
-    public class Boomarang : IBoomerang, ISendBy
+    internal class Boomarang : IBoomerang, ISendBy
     {
         private int listenPort;
 
@@ -54,8 +54,8 @@
             httpResponseStatus = "Ok";
             responseString = "Boomerang interception";
             var cacheControl = "private, max-age=0";
-            int responseCode=200;
-
+            int responseCode = 200;
+            
             if (relativeAddresses.Contains(session.PathAndQuery))
             {
                 var loc = relativeAddresses.IndexOf(session.PathAndQuery);
@@ -66,7 +66,7 @@
                     responseCode = responses[loc].StatusCode;
                 }
             }
-            
+
             session.utilCreateResponseAndBypassServer();
             session.oResponse.headers.HTTPResponseStatus = httpResponseStatus;
             session.oResponse.headers.HTTPResponseCode = responseCode;
@@ -78,8 +78,8 @@
         public void Stop()
         {
             FiddlerApplication.oProxy.Detach();
-            FiddlerApplication.Shutdown();
             Thread.Sleep(500);
+            FiddlerApplication.Shutdown();
         }
 
         public void AddAddress(string prefix)

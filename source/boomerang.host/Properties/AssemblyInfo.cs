@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("boomerang.host")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Boomerang")]
+[assembly: AssemblyDescription("Lightweight framework for setting up web endpoints")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("1E")]
-[assembly: AssemblyProduct("boomerang.host")]
+[assembly: AssemblyProduct("boomerang")]
 [assembly: AssemblyCopyright("Copyright © 1E 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
