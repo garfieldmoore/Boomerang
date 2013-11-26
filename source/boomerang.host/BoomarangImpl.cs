@@ -66,7 +66,11 @@
 
         private void CurrentDomain_DomainUnload(object sender, EventArgs e)
         {
-            Stop();
+            if (proxy != null)
+            {
+                proxy.Stop();
+            }
+
         }
 
         private void OnBeforeRequest(Session session)
@@ -99,13 +103,6 @@
             session.oResponse["Content-Type"] = contentType;
             session.oResponse["Cache-Control"] = cacheControl;
             session.utilSetResponseBody(responseString);
-        }
-
-        public void Stop()
-        {
-            FiddlerApplication.oProxy.Detach();
-            Thread.Sleep(500);
-            FiddlerApplication.Shutdown();
         }
     }
 }

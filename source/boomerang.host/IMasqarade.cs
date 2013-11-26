@@ -6,5 +6,6 @@
     {
         void Start(string hostBaseAddress, int portNumber);
         event EventHandler BeforeRequest;
+        void Stop();
     }
 }
