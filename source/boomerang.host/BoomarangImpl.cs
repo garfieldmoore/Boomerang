@@ -22,17 +22,7 @@
             registrations = new RequestResponder();
         }
 
-        public IList<RequestResponse> Registrations
-        {
-            get
-            {
-                return registrations.RequestResponses;
-            }
-            protected set
-            {
-                registrations.RequestResponses = value;
-            }
-        }
+        public RequestResponder Registerer { get; protected set; }
 
         public void Start(string host, int port)
         {

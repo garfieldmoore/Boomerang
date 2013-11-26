@@ -1,5 +1,7 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host
 {
+    using System.Collections.Generic;
+
     public interface IBoomerang
     {
     }
@@ -10,6 +12,12 @@
         public string Method { get; set; }
         public int Instance { get; set; }
         public Response Response { get; set; }
+        public Queue<Response> Responses { get; set; }
+
+        public RequestResponse()
+        {
+            Responses=new Queue<Response>();
+        }
 
         public override int GetHashCode()
         {

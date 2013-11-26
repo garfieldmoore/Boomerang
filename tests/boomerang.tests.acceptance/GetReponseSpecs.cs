@@ -49,10 +49,12 @@ namespace boomerang.tests.acceptance
             Spec.StatusCode.ShouldBe(HttpStatusCode.Unauthorized.ToString());
         }
 
-        [Test, Ignore]
+        [Test]
         public void Should_register_different_responses_against_same_address()
         {
-            Spec.GivenADefaultServer().Get("address1").Returns("body1", 200).Get("address1").Returns("body2", 201);
+            Spec.GivenADefaultServer()
+                .Get("address1").Returns("body1", 200)
+                .Get("address1").Returns("body2", 201);
 
             Spec.WhenWebGetRequestSent(webHostAddress + "address1");
 

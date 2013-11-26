@@ -51,6 +51,7 @@
     <Compile Include="IMasqarade.cs" />
     <Compile Include="ISendBy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registration.cs" />
     <Compile Include="RequestResponder.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="UniformInterfaceExtensions.cs" />

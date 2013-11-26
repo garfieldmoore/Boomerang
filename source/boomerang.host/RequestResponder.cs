@@ -2,31 +2,40 @@
 {
     using System.Collections.Generic;
 
-    using System.Linq;
 
     public class RequestResponder
     {
-        public IList<RequestResponse> RequestResponses;
+        public IDictionary<Registration, RequestResponse> RequestResponseRegistrations;
+
+        private Registration previousRegistration;
+
+        public static string ResourceNotFoundMessage = "Resource not found";
 
         public RequestResponder()
         {
-            RequestResponses = new List<RequestResponse>();
-        }
-
-        public RequestResponder(IList<RequestResponse> responses)
-        {
-            RequestResponses = responses;
+            RequestResponseRegistrations = new Dictionary<Registration, RequestResponse>();
         }
 
         public RequestResponse GetResponse(string method, string addressTarget)
         {
-            var respone = RequestResponses.FirstOrDefault(x => x.Address == addressTarget && x.Method == method);
-            if (respone == null)
+            RequestResponse responsed;
+
+            if (!addressTarget.StartsWith("/"))
             {
-                respone = new RequestResponse();
+                addressTarget = "/" + addressTarget;
             }
 
-            return respone;
+            var respone =
+                RequestResponseRegistrations.TryGetValue(
+                    new Registration() { Address = addressTarget, Method = method }, out responsed);
+
+            if (!respone)
+            {
+                return new RequestResponse() { Response = new Response() { StatusCode = 400, Body = ResourceNotFoundMessage } };
+            }
+
+            var interim = new RequestResponse() { Response = responsed.Responses.Dequeue() };
+            return interim;
         }
 
         public RequestResponse GetResponse(string addressTarget)
@@ -42,12 +51,17 @@
                 request.Address = "/" + request.Address;
             }
 
-            RequestResponses.Add(request);
+            var newRegistration = new Registration() { Method = request.Method, Address = request.Address };
+            if (!RequestResponseRegistrations.ContainsKey(newRegistration))
+            {
+                this.previousRegistration = newRegistration;
+                RequestResponseRegistrations.Add(new KeyValuePair<Registration, RequestResponse>(this.previousRegistration, new RequestResponse()));
+            }
         }
 
         public void AddResponse(string body, int statusCode)
         {
-            this.RequestResponses[RequestResponses.Count - 1].Response = new Response() { Body = body, StatusCode = statusCode };
+            RequestResponseRegistrations[previousRegistration].Responses.Enqueue(new Response() { Body = body, StatusCode = statusCode });
         }
     }
 }
