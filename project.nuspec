@@ -3,13 +3,13 @@
   <metadata>
 	<title>Boomerang</title>
     <id>boomerang</id>
-    <version>1.0.0</version>
+    <version>0.0.0</version>
     <authors>garfield.moore</authors>
     <owners>garfield.moore</owners>
     <licenseUrl>https://github.com/garfieldmoore/Boomerang/blob/master/license.txt</licenseUrl>
     <projectUrl>https://github.com/garfieldmoore/Boomerang</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Acceptance testing tool for web servers</description>
+    <description>framework for faking external web services for acceptance tests</description>
     <releaseNotes>Initial Version</releaseNotes>
     <copyright>Copyright 2013</copyright>
     <dependencies>

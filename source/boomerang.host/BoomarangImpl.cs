@@ -6,8 +6,6 @@
 
     using Fiddler;
 
-    using System.Linq;
-
     public class BoomarangImpl : IBoomerang
     {
         private readonly IMasqarade proxy;
@@ -16,12 +14,24 @@
 
         private string listenHost;
 
-        public IList<RequestResponse> RequestResponses;
+        private RequestResponder registrations;
 
         public BoomarangImpl(IMasqarade proxy)
         {
             this.proxy = proxy;
-            RequestResponses=new List<RequestResponse>();
+            registrations = new RequestResponder();
+        }
+
+        public IList<RequestResponse> Registrations
+        {
+            get
+            {
+                return registrations.RequestResponses;
+            }
+            protected set
+            {
+                registrations.RequestResponses = value;
+            }
         }
 
         public void Start(string host, int port)
@@ -35,17 +45,12 @@
 
         public void AddAddress(RequestResponse request)
         {
-            if (!request.Address.StartsWith("/"))
-            {
-                request.Address = "/" + request.Address;
-            }
-
-            RequestResponses.Add(request);
+            registrations.AddAddress(request);
         }
 
         public void AddResponse(string body, int statusCode)
         {
-            this.RequestResponses[RequestResponses.Count - 1].Response = new Response() { Body = body, StatusCode = statusCode };
+            registrations.AddResponse(body, statusCode);
         }
 
         private void proxy_BeforeRequest(object sender, EventArgs e)
@@ -75,13 +80,12 @@
         private void SetResponse(Session session)
         {
             string httpResponseStatus = "";
-            string responseString="";
+            string responseString = "";
             var contentType = "text/html; charset=UTF-8";
             var cacheControl = "private, max-age=0";
-            int responseCode=0;
+            int responseCode = 0;
 
-            var responseFinder = new RequestResponder();
-            var resonse = responseFinder.GetResponse(session.PathAndQuery, RequestResponses);
+            var resonse = registrations.GetResponse(session.PathAndQuery);
 
             if (resonse.Response != null)
             {

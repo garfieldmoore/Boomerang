@@ -16,9 +16,9 @@
             var boom = new BoomarangImpl(Substitute.For<IMasqarade>());
             boom.Get("address1");
 
-            boom.RequestResponses.Count.ShouldBe(1);
-            boom.RequestResponses[0].Address.ShouldBe("/address1");
-            boom.RequestResponses[0].Method.ShouldBe("GET");
+            boom.ThenShouldHaveRegisteredNumberOfRequests(1);
+            boom.ThenShouldContainRequestWithAddress("/address1");
+            boom.ThenShouldContainRequest(x=>x.Method == "GET" && x.Address=="/address1");
         }
 
         [Test]
@@ -27,7 +27,7 @@
             var boom = new BoomarangImpl(Substitute.For<IMasqarade>());
 
             boom.Get("address1");
-            boom.RequestResponses[0].Address.ShouldBe("/address1");
+            boom.ThenShouldContainRequestWithAddress("/address1");
         }
 
         [Test]
@@ -36,7 +36,7 @@
             var boom = new BoomarangImpl(Substitute.For<IMasqarade>());
 
             boom.Get("/address1");
-            boom.RequestResponses[0].Address.ShouldContain("/address1");
+            boom.ThenShouldContainRequestWithAddress("/address1");
         }
 
         [Test]
@@ -47,7 +47,7 @@
             boom.Get("/address1");
             boom.Get("/address1");
 
-            boom.RequestResponses.Count.ShouldBe(2);
+            boom.ThenShouldHaveRegisteredNumberOfResponses(2);
         }
 
         [Test]
@@ -57,7 +57,7 @@
 
             boom.Get("address");
             boom.Returns("body", 200);
-            boom.RequestResponses.ShouldContain(x=>x.Response.StatusCode==200 && x.Response.Body=="body");
+            boom.ThenShouldContainResponse(x => x.Response.StatusCode == 200 && x.Response.Body == "body");
         }
     }
- }
+}

@@ -4,14 +4,14 @@ include REXML
 # set properties
 programFilesPath=""
 buildConfiguration = "release"
-productName="VantageEba"
-VsSolutionFile = "lattice.services.web.sln"
+productName="Boomerang"
+VsSolutionFile = "boomerang.host.sln"
 workingDir=Dir.pwd
 packageDir = "buildArtifacts/bin"
 installersPath = "buildArtifacts/installers/Installer.zip"
 windirectory = ENV['windir']
 msbuild = "#{windirectory}\\Microsoft.NET\\Framework\\v4.0.30319\\msbuild.exe"
-nunitconsole="packages/NUnit.2.5.10.11092/tools/nunit-console.exe"
+nunitconsole="packages_manual/NUnit/tools/nunit-console.exe"
 nugetPath= 'packages_manual/nuget.exe'
 zipExe = "packages_manual/7zip/7z.exe"
 os_platform="x64"
@@ -76,7 +76,7 @@ task :runTests do
 end
 
 task :package do
-	projects = Dir.glob('source/**/*.web.csproj')+Dir.glob('tests/**/*.web.*.csproj')	
+	projects = Dir.glob('source/**/**.csproj')+Dir.glob('tests/**/*.csproj')	
 	puts "Projects to package:"
 	puts projects
 	
