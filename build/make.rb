@@ -17,7 +17,7 @@ zipExe = "packages_manual/7zip/7z.exe"
 os_platform="x64"
 
 task :default => :build
-task :build => [ :clean, :envConfig, :compile, :package, :createInstallers]
+task :build => [ :clean, :envConfig, :compile]
 task :commitBuild => [ :clean, :compile, :runTests, :codeAnalysis, :package, :createInstallers]
 
 task :clean do

@@ -16,7 +16,7 @@
     </dependencies>
   </metadata>
    <files>
-        <file src="source\boomerang.host\bin\Release\Boomerang.dll" target="lib\net45\Boomerang.dll" />
-		<file src="source\boomerang.host\bin\Release\FiddlerCore4.dll" target="lib\net45\FiddlerCore4.dll" />
+        <file src="buildArtifacts\bin\Components\Boomerang.dll" target="lib\net45\Boomerang.dll" />
+		<file src="buildArtifacts\bin\Components\FiddlerCore4.dll" target="lib\net45\FiddlerCore4.dll" />
     </files>
 </package>
