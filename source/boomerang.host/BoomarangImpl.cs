@@ -1,8 +1,6 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host
 {
     using System;
-    using System.Collections.Generic;
-    using System.Threading;
 
     using Fiddler;
 
@@ -79,7 +77,7 @@
             var cacheControl = "private, max-age=0";
             int responseCode = 0;
 
-            var resonse = registrations.GetResponse(session.PathAndQuery);
+            var resonse = registrations.GetResponse(session.oRequest.headers.HTTPMethod, session.PathAndQuery);
 
             if (resonse.Response != null)
             {
@@ -87,6 +85,7 @@
                 httpResponseStatus = resonse.Response.StatusCode.ToString();
                 responseCode = resonse.Response.StatusCode;
             }
+
             session.utilCreateResponseAndBypassServer();
             session.oResponse.headers.HTTPResponseStatus = httpResponseStatus;
             session.oResponse.headers.HTTPResponseCode = responseCode;

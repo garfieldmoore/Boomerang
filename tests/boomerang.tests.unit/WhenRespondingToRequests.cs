@@ -1,11 +1,5 @@
 ﻿namespace boomerang.tests.unit
 {
-    using System.Collections.Generic;
-
-    using FizzWare.NBuilder;
-
-    using NSubstitute;
-
     using NUnit.Framework;
 
     using Rainbow.Testing.Boomerang.Host;
