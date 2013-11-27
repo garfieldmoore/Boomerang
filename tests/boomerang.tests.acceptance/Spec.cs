@@ -45,5 +45,15 @@
             StatusCode = response.StatusCode.ToString();
             ResponseText = response.Content;
         }
+
+        public static void WhenDeleteSentTo(string webAddress)
+        {
+            var request = new RestRequest(webAddress, Method.DELETE);
+            var client = new RestClient();
+            var response = client.Execute(request);
+
+            StatusCode = response.StatusCode.ToString();
+            ResponseText = response.Content;
+        }
     }
 }

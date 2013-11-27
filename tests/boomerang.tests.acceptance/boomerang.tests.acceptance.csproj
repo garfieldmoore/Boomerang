@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DeleteSpecs.cs" />
     <Compile Include="Examples.cs" />
     <Compile Include="GetReponseSpecs.cs" />
     <Compile Include="PostSpecs.cs" />

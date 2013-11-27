@@ -14,7 +14,7 @@ namespace boomerang.tests.unit
     {
         public static void ThenShouldContainRequestWithAddress(this BoomarangImpl target, string address)
         {
-            target.Registrations.RequestResponseRegistrations.ContainsKey(new Registration(){Address=address,Method = "GET"}).ShouldBe(true);
+            target.Registrations.RequestResponseRegistrations.ContainsKey(new Registration() { Address = address, Method = "GET" }).ShouldBe(true);
         }
 
         public static void ThenShouldHaveRegisteredNumberOfResponses(this BoomarangImpl target, int count)
@@ -25,7 +25,7 @@ namespace boomerang.tests.unit
             {
                 numberOfResponses += requestResponseRegistration.Value.Responses.Count;
             }
-           
+
             numberOfResponses.ShouldBe(count);
         }
 
@@ -36,7 +36,9 @@ namespace boomerang.tests.unit
 
         public static void ThenShouldContainRequest(this BoomarangImpl target, string method, string address)
         {
-            target.Registrations.RequestResponseRegistrations.ContainsKey(new Registration(){Address=address,Method=method});
+            var contains = target.Registrations.RequestResponseRegistrations.ContainsKey(new Registration() { Address = address, Method = method });
+            
+            contains.ShouldBe(true);
         }
 
         public static void ThenShouldContainPostResponse(this BoomarangImpl target, string address, string responseBody)

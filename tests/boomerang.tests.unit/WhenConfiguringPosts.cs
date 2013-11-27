@@ -15,7 +15,7 @@
             boom.Post("address1", "data");
 
             boom.ThenShouldHaveRegisteredNumberOfRequests(1);
-            boom.ThenShouldContainRequest("POST", "address1");
+            boom.ThenShouldContainRequest("POST", "/address1");
         }
 
         [Test]

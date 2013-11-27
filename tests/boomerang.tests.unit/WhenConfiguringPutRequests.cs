@@ -9,13 +9,13 @@
     public class WhenConfiguringPutRequests
     {
         [Test]
-        public void Should_add_post_request()
+        public void Should_add_put_request()
         {
             var boom = new BoomarangImpl(Substitute.For<IMasqarade>());
             boom.Put("address1", "data");
 
             boom.ThenShouldHaveRegisteredNumberOfRequests(1);
-            boom.ThenShouldContainRequest("PUT", "address1");
+            boom.ThenShouldContainRequest("PUT", "/address1");
         }
 
         [Test]
