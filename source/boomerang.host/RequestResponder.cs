@@ -63,5 +63,10 @@
         {
             RequestResponseRegistrations[previousRegistration].Responses.Enqueue(new Response() { Body = body, StatusCode = statusCode });
         }
+
+        public void AddResponse(string body, int statusCode, string responseBody)
+        {
+            RequestResponseRegistrations[previousRegistration].Responses.Enqueue(new Response() { Body = body, StatusCode = statusCode, ResponseDescription = responseBody });
+        }
     }
 }

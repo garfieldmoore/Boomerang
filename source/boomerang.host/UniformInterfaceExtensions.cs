@@ -6,7 +6,7 @@
     {
         public static IBoomerang Get(this IBoomerang host, string prefix)
         {
-            var requestResponse = new RequestResponse { Address = prefix, Method = "GET", Instance = 0 };
+            var requestResponse = new RequestResponse { Address = prefix, Method = "GET"};
             ((BoomarangImpl)host).AddAddress(requestResponse);
             return host;
         }
@@ -17,14 +17,17 @@
             return host;
         }
 
-        public static IBoomerang Post(this IBoomerang target, string relativeAddress, string data)
+        public static IBoomerang Post(this IBoomerang host, string relativeAddress, string data)
         {
-            throw new NotImplementedException();
+            var requestResponse = new RequestResponse { Address = relativeAddress, Method = "POST"};
+            ((BoomarangImpl)host).AddAddress(requestResponse);
+            return host;
         }
 
-        public static void Returns(this IBoomerang host, string body)
+        public static IBoomerang Returns(this IBoomerang host, int statusCode, string body)
         {
-            throw new NotImplementedException();
+            ((BoomarangImpl)host).AddResponse(body, statusCode, body);
+            return host;
         }
     }
 }

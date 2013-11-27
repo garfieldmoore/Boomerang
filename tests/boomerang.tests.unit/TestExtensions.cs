@@ -34,10 +34,21 @@ namespace boomerang.tests.unit
             target.Registrations.RequestResponseRegistrations.Count.ShouldBe(count);
         }
 
-        public static void ThenShouldContainRequest(this BoomarangImpl target, Expression<Func<RequestResponse, bool>> predicate)
+        public static void ThenShouldContainRequest(this BoomarangImpl target, string method, string address)
         {
-           // target.Registrations.ShouldContain(predicate);
+            target.Registrations.RequestResponseRegistrations.ContainsKey(new Registration(){Address=address,Method=method});
         }
 
+        public static void ThenShouldContainPostResponse(this BoomarangImpl target, string address , string responseBody)
+        {
+            RequestResponse req;
+            target.Registrations.RequestResponseRegistrations.TryGetValue(
+                    new Registration() { Address = address, Method = "POST" },out req);
+
+            req.ShouldNotBe(null);
+            req.Responses.Count.ShouldBeGreaterThan(0);
+            var res = req.Responses.Dequeue();
+            res.ResponseDescription.ShouldBe(responseBody);
+        }
     }
 }

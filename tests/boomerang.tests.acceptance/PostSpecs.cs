@@ -4,6 +4,8 @@
 
     using Rainbow.Testing.Boomerang.Host;
 
+    using Shouldly;
+
     public class PostSpecs
     {
         private string webHostAddress = "http://localhost:5200/";
@@ -11,7 +13,11 @@
         [Test]
         public void Should_respond_with_expectation()
         {
-            Boomerang.Server(5100).Post(webHostAddress, "values").Returns("this is my response");
+            Spec.GivenADefaultServer().Post("myentity", "values").Returns(200, "this is my response");
+
+            Spec.WhenPostsSentTo(webHostAddress + "myentity", "my data");
+
+            Spec.ResponseText.ShouldBe("this is my response");
         }
 
     }
