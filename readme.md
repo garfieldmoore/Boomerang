@@ -28,6 +28,7 @@ Register response to multiple addresses;
 Register multiple responses for a single address;
 
 In this example, the first get to http://localhost:5100/anaddress will return HTTP status code CREATED whereas a second will retun OK
+
     Boomerang.Server(5100).Get("anaddress").Returns("response body", 201).Get("anaddress").Returns("another response body", 200);
 
 
