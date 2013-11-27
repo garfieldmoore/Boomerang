@@ -12,6 +12,11 @@ To get started simply add the package to your application;
 
 Now you can create a fake and define responses from requests;
 
+Features
+--------
+Supported verbs; GET, POST, PUT
+
+
 Examples
 --------
 
@@ -26,8 +31,7 @@ Register response to multiple addresses;
     Boomerang.Server(5100).Get("anaddress").Returns("response body", 200).Get("anotheraddress").Returns("another response body", 201);
 
 Register multiple responses for a single address;
-
-In this example, the first get to http://localhost:5100/anaddress will return HTTP status code CREATED whereas a second will retun OK
+You can specify different responses from the same address;
 
     Boomerang.Server(5100).Get("anaddress").Returns("response body", 201).Get("anaddress").Returns("another response body", 200);
 
