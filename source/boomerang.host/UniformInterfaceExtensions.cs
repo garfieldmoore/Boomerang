@@ -1,5 +1,6 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host
 {
+    using System;
 
     public static class UniformInterfaceExtensions
     {
@@ -14,6 +15,16 @@
         {
             ((BoomarangImpl)host).AddResponse(body, statusCode);
             return host;
+        }
+
+        public static IBoomerang Post(this IBoomerang target, string relativeAddress, string data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void Returns(this IBoomerang host, string body)
+        {
+            throw new NotImplementedException();
         }
     }
 }

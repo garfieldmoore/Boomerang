@@ -12,12 +12,12 @@
 
         private string listenHost;
 
-        private RequestResponder registrations;
+        public RequestResponder Registrations;
 
         public BoomarangImpl(IMasqarade proxy)
         {
             this.proxy = proxy;
-            registrations = new RequestResponder();
+            this.Registrations = new RequestResponder();
         }
 
         public RequestResponder Registerer { get; protected set; }
@@ -33,12 +33,12 @@
 
         public void AddAddress(RequestResponse request)
         {
-            registrations.AddAddress(request);
+            this.Registrations.AddAddress(request);
         }
 
         public void AddResponse(string body, int statusCode)
         {
-            registrations.AddResponse(body, statusCode);
+            this.Registrations.AddResponse(body, statusCode);
         }
 
         private void proxy_BeforeRequest(object sender, EventArgs e)
@@ -77,7 +77,7 @@
             var cacheControl = "private, max-age=0";
             int responseCode = 0;
 
-            var resonse = registrations.GetResponse(session.oRequest.headers.HTTPMethod, session.PathAndQuery);
+            var resonse = this.Registrations.GetResponse(session.oRequest.headers.HTTPMethod, session.PathAndQuery);
 
             if (resonse.Response != null)
             {

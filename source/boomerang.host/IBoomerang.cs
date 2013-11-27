@@ -16,7 +16,7 @@
 
         public RequestResponse()
         {
-            Responses=new Queue<Response>();
+            Responses = new Queue<Response>();
         }
 
         public override int GetHashCode()

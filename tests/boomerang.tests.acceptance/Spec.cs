@@ -18,6 +18,17 @@
 
         public static void WhenWebGetRequestSent(string webHostAddress)
         {
+            WhenWebGetRequestSent(webHostAddress, "GET");
+        }
+
+        public static void WhenPostsSentTo(string webHostAddress, string data)
+        {
+            var client = new WebClient();
+            ResponseText = client.UploadString(webHostAddress, data);
+        }
+
+        public static void WhenWebGetRequestSent(string webHostAddress, string method)
+        {
             try
             {
                 var request = WebRequest.Create(webHostAddress);
