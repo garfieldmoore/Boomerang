@@ -34,5 +34,16 @@
             StatusCode = response.StatusCode.ToString();
             ResponseText = response.Content;
         }
+            
+        public static void WhenPutSentTo(string webHostAddress, string data)
+        {
+            var request = new RestRequest(webHostAddress, Method.PUT);
+            request.AddBody(data);
+            var client = new RestClient();
+            var response = client.Execute(request);
+
+            StatusCode = response.StatusCode.ToString();
+            ResponseText = response.Content;
+        }
     }
 }

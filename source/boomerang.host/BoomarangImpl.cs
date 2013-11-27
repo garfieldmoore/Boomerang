@@ -58,7 +58,6 @@
             {
                 proxy.Stop();
             }
-
         }
 
         private void OnBeforeRequest(Session session)

@@ -57,6 +57,7 @@
     <Compile Include="TestExtensions.cs" />
     <Compile Include="WhenConfiguringGetRequests.cs" />
     <Compile Include="WhenConfiguringPosts.cs" />
+    <Compile Include="WhenConfiguringPutRequests.cs" />
     <Compile Include="WhenRespondingToRequests.cs" />
     <Compile Include="WhenStartingServer.cs" />
   </ItemGroup>

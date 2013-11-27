@@ -39,11 +39,23 @@ namespace boomerang.tests.unit
             target.Registrations.RequestResponseRegistrations.ContainsKey(new Registration(){Address=address,Method=method});
         }
 
-        public static void ThenShouldContainPostResponse(this BoomarangImpl target, string address , string responseBody)
+        public static void ThenShouldContainPostResponse(this BoomarangImpl target, string address, string responseBody)
         {
             RequestResponse req;
             target.Registrations.RequestResponseRegistrations.TryGetValue(
-                    new Registration() { Address = address, Method = "POST" },out req);
+                    new Registration() { Address = address, Method = "POST" }, out req);
+
+            req.ShouldNotBe(null);
+            req.Responses.Count.ShouldBeGreaterThan(0);
+            var res = req.Responses.Dequeue();
+            res.Body.ShouldBe(responseBody);
+        }
+
+        public static void ThenShouldContainPutResponse(this BoomarangImpl target, string address, string responseBody)
+        {
+            RequestResponse req;
+            target.Registrations.RequestResponseRegistrations.TryGetValue(
+                    new Registration() { Address = address, Method = "PUT" }, out req);
 
             req.ShouldNotBe(null);
             req.Responses.Count.ShouldBeGreaterThan(0);

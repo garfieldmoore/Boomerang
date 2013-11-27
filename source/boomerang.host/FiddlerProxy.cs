@@ -14,7 +14,6 @@
             FiddlerApplication.oProxy.Detach();
             Thread.Sleep(500);
             FiddlerApplication.Shutdown();
-
         }
 
         public void SetResponse(Session session, Response response)

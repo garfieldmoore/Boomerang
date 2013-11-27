@@ -24,10 +24,12 @@
             return host;
         }
 
-        public static IBoomerang Returns(this IBoomerang host, int statusCode, string body)
+        public static IBoomerang Put(this IBoomerang target, string relativeAddress, string data)
         {
-            ((BoomarangImpl)host).AddResponse(body, statusCode);
-            return host;
+            var requestResponse = new RequestResponse { Address = relativeAddress, Method = "PUT" };
+            ((BoomarangImpl)target).AddAddress(requestResponse);
+            return target;
         }
+
     }
 }
