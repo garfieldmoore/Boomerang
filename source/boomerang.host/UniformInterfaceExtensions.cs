@@ -26,7 +26,7 @@
 
         public static IBoomerang Returns(this IBoomerang host, int statusCode, string body)
         {
-            ((BoomarangImpl)host).AddResponse(body, statusCode, body);
+            ((BoomarangImpl)host).AddResponse(body, statusCode);
             return host;
         }
     }

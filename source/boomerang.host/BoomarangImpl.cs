@@ -93,10 +93,5 @@
             session.oResponse["Cache-Control"] = cacheControl;
             session.utilSetResponseBody(responseString);
         }
-
-        public void AddResponse(string body, int statusCode, string responseBody)
-        {
-            this.Registrations.AddResponse(body, statusCode, responseBody);
-        }
     }
 }

@@ -48,7 +48,7 @@ namespace boomerang.tests.unit
             req.ShouldNotBe(null);
             req.Responses.Count.ShouldBeGreaterThan(0);
             var res = req.Responses.Dequeue();
-            res.ResponseDescription.ShouldBe(responseBody);
+            res.Body.ShouldBe(responseBody);
         }
     }
 }
