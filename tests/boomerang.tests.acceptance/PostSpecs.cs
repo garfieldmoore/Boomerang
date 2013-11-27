@@ -13,11 +13,12 @@
         [Test]
         public void Should_respond_with_expectation()
         {
-            Spec.GivenADefaultServer().Post("myentity", "values").Returns(200, "this is my response");
+            Spec.GivenADefaultServer().Post("myentity", "values").Returns(201, "this is my response");
 
             Spec.WhenPostsSentTo(webHostAddress + "myentity", "my data");
 
             Spec.ResponseText.ShouldBe("this is my response");
+            Spec.StatusCode.ShouldBe("Created");
         }
 
     }

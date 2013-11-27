@@ -1,79 +1,38 @@
 ﻿namespace boomerang.tests.acceptance
 {
-    using System.IO;
-    using System.Net;
-
     using Rainbow.Testing.Boomerang.Host;
+
+    using RestSharp;
 
     internal class Spec
     {
         public static string StatusCode { get; set; }
         public static string ResponseText { get; set; }
-        public static string StatusDescription { get; set; }
 
         internal static IBoomerang GivenADefaultServer()
         {
             return Boomerang.Server(5200);
         }
 
-        public static void WhenWebGetRequestSent(string webHostAddress)
-        {
-            WhenWebGetRequestSent(webHostAddress, "GET");
-        }
-
         public static void WhenPostsSentTo(string webHostAddress, string data)
         {
-            var client = new WebClient();
-            ResponseText = client.UploadString(webHostAddress, data);
+            var request = new RestRequest(webHostAddress, Method.POST);
+            request.AddBody(data);
+            var client = new RestClient();
+            var response = client.Execute(request);
+            
+            StatusCode = response.StatusCode.ToString();
+            ResponseText = response.Content;
         }
 
-        public static void WhenWebGetRequestSent(string webHostAddress, string method)
+        public static void WhenWebGetRequestSent(string webHostAddress)
         {
-            try
-            {
-                var request = WebRequest.Create(webHostAddress);
-                request.Method = "Get";
+            var request = new RestRequest(webHostAddress, Method.GET);
+            var client = new RestClient();
+            var response = client.Execute(request);
 
-                using (var response = request.GetResponse())
-                {
-                    SetResponseValuesFrom(response);
-                    response.Close();
-                }
-
-            }
-            catch (WebException e)
-            {
-                if (e.Response != null)
-                {
-                    SetResponseValuesFrom(e.Response);
-                }
-                else
-                {
-                    throw;
-                }
-            }
-        }
-
-        private static void SetResponseValuesFrom(WebResponse response)
-        {
-            var httpWebResponse = ((HttpWebResponse)response);
-            StatusDescription = httpWebResponse.StatusDescription;
-            StatusCode = httpWebResponse.StatusCode.ToString();
-            var responeText = ReadFromStream(response.GetResponseStream());
-            response.Close();
-
-            ResponseText = responeText;
-        }
-
-        private static string ReadFromStream(Stream response)
-        {
-            string responseText;
-            using (var reader = new StreamReader(response))
-            {
-                responseText = reader.ReadToEnd();
-            }
-
-            return responseText;
+            StatusCode = response.StatusCode.ToString();
+            ResponseText = response.Content;
         }
     }
 }
