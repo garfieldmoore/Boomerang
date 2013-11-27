@@ -17,6 +17,29 @@
 
         }
 
+        public void SetResponse(Session session, Response response)
+        {
+            string httpResponseStatus = "";
+            string responseString = "";
+            var contentType = "text/html; charset=UTF-8";
+            var cacheControl = "private, max-age=0";
+            int responseCode = 0;
+
+            if (response != null)
+            {
+                responseString = response.Body;
+                httpResponseStatus = response.StatusCode.ToString();
+                responseCode = response.StatusCode;
+            }
+
+            session.utilCreateResponseAndBypassServer();
+            session.oResponse.headers.HTTPResponseStatus = httpResponseStatus;
+            session.oResponse.headers.HTTPResponseCode = responseCode;
+            session.oResponse["Content-Type"] = contentType;
+            session.oResponse["Cache-Control"] = cacheControl;
+            session.utilSetResponseBody(responseString);
+        }
+
         protected virtual void OnBeforeRequest(Session oSession)
         {
             var handler = this.BeforeRequest;

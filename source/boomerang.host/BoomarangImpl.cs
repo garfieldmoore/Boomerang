@@ -71,27 +71,9 @@
 
         private void SetResponse(Session session)
         {
-            string httpResponseStatus = "";
-            string responseString = "";
-            var contentType = "text/html; charset=UTF-8";
-            var cacheControl = "private, max-age=0";
-            int responseCode = 0;
-
             var resonse = this.Registrations.GetResponse(session.oRequest.headers.HTTPMethod, session.PathAndQuery);
 
-            if (resonse.Response != null)
-            {
-                responseString = resonse.Response.Body;
-                httpResponseStatus = resonse.Response.StatusCode.ToString();
-                responseCode = resonse.Response.StatusCode;
-            }
-
-            session.utilCreateResponseAndBypassServer();
-            session.oResponse.headers.HTTPResponseStatus = httpResponseStatus;
-            session.oResponse.headers.HTTPResponseCode = responseCode;
-            session.oResponse["Content-Type"] = contentType;
-            session.oResponse["Cache-Control"] = cacheControl;
-            session.utilSetResponseBody(responseString);
+            proxy.SetResponse(session, resonse.Response);
         }
     }
 }
