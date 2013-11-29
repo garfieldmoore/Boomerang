@@ -25,10 +25,5 @@
 
             return server;
         }
-
-        public static void Initialize(IBoomerangConfigurationFactory boomerangConfigurationFactory)
-        {
-            configurationFactory = boomerangConfigurationFactory;
-        }
     }
 }
