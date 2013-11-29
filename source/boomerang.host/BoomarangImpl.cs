@@ -68,9 +68,9 @@
 
         private void SetResponse(Session session)
         {
-            var resonse = this.Registrations.GetResponse(session.oRequest.headers.HTTPMethod, session.PathAndQuery);
+            var expectedResponse = Registrations.GetResponse(session.oRequest.headers.HTTPMethod, session.PathAndQuery);
 
-            proxy.SetResponse(session, resonse.Response);
+            proxy.SetResponse(session, expectedResponse);
         }
     }
 }

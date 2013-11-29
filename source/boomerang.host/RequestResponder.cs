@@ -16,33 +16,28 @@
             RequestResponseRegistrations = new Dictionary<Registration, RequestResponse>();
         }
 
-        public RequestResponse GetResponse(string method, string addressTarget)
+        public Response GetResponse(string method, string addressTarget)
         {
-            RequestResponse responsed;
+            RequestResponse requestResponse;
 
             if (!addressTarget.StartsWith("/"))
             {
                 addressTarget = "/" + addressTarget;
             }
 
-            var respone =
+            var foundRequest =
                 RequestResponseRegistrations.TryGetValue(
-                    new Registration() { Address = addressTarget, Method = method }, out responsed);
+                    new Registration() { Address = addressTarget, Method = method }, out requestResponse);
 
-            if (!respone)
+            if (!foundRequest)
             {
-                return new RequestResponse() { Response = new Response() { StatusCode = 400, Body = ResourceNotFoundMessage } };
+                return new Response() { StatusCode = 400, Body = ResourceNotFoundMessage };
             }
 
-            var interim = new RequestResponse() { Response = responsed.Responses.Dequeue() };
-            return interim;
-        }
+            var registeredResponse = requestResponse.Responses.Dequeue();
 
-        public RequestResponse GetResponse(string addressTarget)
-        {
-            return GetResponse("GET", addressTarget);
+            return new Response() { StatusCode = registeredResponse.StatusCode, Body=registeredResponse.Body };
         }
-
 
         public void AddAddress(RequestResponse request)
         {

@@ -17,8 +17,8 @@
 
             var response = responder.GetResponse("GET", "address");
             
-            response.Response.Body.ShouldBe("body1");
-            response.Response.StatusCode.ShouldBe(200);
+            response.Body.ShouldBe("body1");
+            response.StatusCode.ShouldBe(200);
         }
 
         [Test]
@@ -31,8 +31,8 @@
             var response = responder.GetResponse("GET", "address2");
             
             response.ShouldNotBe(null);
-            response.Response.Body.ShouldBe(RequestResponder.ResourceNotFoundMessage);
-            response.Response.StatusCode.ShouldBe(400);
+            response.Body.ShouldBe(RequestResponder.ResourceNotFoundMessage);
+            response.StatusCode.ShouldBe(400);
         }
 
         [Test]
@@ -44,8 +44,8 @@
 
             var response = responder.GetResponse("GET", "address");
             response.ShouldNotBe(null);
-            response.Response.Body.ShouldBe("body1");
-            response.Response.StatusCode.ShouldBe(200);
+            response.Body.ShouldBe("body1");
+            response.StatusCode.ShouldBe(200);
         }
 
         [Test]
@@ -56,14 +56,14 @@
             responder.AddResponse("body1", 200);
             responder.AddResponse("body2", 201);
 
-            var response = responder.GetResponse("address");
+            var response = responder.GetResponse("GET", "address");
             
-            response.Response.StatusCode.ShouldBe(200);
-            response.Response.Body.ShouldBe("body1");
+            response.StatusCode.ShouldBe(200);
+            response.Body.ShouldBe("body1");
 
             response = responder.GetResponse("GET", "address");
-            response.Response.StatusCode.ShouldBe(201);
-            response.Response.Body.ShouldBe("body2");
+            response.StatusCode.ShouldBe(201);
+            response.Body.ShouldBe("body2");
         }
     }
 }
