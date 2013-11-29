@@ -20,8 +20,6 @@
             this.Registrations = new RequestResponder();
         }
 
-        public RequestResponder Registerer { get; protected set; }
-
         public void Start(string host, int port)
         {
             this.listenHost = host;

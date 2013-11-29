@@ -18,7 +18,15 @@
 
         public static IBoomerang Post(this IBoomerang host, string relativeAddress, string data)
         {
+            host.Request(relativeAddress, data, "POST");
             var requestResponse = new RequestResponse { Address = relativeAddress, Method = "POST" };
+            ((BoomarangImpl)host).AddAddress(requestResponse);
+            return host;
+        }
+
+        public static IBoomerang Request(this IBoomerang host, string relativeAddress, string data, string httpMethod)
+        {
+            var requestResponse = new RequestResponse { Address = relativeAddress, Method = httpMethod };
             ((BoomarangImpl)host).AddAddress(requestResponse);
             return host;
         }

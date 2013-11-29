@@ -14,7 +14,7 @@ Now you can create a fake and define responses from requests;
 
 Features
 --------
-Supported verbs; GET, POST, PUT
+Supported verbs; GET, POST, PUT, DELETE
 
 
 Examples
