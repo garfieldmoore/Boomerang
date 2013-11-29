@@ -29,7 +29,7 @@
             proxy.BeforeRequest += proxy_BeforeRequest;
         }
 
-        public void AddAddress(RequestResponse request)
+        public void AddAddress(Registration request)
         {
             this.Registrations.AddAddress(request);
         }

@@ -5,7 +5,7 @@
 
     public class RequestResponder
     {
-        public IDictionary<Registration, RequestResponse> RequestResponseRegistrations;
+        public IDictionary<Registration, RegisteredResponses> RequestResponseRegistrations;
 
         private Registration previousRegistration;
 
@@ -13,12 +13,12 @@
 
         public RequestResponder()
         {
-            RequestResponseRegistrations = new Dictionary<Registration, RequestResponse>();
+            RequestResponseRegistrations = new Dictionary<Registration, RegisteredResponses>();
         }
 
         public Response GetResponse(string method, string addressTarget)
         {
-            RequestResponse requestResponse;
+            RegisteredResponses requestResponse;
 
             if (!addressTarget.StartsWith("/"))
             {
@@ -39,7 +39,7 @@
             return new Response() { StatusCode = registeredResponse.StatusCode, Body=registeredResponse.Body };
         }
 
-        public void AddAddress(RequestResponse request)
+        public void AddAddress(Registration request)
         {
             if (!request.Address.StartsWith("/"))
             {
@@ -50,7 +50,7 @@
             if (!RequestResponseRegistrations.ContainsKey(newRegistration))
             {
                 this.previousRegistration = newRegistration;
-                RequestResponseRegistrations.Add(new KeyValuePair<Registration, RequestResponse>(this.previousRegistration, new RequestResponse()));
+                RequestResponseRegistrations.Add(new KeyValuePair<Registration, RegisteredResponses>(this.previousRegistration, new RegisteredResponses()));
             }
         }
 

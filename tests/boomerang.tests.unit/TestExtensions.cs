@@ -43,7 +43,7 @@ namespace boomerang.tests.unit
 
         public static void ThenShouldContainPostResponse(this BoomarangImpl target, string address, string responseBody)
         {
-            RequestResponse req;
+            RegisteredResponses req;
             target.Registrations.RequestResponseRegistrations.TryGetValue(
                     new Registration() { Address = address, Method = "POST" }, out req);
 
@@ -55,7 +55,7 @@ namespace boomerang.tests.unit
 
         public static void ThenShouldContainPutResponse(this BoomarangImpl target, string address, string responseBody)
         {
-            RequestResponse req;
+            RegisteredResponses req;
             target.Registrations.RequestResponseRegistrations.TryGetValue(
                     new Registration() { Address = address, Method = "PUT" }, out req);
 
