@@ -10,40 +10,35 @@
             return host;
         }
 
-        public static IBoomerang Returns(this IBoomerang host, string body, int statusCode)
+        public static IBoomerang Post(this IBoomerang host, string relativeAddress)
         {
-            ((BoomarangImpl)host).AddResponse(body, statusCode);
+            host.Request(relativeAddress, "POST");
             return host;
         }
 
-        public static IBoomerang Post(this IBoomerang host, string relativeAddress, string data)
+        public static IBoomerang Put(this IBoomerang target, string relativeAddress)
         {
-            host.Request(relativeAddress, data, "POST");
-            var requestResponse = new Request { Address = relativeAddress, Method = "POST" };
-            ((BoomarangImpl)host).AddAddress(requestResponse);
-            return host;
-        }
-
-        public static IBoomerang Request(this IBoomerang host, string relativeAddress, string data, string httpMethod)
-        {
-            var requestResponse = new Request { Address = relativeAddress, Method = httpMethod };
-            ((BoomarangImpl)host).AddAddress(requestResponse);
-            return host;
-        }
-
-        public static IBoomerang Put(this IBoomerang target, string relativeAddress, string data)
-        {
-            var requestResponse = new Request { Address = relativeAddress, Method = "PUT" };
-            ((BoomarangImpl)target).AddAddress(requestResponse);
+            target.Request(relativeAddress, "PUT");
             return target;
         }
 
         public static IBoomerang Delete(this IBoomerang target, string relativeAddress)
         {
-            var requestResponse = new Request { Address = relativeAddress, Method = "DELETE" };
-            ((BoomarangImpl)target).AddAddress(requestResponse);
+            target.Request(relativeAddress, "DELETE");
             return target;
         }
 
+        public static IBoomerang Request(this IBoomerang host, string relativeAddress, string httpMethod)
+        {
+            var requestResponse = new Request { Address = relativeAddress, Method = httpMethod };
+            ((BoomarangImpl)host).AddAddress(requestResponse);
+            return host;
+        }
+    
+        public static IBoomerang Returns(this IBoomerang host, string body, int statusCode)
+        {
+            ((BoomarangImpl)host).AddResponse(body, statusCode);
+            return host;
+        }
     }
 }

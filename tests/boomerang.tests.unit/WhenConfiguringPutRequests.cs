@@ -12,7 +12,7 @@
         public void Should_add_put_request()
         {
             var boom = new BoomarangImpl(Substitute.For<IMasqarade>());
-            boom.Put("address1", "data");
+            boom.Put("address1");
 
             boom.ThenShouldHaveRegisteredNumberOfRequests(1);
             boom.ThenShouldContainRequest("PUT", "/address1");
@@ -22,7 +22,7 @@
         public void Should_add_response()
         {
             var boom = new BoomarangImpl(Substitute.For<IMasqarade>());
-            boom.Put("address1", "data");
+            boom.Put("address1");
             boom.Returns("body", 200);
 
             boom.ThenShouldHaveRegisteredNumberOfResponses(1);
