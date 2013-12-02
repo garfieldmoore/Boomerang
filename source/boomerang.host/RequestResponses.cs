@@ -1,9 +1,10 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host
 {
-    using System.Collections;
     using System.Collections.Generic;
 
-    // Rename--maybe
+    /// <summary>
+    /// 
+    /// </summary>
     public class RequestResponses
     {
         protected IDictionary<Request, Queue<Response>> RequestResponseRegistrations;

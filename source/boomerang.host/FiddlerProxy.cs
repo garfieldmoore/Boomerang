@@ -7,7 +7,6 @@
 
     internal class FiddlerProxy : IMasqarade
     {
-        // remove
         public event EventHandler BeforeRequest;
 
         public void Stop()
@@ -19,7 +18,6 @@
 
         public void SetResponse(Session session, Response response)
         {
-            // create configuration for response an factory methods on the BCF
             string httpResponseStatus = "";
             string responseString = "";
             var contentType = "text/html; charset=UTF-8";
@@ -41,7 +39,6 @@
             session.utilSetResponseBody(responseString);
         }
 
-        //  not needed if we bring the requestresponder into this class
         protected virtual void OnBeforeRequest(Session oSession)
         {
             var handler = this.BeforeRequest;

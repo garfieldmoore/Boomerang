@@ -13,10 +13,8 @@
         private int listenPort;
         private string listenHost;
 
-        // This probably needs to be moved up into the fiddler class 
         public RequestResponses Registrations;
 
-        // use factory with initialiase to create this in tests.
         public BoomarangImpl(IMasqarade proxy)
         {
             this.proxy = proxy;
@@ -37,11 +35,20 @@
             proxy.BeforeRequest += proxy_BeforeRequest;
         }
 
+        /// <summary>
+        /// Registers requests as a distict method and address
+        /// </summary>
+        /// <param name="request">Method and address</param>
         public void AddAddress(Request request)
         {
             this.Registrations.AddAddress(request);
         }
 
+        /// <summary>
+        /// Adds a response for the previously added address
+        /// </summary>
+        /// <param name="body">The response body for the request</param>
+        /// <param name="statusCode">The statuc code to respond with</param>
         public void AddResponse(string body, int statusCode)
         {
             this.Registrations.AddResponse(body, statusCode);
@@ -66,7 +73,6 @@
             }
         }
 
-        // MOve this to the fiddler class as this is implementation
         private void OnBeforeRequest(Session session)
         {
             if ((session.oRequest.pipeClient.LocalPort == this.listenPort) && (session.hostname == this.listenHost))
@@ -75,7 +81,6 @@
             }
         }
 
-        // feature envy
         private void SetResponse(Session session)
         {
             var expectedResponse = Registrations.GetNextResponseFor(session.oRequest.headers.HTTPMethod, session.PathAndQuery);
