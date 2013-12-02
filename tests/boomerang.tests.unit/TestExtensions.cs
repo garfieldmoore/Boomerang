@@ -1,29 +1,26 @@
 namespace boomerang.tests.unit
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq.Expressions;
 
     using Rainbow.Testing.Boomerang.Host;
 
     using Shouldly;
 
-    using System.Linq;
 
     public static class TestExtensions
     {
         public static void ThenShouldContainRequestWithAddress(this BoomarangImpl target, string address)
         {
-            target.Registrations.RequestResponseRegistrations.ContainsKey(new Registration() { Address = address, Method = "GET" }).ShouldBe(true);
+            target.Registrations.Contains(new Request() { Address = address, Method = "GET" }).ShouldBe(true);
         }
 
         public static void ThenShouldHaveRegisteredNumberOfResponses(this BoomarangImpl target, int count)
         {
             var numberOfResponses = 0;
 
-            foreach (var requestResponseRegistration in target.Registrations.RequestResponseRegistrations)
+            foreach (var requestResponseRegistration in target.Registrations.Requests())
             {
-                numberOfResponses += requestResponseRegistration.Value.Responses.Count;
+                numberOfResponses += requestResponseRegistration.Count;
             }
 
             numberOfResponses.ShouldBe(count);
@@ -31,37 +28,36 @@ namespace boomerang.tests.unit
 
         public static void ThenShouldHaveRegisteredNumberOfRequests(this BoomarangImpl target, int count)
         {
-            target.Registrations.RequestResponseRegistrations.Count.ShouldBe(count);
+            target.Registrations.GetCount().ShouldBe(count);
         }
 
         public static void ThenShouldContainRequest(this BoomarangImpl target, string method, string address)
         {
-            var contains = target.Registrations.RequestResponseRegistrations.ContainsKey(new Registration() { Address = address, Method = method });
-            
+            var contains = target.Registrations.Contains(new Request() { Address = address, Method = method });
+
             contains.ShouldBe(true);
         }
 
         public static void ThenShouldContainPostResponse(this BoomarangImpl target, string address, string responseBody)
         {
-            RegisteredResponses req;
-            target.Registrations.RequestResponseRegistrations.TryGetValue(
-                    new Registration() { Address = address, Method = "POST" }, out req);
+            Queue<Response> req;
+            target.Registrations.GetAllResponsesFor(new Request() { Address = address, Method = "POST" }, out req);
 
             req.ShouldNotBe(null);
-            req.Responses.Count.ShouldBeGreaterThan(0);
-            var res = req.Responses.Dequeue();
+            req.Count.ShouldBeGreaterThan(0);
+            var res = req.Dequeue();
             res.Body.ShouldBe(responseBody);
         }
 
         public static void ThenShouldContainPutResponse(this BoomarangImpl target, string address, string responseBody)
         {
-            RegisteredResponses req;
-            target.Registrations.RequestResponseRegistrations.TryGetValue(
-                    new Registration() { Address = address, Method = "PUT" }, out req);
+            Queue<Response> req;
+            target.Registrations.GetAllResponsesFor(
+                    new Request() { Address = address, Method = "PUT" }, out req);
 
             req.ShouldNotBe(null);
-            req.Responses.Count.ShouldBeGreaterThan(0);
-            var res = req.Responses.Dequeue();
+            req.Count.ShouldBeGreaterThan(0);
+            var res = req.Dequeue();
             res.Body.ShouldBe(responseBody);
         }
     }

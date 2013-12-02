@@ -11,11 +11,11 @@
         [Test]
         public void Should_find_response_for_address()
         {
-            var responder = new RequestResponder();
-            responder.AddAddress(new Registration() { Address = "address", Method = "GET" });
+            var responder = new RequestResponses();
+            responder.AddAddress(new Request() { Address = "address", Method = "GET" });
             responder.AddResponse("body1", 200);
 
-            var response = responder.GetResponse("GET", "address");
+            var response = responder.GetNextResponseFor("GET", "address");
             
             response.Body.ShouldBe("body1");
             response.StatusCode.ShouldBe(200);
@@ -24,25 +24,25 @@
         [Test]
         public void Should_reponse_with_resource_not_found_if_address_not_configured()
         {
-            var responder = new RequestResponder();
-            responder.AddAddress(new Registration() { Address = "address", Method = "GET" });
+            var responder = new RequestResponses();
+            responder.AddAddress(new Request() { Address = "address", Method = "GET" });
             responder.AddResponse("body1", 200);
 
-            var response = responder.GetResponse("GET", "address2");
+            var response = responder.GetNextResponseFor("GET", "address2");
             
             response.ShouldNotBe(null);
-            response.Body.ShouldBe(RequestResponder.ResourceNotFoundMessage);
+            response.Body.ShouldBe(RequestResponses.ResourceNotFoundMessage);
             response.StatusCode.ShouldBe(400);
         }
 
         [Test]
         public void Should_not_fail_if_no_response_defined_for_address()
         {
-            var responder = new RequestResponder();
-            responder.AddAddress(new Registration() { Address = "address", Method = "GET" });
+            var responder = new RequestResponses();
+            responder.AddAddress(new Request() { Address = "address", Method = "GET" });
             responder.AddResponse("body1", 200);
 
-            var response = responder.GetResponse("GET", "address");
+            var response = responder.GetNextResponseFor("GET", "address");
             response.ShouldNotBe(null);
             response.Body.ShouldBe("body1");
             response.StatusCode.ShouldBe(200);
@@ -51,17 +51,17 @@
         [Test]
         public void Should_find_multiple_responses_for_same_address()
         {
-            var responder = new RequestResponder();
-            responder.AddAddress(new Registration() { Address = "address", Method = "GET" });
+            var responder = new RequestResponses();
+            responder.AddAddress(new Request() { Address = "address", Method = "GET" });
             responder.AddResponse("body1", 200);
             responder.AddResponse("body2", 201);
 
-            var response = responder.GetResponse("GET", "address");
+            var response = responder.GetNextResponseFor("GET", "address");
             
             response.StatusCode.ShouldBe(200);
             response.Body.ShouldBe("body1");
 
-            response = responder.GetResponse("GET", "address");
+            response = responder.GetNextResponseFor("GET", "address");
             response.StatusCode.ShouldBe(201);
             response.Body.ShouldBe("body2");
         }

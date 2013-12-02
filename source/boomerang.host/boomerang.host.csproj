@@ -51,9 +51,9 @@
     <Compile Include="IBoomerang.cs" />
     <Compile Include="IMasqarade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registration.cs" />
-    <Compile Include="RequestResponder.cs" />
-    <Compile Include="RegisteredResponses.cs" />
+    <Compile Include="ProxyRequestEventArgs.cs" />
+    <Compile Include="Request.cs" />
+    <Compile Include="RequestResponses.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="UniformInterfaceExtensions.cs" />
   </ItemGroup>
