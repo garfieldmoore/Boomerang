@@ -11,7 +11,7 @@
         private int listenPort;
         private string listenHost;
 
-        public RequestResponses Registrations;
+        public IRequestResponses Registrations;
 
         public BoomarangImpl(IMasqarade proxy)
         {
@@ -19,7 +19,7 @@
             this.Registrations = new RequestResponses();
         }
 
-        public BoomarangImpl(IMasqarade proxy, RequestResponses responses)
+        public BoomarangImpl(IMasqarade proxy, IRequestResponses responses)
         {
             this.proxy = proxy;
             this.Registrations = responses;

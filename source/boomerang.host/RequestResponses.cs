@@ -2,10 +2,24 @@
 {
     using System.Collections.Generic;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public class RequestResponses
+    public interface IRequestResponses
+    {
+        IEnumerable<Queue<Response>> Requests();
+
+        void AddAddress(Request request);
+
+        void AddResponse(string body, int statusCode);
+
+        bool Contains(Request request);
+
+        int GetCount();
+
+        bool GetAllResponsesFor(Request request, out  Queue<Response> req);
+
+        Response GetNextResponseFor(string method, string addressTarget);
+    }
+
+    public class RequestResponses : IRequestResponses
     {
         protected IDictionary<Request, Queue<Response>> RequestResponseRegistrations;
 
@@ -67,7 +81,7 @@
             return RequestResponseRegistrations.TryGetValue(request, out req);
         }
 
-        public virtual Response GetNextResponseFor(string method, string addressTarget)
+        public Response GetNextResponseFor(string method, string addressTarget)
         {
             Queue<Response> requestResponse;
 

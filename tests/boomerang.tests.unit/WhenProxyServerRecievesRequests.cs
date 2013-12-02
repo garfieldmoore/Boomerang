@@ -10,7 +10,7 @@
         public void Boomerang_should_set_proxy_response()
         {
             var masqarade = Substitute.For<IMasqarade>();
-            var requestResponses = Substitute.For<RequestResponses>();
+            var requestResponses = Substitute.For<IRequestResponses>();
             requestResponses.GetNextResponseFor("GET", "address").Returns(new Response());
 
             var boom = new BoomarangImpl(masqarade, requestResponses);
