@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FiddlerCore4, Version=4.4.5.6, Culture=neutral, PublicKeyToken=67cb91587178ac5a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages_manual\Fiddler\DotNet4\FiddlerCore4.dll</HintPath>
+    </Reference>
     <Reference Include="FizzWare.NBuilder">
       <HintPath>..\..\packages\NBuilder.3.0.1.1\lib\FizzWare.NBuilder.dll</HintPath>
     </Reference>
@@ -60,6 +64,7 @@
     <Compile Include="WhenConfiguringGetRequests.cs" />
     <Compile Include="WhenConfiguringPosts.cs" />
     <Compile Include="WhenConfiguringPutRequests.cs" />
+    <Compile Include="WhenProxyServerRecievesRequests.cs" />
     <Compile Include="WhenRespondingToRequests.cs" />
     <Compile Include="WhenStartingServer.cs" />
   </ItemGroup>

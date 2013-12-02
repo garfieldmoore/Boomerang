@@ -2,8 +2,6 @@
 {
     using System;
 
-    using Fiddler;
-
     /// <summary>
     /// Manages connection to proxy server
     /// </summary>
@@ -21,6 +19,12 @@
             this.Registrations = new RequestResponses();
         }
 
+        public BoomarangImpl(IMasqarade proxy, RequestResponses responses)
+        {
+            this.proxy = proxy;
+            this.Registrations = responses;
+        }
+
         /// <summary>
         /// Start the proxy server
         /// </summary>
@@ -30,9 +34,9 @@
         {
             this.listenHost = host;
             this.listenPort = port;
-            AppDomain.CurrentDomain.DomainUnload += CurrentDomain_DomainUnload;
+            AppDomain.CurrentDomain.DomainUnload += this.OnCurrentDomainUnload;
             proxy.Start(host, port);
-            proxy.BeforeRequest += proxy_BeforeRequest;
+            proxy.BeforeRequest += this.OnProxyBeforeRequest;
         }
 
         /// <summary>
@@ -54,7 +58,7 @@
             this.Registrations.AddResponse(body, statusCode);
         }
 
-        private void proxy_BeforeRequest(object sender, EventArgs e)
+        private void OnProxyBeforeRequest(object sender, EventArgs e)
         {
             var requesteventArgs = e as ProxyRequestEventArgs;
             if (requesteventArgs == null)
@@ -62,10 +66,10 @@
                 return;
             }
 
-            this.OnBeforeRequest(requesteventArgs.Session);
+            this.OnBeforeRequest(requesteventArgs);
         }
 
-        private void CurrentDomain_DomainUnload(object sender, EventArgs e)
+        private void OnCurrentDomainUnload(object sender, EventArgs e)
         {
             if (proxy != null)
             {
@@ -73,19 +77,16 @@
             }
         }
 
-        private void OnBeforeRequest(Session session)
+        private void OnBeforeRequest(ProxyRequestEventArgs session)
         {
-            if ((session.oRequest.pipeClient.LocalPort == this.listenPort) && (session.hostname == this.listenHost))
-            {
-                SetResponse(session);
-            }
+            SetResponse(session.Method, session.RelativePath);
         }
 
-        private void SetResponse(Session session)
+        private void SetResponse(string method, string relativePath)
         {
-            var expectedResponse = Registrations.GetNextResponseFor(session.oRequest.headers.HTTPMethod, session.PathAndQuery);
+            var expectedResponse = Registrations.GetNextResponseFor(method, relativePath);
 
-            proxy.SetResponse(session, expectedResponse);
+            proxy.SetResponse(expectedResponse);
         }
     }
 }

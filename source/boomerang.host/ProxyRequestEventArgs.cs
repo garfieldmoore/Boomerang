@@ -1,11 +1,10 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host
 {
     using System;
-
-    using Fiddler;
-
+    
     public class ProxyRequestEventArgs : EventArgs
     {
-        public Session Session { get; set; }
+        public string Method { get; set; }
+        public string RelativePath { get; set; }
     }
 }

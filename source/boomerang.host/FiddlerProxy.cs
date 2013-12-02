@@ -2,12 +2,15 @@
 {
     using System;
     using System.Threading;
-
     using Fiddler;
 
     internal class FiddlerProxy : IMasqarade
     {
         public event EventHandler BeforeRequest;
+
+        private int listenPort;
+        private string listenHost;
+        private Session currentSession;
 
         public void Stop()
         {
@@ -16,42 +19,49 @@
             FiddlerApplication.Shutdown();
         }
 
-        public void SetResponse(Session session, Response response)
+        public void SetResponse(Response response)
         {
-            string httpResponseStatus = "";
-            string responseString = "";
-            var contentType = "text/html; charset=UTF-8";
-            var cacheControl = "private, max-age=0";
-            int responseCode = 0;
-
-            if (response != null)
-            {
-                responseString = response.Body;
-                httpResponseStatus = response.StatusCode.ToString();
-                responseCode = response.StatusCode;
-            }
-
-            session.utilCreateResponseAndBypassServer();
-            session.oResponse.headers.HTTPResponseStatus = httpResponseStatus;
-            session.oResponse.headers.HTTPResponseCode = responseCode;
-            session.oResponse["Content-Type"] = contentType;
-            session.oResponse["Cache-Control"] = cacheControl;
-            session.utilSetResponseBody(responseString);
+            currentSession.utilCreateResponseAndBypassServer();
+            currentSession.oResponse.headers.HTTPResponseStatus = response.StatusCode.ToString();
+            currentSession.oResponse.headers.HTTPResponseCode = response.StatusCode;
+            currentSession.oResponse["Content-Type"] = response.ContentType;
+            currentSession.oResponse["Cache-Control"] = response.CacheControl;
+            currentSession.utilSetResponseBody(response.Body);
         }
 
-        protected virtual void OnBeforeRequest(Session oSession)
+        protected virtual void OnBeforeRequest(Session session)
         {
-            var handler = this.BeforeRequest;
-            if (handler != null)
+            currentSession = session;
+            if (HasSubscribers(BeforeRequest) && (IsRequestOwner(session)))
             {
-                handler(this, new ProxyRequestEventArgs() { Session = oSession });
+                BeforeRequest(this, CreateRequestEventArgs(session));
             }
+        }
+
+        private static bool HasSubscribers(EventHandler handler)
+        {
+            return handler != null;
+        }
+
+        private bool IsRequestOwner(Session session)
+        {
+            return (session.oRequest.pipeClient.LocalPort == this.listenPort) && (session.hostname == this.listenHost);
+        }
+
+        private static ProxyRequestEventArgs CreateRequestEventArgs(Session session)
+        {
+            return new ProxyRequestEventArgs()
+                       {
+                           Method = session.RequestMethod,
+                           RelativePath = session.PathAndQuery
+                       };
         }
 
         public void Start(string hostBaseAddress, int portNumber)
         {
             var flags = FiddlerCoreStartupFlags.Default | FiddlerCoreStartupFlags.RegisterAsSystemProxy;
-
+            listenPort = portNumber;
+            this.listenHost = hostBaseAddress;
             FiddlerApplication.Startup(portNumber, flags);
             FiddlerApplication.BeforeRequest += this.OnBeforeRequest;
         }

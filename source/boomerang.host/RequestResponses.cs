@@ -67,7 +67,7 @@
             return RequestResponseRegistrations.TryGetValue(request, out req);
         }
 
-        public Response GetNextResponseFor(string method, string addressTarget)
+        public virtual Response GetNextResponseFor(string method, string addressTarget)
         {
             Queue<Response> requestResponse;
 
