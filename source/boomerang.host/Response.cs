@@ -21,8 +21,14 @@
         /// </summary>
         public string Body { get; set; }
 
+        /// <summary>
+        /// Response content type. Defaults to text/html
+        /// </summary>
         public string ContentType { get; set; }
 
+        /// <summary>
+        /// Cache control header of response. defaults to private, max-age=0
+        /// </summary>
         public string CacheControl { get; set; }
     }
 }

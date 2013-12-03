@@ -1,11 +1,8 @@
 namespace boomerang.tests.unit
 {
     using System.Collections.Generic;
-
     using Rainbow.Testing.Boomerang.Host;
-
     using Shouldly;
-
 
     public static class TestExtensions
     {
