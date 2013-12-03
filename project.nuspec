@@ -14,9 +14,11 @@
     <copyright>Copyright 2013</copyright>
     <dependencies>
     </dependencies>
+	<tags>Acceptance Testing</tags>
   </metadata>
    <files>
-        <file src="source\boomerang.host\bin\Release\Boomerang.dll" target="lib\net45\Boomerang.dll" />
-		<file src="source\boomerang.host\bin\Release\FiddlerCore4.dll" target="lib\net45\FiddlerCore4.dll" />
+        <file src="source\boomerang.host\bin\Release\Boomerang.dll" target="lib\net40\Boomerang.dll" />
+		<file src="source\boomerang.host\bin\Release\FiddlerCore4.dll" target="lib\net40\FiddlerCore4.dll" />
+		<file src="source\boomerang.host\bin\Release\Boomerang.xml" target="lib\net40\Boomerang.xml" />
     </files>
 </package>
