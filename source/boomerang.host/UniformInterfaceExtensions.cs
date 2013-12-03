@@ -1,5 +1,7 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Helper methods to configure requests to intercept and desired responses from proxy server
     /// </summary>
@@ -80,5 +82,16 @@
             ((BoomarangImpl)host).AddResponse(body, statusCode);
             return host;
         }
+
+        /// <summary>
+        /// Returns all requests that were recieved by the proxy server
+        /// </summary>
+        /// <param name="target">Configuration handler for proxer server</param>
+        /// <returns>List of requests</returns>
+        public static IEnumerable<Request> GetAllReceivedRequests(this IBoomerang target)
+        {
+            return ((BoomarangImpl)target).GetAllReceivedRequests();
+        }
+
     }
 }

@@ -1,8 +1,11 @@
 ﻿namespace boomerang.tests.unit
 {
+    using System.Linq;
+
     using NSubstitute;
     using NUnit.Framework;
     using Rainbow.Testing.Boomerang.Host;
+    using Shouldly;
 
     public class WhenProxyServerRecievesRequests
     {
@@ -17,10 +20,25 @@
             GivenRegisteredResponse("body", 200);
             GivenProxyIsRunning();
 
-            WhenBeforeRequestIsSent(masqarade);
+            WhenRequestIsSent(masqarade);
 
             ThenShouldSetResponse();
         }
+
+        [Test]
+        public void Should_store_request()
+        {
+            GivenProxyForRequest(new Request() { Address = "address", Method = "GET" });
+            GivenRegisteredResponse("body", 200);
+
+            GivenProxyIsRunning();
+
+            WhenRequestIsSent(masqarade);
+
+            boomerang.GetAllReceivedRequests().Count().ShouldBe(1);
+            boomerang.GetAllReceivedRequests().Contains(new Request(){Method="GET", Address = "address"}).ShouldBe(true);
+        }
+
 
         private void GivenRegisteredResponse(string body, int statusCode)
         {
@@ -45,7 +63,7 @@
             masqarade.Received().SetResponse(Arg.Any<Response>());
         }
 
-        private static void WhenBeforeRequestIsSent(IMasqarade masqarade)
+        private static void WhenRequestIsSent(IMasqarade masqarade)
         {
             masqarade.BeforeRequest += Raise.EventWith(
                 masqarade, new ProxyRequestEventArgs() { Method = "GET", RelativePath = "address" });

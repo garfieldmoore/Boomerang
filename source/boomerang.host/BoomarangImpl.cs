@@ -1,6 +1,7 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Manages connection to proxy server
@@ -13,14 +14,18 @@
 
         public IRequestResponses Registrations;
 
+        protected IList<Request> ReceivedRequests;
+
         public BoomarangImpl(IMasqarade proxy)
         {
+            ReceivedRequests = new List<Request>();
             this.proxy = proxy;
             this.Registrations = new RequestResponses();
         }
 
         public BoomarangImpl(IMasqarade proxy, IRequestResponses responses)
         {
+            ReceivedRequests = new List<Request>();
             this.proxy = proxy;
             this.Registrations = responses;
         }
@@ -77,9 +82,13 @@
             }
         }
 
-        private void OnBeforeRequest(ProxyRequestEventArgs session)
+        private void OnBeforeRequest(ProxyRequestEventArgs eventArgs)
         {
-            SetResponse(session.Method, session.RelativePath);
+            var request = new Request() { Method = eventArgs.Method, Address = eventArgs.RelativePath };
+
+            ReceivedRequests.Add(request);
+
+            SetResponse(eventArgs.Method, eventArgs.RelativePath);
         }
 
         private void SetResponse(string method, string relativePath)
@@ -87,6 +96,11 @@
             var expectedResponse = Registrations.GetNextResponseFor(method, relativePath);
 
             proxy.SetResponse(expectedResponse);
+        }
+
+        public IEnumerable<Request> GetAllReceivedRequests()
+        {
+            return ReceivedRequests;
         }
     }
 }
