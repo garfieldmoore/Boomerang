@@ -84,6 +84,7 @@
 
         private void OnBeforeRequest(ProxyRequestEventArgs eventArgs)
         {
+            // Should probably raise an event for this..
             var request = new Request() { Method = eventArgs.Method, Address = eventArgs.RelativePath };
 
             ReceivedRequests.Add(request);

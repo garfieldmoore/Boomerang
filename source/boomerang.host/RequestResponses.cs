@@ -25,7 +25,7 @@
 
         private Request previousRequest;
 
-        public static string ResourceNotFoundMessage = "Resource not found";
+        public static string ResourceNotFoundMessage = "Boomerang error: Resource not found or no response configured for request";
 
         public RequestResponses()
         {
@@ -89,7 +89,7 @@
 
             var foundRequest = RequestResponseRegistrations.TryGetValue(new Request() { Address = addressTarget, Method = method }, out requestResponse);
 
-            if (!foundRequest)
+            if (!foundRequest || requestResponse==null || requestResponse.Count== 0)
             {
                 return new Response() { StatusCode = 400, Body = ResourceNotFoundMessage };
             }

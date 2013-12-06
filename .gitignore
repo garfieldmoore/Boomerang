@@ -8,3 +8,5 @@ packages/
 *.suo
 **.dotsettings
 /*.user
+TestResults/
+Visual Studio 2012/

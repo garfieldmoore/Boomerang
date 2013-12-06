@@ -10,11 +10,11 @@
     <projectUrl>https://github.com/garfieldmoore/Boomerang</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>framework for faking external web services for acceptance tests</description>
-    <releaseNotes>Initial Version</releaseNotes>
+    <releaseNotes>Supports GET, POST, PUT & DELETE</releaseNotes>
     <copyright>Copyright 2013</copyright>
     <dependencies>
     </dependencies>
-	<tags>Acceptance Testing</tags>
+	<tags>acceptance testing bdd fakes stubs tests</tags>
   </metadata>
    <files>
         <file src="source\boomerang.host\bin\Release\Boomerang.dll" target="lib\net40\Boomerang.dll" />

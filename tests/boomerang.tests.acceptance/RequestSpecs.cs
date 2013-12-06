@@ -25,5 +25,16 @@
             Spec.ReceivedRequests.Contains(new Request() { Method = "GET", Address = "/thisaddress" }).ShouldBe(true);
         }
 
+        [Test]
+        public void Should_send_bad_request_when_no_responses_configured()
+        {
+            Spec.GivenADefaultServer().Get("thisaddress").Returns("body", 200);
+
+            Spec.WhenWebGetRequestSent(webHostAddress + "thisaddress");
+            Spec.WhenWebGetRequestSent(webHostAddress + "thisaddress");
+
+            Spec.StatusCode.ShouldBe("BadRequest");
+            Spec.ResponseText.ShouldBe("Boomerang error: Resource not found or no response configured for request");
+        }
     }
 }
