@@ -70,7 +70,8 @@
 
         public void AddResponse(string body, int statusCode, IDictionary<string, string> headers)
         {
-            RequestResponseRegistrations[this.previousRequest].Enqueue(new Response() { Body = body, StatusCode = statusCode, Headers = headers });
+            var response = new Response() { Body = body, StatusCode = statusCode, Headers = new Dictionary<string, string>(headers) };
+            RequestResponseRegistrations[this.previousRequest].Enqueue(response);
         }
 
         public bool Contains(Request request)
@@ -96,11 +97,11 @@
 
             var foundRequest = RequestResponseRegistrations.TryGetValue(new Request() { Address = addressTarget, Method = method }, out requestResponse);
 
-            if (!foundRequest || requestResponse==null || requestResponse.Count== 0)
+            if (!foundRequest || requestResponse == null || requestResponse.Count == 0)
             {
                 return new Response() { StatusCode = 400, Body = ResourceNotFoundMessage };
             }
-            
+
             return requestResponse.Dequeue();
         }
     }

@@ -4,13 +4,11 @@ namespace CoffeTime.Specifications
 {
     using System.Collections.Generic;
     using System.Linq;
-
     using coffee.demo;
     using CoffeTime.Api;
     using Rainbow.Testing.Boomerang.Host;
-    using TechTalk.SpecFlow.Assist;
-
     using Shouldly;
+    using TechTalk.SpecFlow.Assist;
 
     [Binding]
     public class MenuFeatureSteps
@@ -21,7 +19,9 @@ namespace CoffeTime.Specifications
             var products = new List<Product>();
             products.Add(new Product() { Name = productName, Description = productDescription, Id = 1 });
 
-            Boomerang.Server(5100).Get("api/menu").Returns(products.SerialiseToJsonString(), 200);
+            var dictionary = new Dictionary<string, string>() { { "content-type", "application/json" } };
+            Boomerang.Server(5100).Get("/api/menu").Returns(products.SerialiseToJsonString(), 200, dictionary);
+            dictionary.Remove("content-type");
         }
 
         [When(@"bobbie asks for the menu")]
