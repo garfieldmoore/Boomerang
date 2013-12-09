@@ -1,6 +1,6 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host
 {
-    public interface IBoomerangConfigurationFactory
+    internal interface IBoomerangConfigurationFactory
     {
         IBoomerang Create();
     }

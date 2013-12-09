@@ -10,3 +10,6 @@ packages/
 /*.user
 TestResults/
 Visual Studio 2012/
+/source/boomerang.demo/demo.Api/*.user
+/source/boomerang.demo/demo.Specifications/*.user
+/source/boomerang.demo/demo.console/*.user

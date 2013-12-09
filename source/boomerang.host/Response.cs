@@ -1,5 +1,7 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// The response defined for a service request
     /// </summary>
@@ -9,6 +11,7 @@
         {
             ContentType = "text/html; charset=UTF-8";
             CacheControl = "private, max-age=0";
+            Headers=new Dictionary<string, string>();
         }
 
         /// <summary>
@@ -30,5 +33,10 @@
         /// Cache control header of response. defaults to private, max-age=0
         /// </summary>
         public string CacheControl { get; set; }
+
+        /// <summary>
+        /// Headers expected in response
+        /// </summary>
+        public IDictionary<string, string> Headers { get; set; }
     }
 }

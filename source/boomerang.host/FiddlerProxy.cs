@@ -24,9 +24,26 @@
             currentSession.utilCreateResponseAndBypassServer();
             currentSession.oResponse.headers.HTTPResponseStatus = response.StatusCode.ToString();
             currentSession.oResponse.headers.HTTPResponseCode = response.StatusCode;
-            currentSession.oResponse["Content-Type"] = response.ContentType;
-            currentSession.oResponse["Cache-Control"] = response.CacheControl;
+
+            SetHeaders(response);
+
             currentSession.utilSetResponseBody(response.Body);
+        }
+
+        private void SetHeaders(Response response)
+        {
+            if (response.Headers.Count == 0)
+            {
+                this.currentSession.oResponse["Content-Type"] = response.ContentType;
+                this.currentSession.oResponse["Cache-Control"] = response.CacheControl;
+            }
+            else
+            {
+                foreach (var header in response.Headers)
+                {
+                    this.currentSession.oResponse.headers.Add(header.Key, header.Value);
+                }
+            }
         }
 
         protected virtual void OnBeforeRequest(Session session)

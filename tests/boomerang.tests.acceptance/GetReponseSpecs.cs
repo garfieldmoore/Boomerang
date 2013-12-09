@@ -16,7 +16,7 @@ namespace boomerang.tests.acceptance
         {
             Spec.GivenADefaultServer().Get("").Returns("Boomerang interception", 200);
 
-            Spec.WhenWebGetRequestSent(webHostAddress);
+            Spec.WhenGetRequestSent(webHostAddress);
 
             Spec.ResponseText.ShouldBe("Boomerang interception");
             Spec.StatusCode.ShouldBe("OK");
@@ -27,7 +27,7 @@ namespace boomerang.tests.acceptance
         {
             Spec.GivenADefaultServer().Get("address1").Returns("body1", 200);
 
-            Spec.WhenWebGetRequestSent(webHostAddress + "address1");
+            Spec.WhenGetRequestSent(webHostAddress + "address1");
 
             Spec.StatusCode.ShouldBe(HttpStatusCode.OK.ToString());
             Spec.ResponseText.ShouldBe("body1");
@@ -38,12 +38,12 @@ namespace boomerang.tests.acceptance
         {
             Spec.GivenADefaultServer().Get("address1").Returns("body1", 200).Get("address2").Returns("body2", 401);
 
-            Spec.WhenWebGetRequestSent(webHostAddress + "address1");
+            Spec.WhenGetRequestSent(webHostAddress + "address1");
 
             Spec.StatusCode.ShouldBe("OK");
             Spec.ResponseText.ShouldBe("body1");
 
-            Spec.WhenWebGetRequestSent(webHostAddress + "address2");
+            Spec.WhenGetRequestSent(webHostAddress + "address2");
 
             Spec.ResponseText.ShouldBe("body2");
             Spec.StatusCode.ShouldBe(HttpStatusCode.Unauthorized.ToString());
@@ -56,12 +56,12 @@ namespace boomerang.tests.acceptance
                 .Get("address1").Returns("body1", 200)
                 .Get("address1").Returns("body2", 201);
 
-            Spec.WhenWebGetRequestSent(webHostAddress + "address1");
+            Spec.WhenGetRequestSent(webHostAddress + "address1");
 
             Spec.ResponseText.ShouldBe("body1");
             Spec.StatusCode.ShouldBe(HttpStatusCode.OK.ToString());
 
-            Spec.WhenWebGetRequestSent(webHostAddress + "address1");
+            Spec.WhenGetRequestSent(webHostAddress + "address1");
 
             Spec.ResponseText.ShouldBe("body2");
             Spec.StatusCode.ShouldBe(HttpStatusCode.Created.ToString());

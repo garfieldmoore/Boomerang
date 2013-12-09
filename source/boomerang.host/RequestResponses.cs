@@ -17,6 +17,8 @@
         bool GetAllResponsesFor(Request request, out  Queue<Response> req);
 
         Response GetNextResponseFor(string method, string addressTarget);
+
+        void AddResponse(string body, int statusCode, IDictionary<string, string> headers);
     }
 
     public class RequestResponses : IRequestResponses
@@ -64,6 +66,11 @@
         public void AddResponse(string body, int statusCode)
         {
             RequestResponseRegistrations[this.previousRequest].Enqueue(new Response() { Body = body, StatusCode = statusCode });
+        }
+
+        public void AddResponse(string body, int statusCode, IDictionary<string, string> headers)
+        {
+            RequestResponseRegistrations[this.previousRequest].Enqueue(new Response() { Body = body, StatusCode = statusCode, Headers = headers });
         }
 
         public bool Contains(Request request)

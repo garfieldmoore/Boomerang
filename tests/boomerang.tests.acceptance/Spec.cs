@@ -14,6 +14,10 @@
         public static string StatusCode { get; set; }
         public static string ResponseText { get; set; }
 
+        public static readonly string HostAddress = "http://localhost:5200/";
+
+        public static IDictionary<string, string> ResponseHeaders;
+
         public static IList<Request> ReceivedRequests
         {
             get
@@ -39,14 +43,21 @@
             ResponseText = response.Content;
         }
 
-        public static void WhenWebGetRequestSent(string webHostAddress)
+        public static void WhenGetRequestSent(string webHostAddress)
         {
+            ResponseHeaders=new Dictionary<string, string>();
             var request = new RestRequest(webHostAddress, Method.GET);
             var client = new RestClient();
+            
             var response = client.Execute(request);
 
             StatusCode = response.StatusCode.ToString();
             ResponseText = response.Content;
+
+            foreach (var parameter in response.Headers)
+            {
+                ResponseHeaders.Add(parameter.Name, parameter.Value.ToString());
+            }
         }
 
         public static void WhenPutSentTo(string webHostAddress, string data)
@@ -68,6 +79,6 @@
 
             StatusCode = response.StatusCode.ToString();
             ResponseText = response.Content;
-        }
+        }        
     }
 }

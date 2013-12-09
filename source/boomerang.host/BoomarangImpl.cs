@@ -2,10 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
 
     /// <summary>
     /// Manages connection to proxy server
     /// </summary>
+    [Browsable(false)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class BoomarangImpl : IBoomerang
     {
         private readonly IMasqarade proxy;
@@ -61,6 +64,12 @@
         public void AddResponse(string body, int statusCode)
         {
             this.Registrations.AddResponse(body, statusCode);
+        }
+
+        public void AddResponse(string body, int statusCode, IDictionary<string, string> headers)
+        {
+            this.Registrations.AddResponse(body, statusCode, headers);
+
         }
 
         private void OnProxyBeforeRequest(object sender, EventArgs e)

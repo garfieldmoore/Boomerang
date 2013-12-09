@@ -3,7 +3,7 @@
     /// <summary>
     /// Default proxy server factory
     /// </summary>
-    public class BoomerangConfigurationFactory : IBoomerangConfigurationFactory
+    internal class BoomerangConfigurationFactory : IBoomerangConfigurationFactory
     {
         public IBoomerang Create()
         {

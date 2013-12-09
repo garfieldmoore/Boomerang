@@ -84,6 +84,20 @@
         }
 
         /// <summary>
+        /// Set the response to return on the previously added request address
+        /// </summary>
+        /// <param name="host">Configuration handler for proxer server</param>
+        /// <param name="body">The required response body</param>
+        /// <param name="statusCode">The required status code for the response</param>
+        /// <param name="headers">Headers to set in response</param>
+        /// <returns>Configuration handler</returns>
+        public static IBoomerang Returns(this IBoomerang host, string body, int statusCode, IDictionary<string, string> headers)
+        {
+            ((BoomarangImpl)host).AddResponse(body, statusCode, headers);
+            return host;
+        }
+
+        /// <summary>
         /// Returns all requests that were recieved by the proxy server
         /// </summary>
         /// <param name="target">Configuration handler for proxer server</param>

@@ -19,7 +19,7 @@
 
             Spec.GivenADefaultServer().Get("thisaddress").Returns("body", 200);
 
-            Spec.WhenWebGetRequestSent(webHostAddress + "thisaddress");
+            Spec.WhenGetRequestSent(webHostAddress + "thisaddress");
 
             Spec.ReceivedRequests.Count.ShouldBe(calls + 1);
             Spec.ReceivedRequests.Contains(new Request() { Method = "GET", Address = "/thisaddress" }).ShouldBe(true);
@@ -30,8 +30,8 @@
         {
             Spec.GivenADefaultServer().Get("thisaddress").Returns("body", 200);
 
-            Spec.WhenWebGetRequestSent(webHostAddress + "thisaddress");
-            Spec.WhenWebGetRequestSent(webHostAddress + "thisaddress");
+            Spec.WhenGetRequestSent(webHostAddress + "thisaddress");
+            Spec.WhenGetRequestSent(webHostAddress + "thisaddress");
 
             Spec.StatusCode.ShouldBe("BadRequest");
             Spec.ResponseText.ShouldBe("Boomerang error: Resource not found or no response configured for request");
