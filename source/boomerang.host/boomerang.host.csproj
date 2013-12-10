@@ -52,6 +52,7 @@
     <Compile Include="IBoomerangConfigurationFactory.cs" />
     <Compile Include="IBoomerang.cs" />
     <Compile Include="IMasqarade.cs" />
+    <Compile Include="IRequestResponses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProxyRequestEventArgs.cs" />
     <Compile Include="Request.cs" />

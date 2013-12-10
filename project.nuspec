@@ -4,8 +4,8 @@
 	<title>Boomerang</title>
     <id>boomerang</id>
     <version>0.0.0</version>
-    <authors>garfield.moore</authors>
-    <owners>garfield.moore</owners>
+    <authors>Garfield Moore</authors>
+    <owners>Garfield Moore</owners>
     <licenseUrl>https://github.com/garfieldmoore/Boomerang/blob/master/license.txt</licenseUrl>
     <projectUrl>https://github.com/garfieldmoore/Boomerang</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -14,7 +14,7 @@
     <copyright>Copyright 2013</copyright>
     <dependencies>
     </dependencies>
-	<tags>fakes stubs acceptance testing bdd tests</tags>
+	<tags>fake acceptance test testing stubs web services faking bdd</tags>
   </metadata>
    <files>
         <file src="source\boomerang.host\bin\Release\Boomerang.dll" target="lib\net40\Boomerang.dll" />

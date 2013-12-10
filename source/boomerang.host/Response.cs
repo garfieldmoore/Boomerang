@@ -11,7 +11,7 @@
         {
             ContentType = "text/html; charset=UTF-8";
             CacheControl = "private, max-age=0";
-            Headers=new Dictionary<string, string>();
+            Headers = new Dictionary<string, string>();
         }
 
         /// <summary>
@@ -25,12 +25,12 @@
         public string Body { get; set; }
 
         /// <summary>
-        /// Response content type. Defaults to text/html
+        /// Default content type. Defaults to text/html
         /// </summary>
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Cache control header of response. defaults to private, max-age=0
+        /// Default Cache control header of response. defaults to private, max-age=0
         /// </summary>
         public string CacheControl { get; set; }
 
