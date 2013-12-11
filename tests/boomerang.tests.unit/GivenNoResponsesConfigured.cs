@@ -32,7 +32,7 @@
         private void GivenProxyIsRunning()
         {
             this.boomerang = this.boomerang = new BoomarangImpl(this.masqarade, this.requestResponses);
-            this.boomerang.Start("http://localhost", 5100);
+            this.boomerang.Start(5100);
         }
 
         private void GivenProxyServer()

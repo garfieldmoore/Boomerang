@@ -9,14 +9,12 @@ namespace boomerang.tests.acceptance
 
     public class GetReponseSpecs
     {
-        private string webHostAddress = "http://localhost:5200/";
-
         [Test]
         public void Should_allow_expectations_on_server_base_address()
         {
             Spec.GivenADefaultServer().Get("").Returns("Boomerang interception", 200);
 
-            Spec.WhenGetRequestSent(webHostAddress);
+            Spec.WhenGetRequestSent(Spec.HostAddress);
 
             Spec.ResponseText.ShouldBe("Boomerang interception");
             Spec.StatusCode.ShouldBe("OK");
@@ -27,7 +25,7 @@ namespace boomerang.tests.acceptance
         {
             Spec.GivenADefaultServer().Get("address1").Returns("body1", 200);
 
-            Spec.WhenGetRequestSent(webHostAddress + "address1");
+            Spec.WhenGetRequestSent(Spec.HostAddress + "address1");
 
             Spec.StatusCode.ShouldBe(HttpStatusCode.OK.ToString());
             Spec.ResponseText.ShouldBe("body1");
@@ -38,12 +36,12 @@ namespace boomerang.tests.acceptance
         {
             Spec.GivenADefaultServer().Get("address1").Returns("body1", 200).Get("address2").Returns("body2", 401);
 
-            Spec.WhenGetRequestSent(webHostAddress + "address1");
+            Spec.WhenGetRequestSent("http://example.com/address1");
 
             Spec.StatusCode.ShouldBe("OK");
             Spec.ResponseText.ShouldBe("body1");
 
-            Spec.WhenGetRequestSent(webHostAddress + "address2");
+            Spec.WhenGetRequestSent(Spec.HostAddress + "address2");
 
             Spec.ResponseText.ShouldBe("body2");
             Spec.StatusCode.ShouldBe(HttpStatusCode.Unauthorized.ToString());
@@ -56,12 +54,12 @@ namespace boomerang.tests.acceptance
                 .Get("address1").Returns("body1", 200)
                 .Get("address1").Returns("body2", 201);
 
-            Spec.WhenGetRequestSent(webHostAddress + "address1");
+            Spec.WhenGetRequestSent(Spec.HostAddress + "address1");
 
             Spec.ResponseText.ShouldBe("body1");
             Spec.StatusCode.ShouldBe(HttpStatusCode.OK.ToString());
 
-            Spec.WhenGetRequestSent(webHostAddress + "address1");
+            Spec.WhenGetRequestSent(Spec.HostAddress + "address1");
 
             Spec.ResponseText.ShouldBe("body2");
             Spec.StatusCode.ShouldBe(HttpStatusCode.Created.ToString());

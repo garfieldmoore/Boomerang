@@ -14,7 +14,7 @@
         public static string StatusCode { get; set; }
         public static string ResponseText { get; set; }
 
-        public static readonly string HostAddress = "http://localhost:5200/";
+        public static readonly string HostAddress = "http://rainbow.co.uk/";
 
         public static IDictionary<string, string> ResponseHeaders;
 
@@ -28,7 +28,7 @@
 
         internal static IBoomerang GivenADefaultServer()
         {
-            defaultServer = Boomerang.Server(5200);
+            defaultServer = Boomerang.Server(5100);
             return defaultServer;
         }
 

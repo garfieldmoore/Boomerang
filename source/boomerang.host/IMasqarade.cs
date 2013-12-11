@@ -10,9 +10,8 @@
         /// <summary>
         /// Starts the proxy server
         /// </summary>
-        /// <param name="hostBaseAddress">Address of the proxy server</param>
         /// <param name="portNumber">Port number the proxy server should be listening on</param>
-        void Start(string hostBaseAddress, int portNumber);
+        void Start(int portNumber);
 
         /// <summary>
         /// Fires when a request is received. Used to intercept requests and set the response using <see cref="SetResponse"/>

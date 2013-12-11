@@ -16,9 +16,9 @@
             var proxy = Substitute.For<IMasqarade>();
             var boomer = new BoomarangImpl(proxy);
 
-            boomer.Start("localhost", 5100);
+            boomer.Start(5100);
 
-            proxy.Received(1).Start("localhost", 5100);
+            proxy.Received(1).Start(5100);
         }
     }
 }

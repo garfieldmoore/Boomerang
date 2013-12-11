@@ -62,7 +62,8 @@
 
         private bool IsRequestOwner(Session session)
         {
-            return (session.oRequest.pipeClient.LocalPort == this.listenPort) && (session.hostname == this.listenHost);
+            // TODO: Might not need this
+            return (session.oRequest.pipeClient.LocalPort == this.listenPort);// && (session.hostname == this.listenHost);
         }
 
         private static ProxyRequestEventArgs CreateRequestEventArgs(Session session)
@@ -74,11 +75,10 @@
                        };
         }
 
-        public void Start(string hostBaseAddress, int portNumber)
+        public void Start(int portNumber)
         {
             var flags = FiddlerCoreStartupFlags.Default | FiddlerCoreStartupFlags.RegisterAsSystemProxy;
             listenPort = portNumber;
-            this.listenHost = hostBaseAddress;
             FiddlerApplication.Startup(portNumber, flags);
             FiddlerApplication.BeforeRequest += this.OnBeforeRequest;
         }

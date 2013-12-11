@@ -36,14 +36,12 @@
         /// <summary>
         /// Start the proxy server
         /// </summary>
-        /// <param name="host">host address of the server (defaults to http://localhost:[port]</param>
         /// <param name="port">The port number to listen on</param>
-        public void Start(string host, int port)
+        public void Start(int port)
         {
-            this.listenHost = host;
             this.listenPort = port;
             AppDomain.CurrentDomain.DomainUnload += this.OnCurrentDomainUnload;
-            proxy.Start(host, port);
+            proxy.Start(port);
             proxy.BeforeRequest += this.OnProxyBeforeRequest;
         }
 
