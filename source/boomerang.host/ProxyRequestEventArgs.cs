@@ -7,8 +7,14 @@
     /// </summary>
     public class ProxyRequestEventArgs : EventArgs
     {
+        /// <summary>
+        /// Gets or sets the HTTP method
+        /// </summary>
         public string Method { get; set; }
 
+        /// <summary>
+        /// Gets or sets the relative uri of the request
+        /// </summary>
         public string RelativePath { get; set; }
     }
 }

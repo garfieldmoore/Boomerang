@@ -11,6 +11,9 @@
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class BoomarangImpl : IBoomerang
     {
+        /// <summary>
+        /// Address and responses
+        /// </summary>
         public IRequestResponses Registrations;
 
         protected IList<Request> ReceivedRequests;
@@ -31,8 +34,8 @@
         /// <summary>
         /// Used for testing
         /// </summary>
-        /// <param name="proxy"></param>
-        /// <param name="responses"></param>
+        /// <param name="proxy">Proxy server to use</param>
+        /// <param name="responses">Responses expected</param>
         public BoomarangImpl(IMasqarade proxy, IRequestResponses responses)
         {
             ReceivedRequests = new List<Request>();
@@ -59,11 +62,21 @@
             Registrations.AddResponse(body, statusCode);
         }
 
+        /// <summary>
+        ///     Adds a response for the previously added address
+        /// </summary>
+        /// <param name="body">The response body for the request</param>
+        /// <param name="statusCode">The status code to respond with</param>
+        /// <param name="headers">Headers to add. These will replace the defaults</param>
         public void AddResponse(string body, int statusCode, IDictionary<string, string> headers)
         {
             Registrations.AddResponse(body, statusCode, headers);
         }
 
+        /// <summary>
+        /// Returns the requests the proxy server has received.
+        /// </summary>
+        /// <returns>The Requests received</returns>
         public IEnumerable<Request> GetAllReceivedRequests()
         {
             return ReceivedRequests;

@@ -3,9 +3,6 @@
     /// <summary>
     /// Factory to create proxy servers
     /// </summary>
-    /// <example>
-    /// Boomerang.Server(5100);
-    /// </example>
     public class Boomerang
     {
         private static IBoomerang server;

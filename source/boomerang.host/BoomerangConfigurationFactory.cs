@@ -5,6 +5,10 @@
     /// </summary>
     internal class BoomerangConfigurationFactory : IBoomerangConfigurationFactory
     {
+        /// <summary>
+        /// Create boomerang instance
+        /// </summary>
+        /// <returns>Returns an instance of IBoomerang</returns>
         public IBoomerang Create()
         {
             return new BoomarangImpl(new FiddlerProxy());

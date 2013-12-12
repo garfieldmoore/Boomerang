@@ -18,6 +18,9 @@
         /// </summary>
         public event EventHandler BeforeRequest;
 
+        /// <summary>
+        /// Stop the proxy server
+        /// </summary>
         public void Stop()
         {
             FiddlerApplication.oProxy.Detach();
@@ -25,6 +28,10 @@
             FiddlerApplication.Shutdown();
         }
 
+        /// <summary>
+        /// Sets the response for the current sessions request
+        /// </summary>
+        /// <param name="response">The desired response</param>
         public void SetResponse(Response response)
         {
             currentSession.utilCreateResponseAndBypassServer();
@@ -36,6 +43,10 @@
             currentSession.utilSetResponseBody(response.Body);
         }
 
+        /// <summary>
+        /// Starts the proxy
+        /// </summary>
+        /// <param name="portNumber">The port number the proxy will listen on. Zero to select an unused port</param>
         public void Start(int portNumber)
         {
             var flags = FiddlerCoreStartupFlags.Default | FiddlerCoreStartupFlags.RegisterAsSystemProxy;
@@ -44,6 +55,10 @@
             FiddlerApplication.BeforeRequest += this.OnBeforeRequest;
         }
 
+        /// <summary>
+        /// Fired before a request is processed
+        /// </summary>
+        /// <param name="session">The session that owns the request</param>
         protected virtual void OnBeforeRequest(Session session)
         {
             currentSession = session;

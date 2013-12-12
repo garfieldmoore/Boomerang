@@ -26,7 +26,7 @@
         /// <summary>
         /// Set the response the proxy server should return for a request
         /// </summary>
-        /// <param name="response"></param>
+        /// <param name="response">The response to set</param>
         void SetResponse(Response response);
     }
 }
