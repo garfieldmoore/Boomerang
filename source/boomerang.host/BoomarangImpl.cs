@@ -11,74 +11,83 @@
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class BoomarangImpl : IBoomerang
     {
-        private readonly IMasqarade proxy;
-        private int listenPort;
-        private string listenHost;
-
         public IRequestResponses Registrations;
 
         protected IList<Request> ReceivedRequests;
 
+        private readonly IMasqarade proxy;
+
+        /// <summary>
+        /// Creates a a manager for the supplied proxy server implementation
+        /// </summary>
+        /// <param name="proxy">proxy server implementation</param>
         public BoomarangImpl(IMasqarade proxy)
         {
             ReceivedRequests = new List<Request>();
             this.proxy = proxy;
-            this.Registrations = new RequestResponses();
+            Registrations = new RequestResponses();
         }
 
+        /// <summary>
+        /// Used for testing
+        /// </summary>
+        /// <param name="proxy"></param>
+        /// <param name="responses"></param>
         public BoomarangImpl(IMasqarade proxy, IRequestResponses responses)
         {
             ReceivedRequests = new List<Request>();
             this.proxy = proxy;
-            this.Registrations = responses;
+            Registrations = responses;
         }
 
         /// <summary>
-        /// Start the proxy server
-        /// </summary>
-        /// <param name="port">The port number to listen on</param>
-        public void Start(int port)
-        {
-            this.listenPort = port;
-            AppDomain.CurrentDomain.DomainUnload += this.OnCurrentDomainUnload;
-            proxy.Start(port);
-            proxy.BeforeRequest += this.OnProxyBeforeRequest;
-        }
-
-        /// <summary>
-        /// Registers requests as a distict method and address
+        /// Registers a HTTP method for interception at a relative address
         /// </summary>
         /// <param name="request">Method and address</param>
         public void AddAddress(Request request)
         {
-            this.Registrations.AddAddress(request);
+            Registrations.AddAddress(request);
         }
 
         /// <summary>
-        /// Adds a response for the previously added address
+        ///     Adds a response for the previously added address
         /// </summary>
         /// <param name="body">The response body for the request</param>
-        /// <param name="statusCode">The statuc code to respond with</param>
+        /// <param name="statusCode">The status code to respond with</param>
         public void AddResponse(string body, int statusCode)
         {
-            this.Registrations.AddResponse(body, statusCode);
+            Registrations.AddResponse(body, statusCode);
         }
 
         public void AddResponse(string body, int statusCode, IDictionary<string, string> headers)
         {
-            this.Registrations.AddResponse(body, statusCode, headers);
-
+            Registrations.AddResponse(body, statusCode, headers);
         }
 
-        private void OnProxyBeforeRequest(object sender, EventArgs e)
+        public IEnumerable<Request> GetAllReceivedRequests()
         {
-            var requesteventArgs = e as ProxyRequestEventArgs;
-            if (requesteventArgs == null)
-            {
-                return;
-            }
+            return ReceivedRequests;
+        }
 
-            this.OnBeforeRequest(requesteventArgs);
+        /// <summary>
+        ///     Start the proxy server
+        /// </summary>
+        /// <param name="port">The port number to listen on</param>
+        public void Start(int port)
+        {
+            AppDomain.CurrentDomain.DomainUnload += OnCurrentDomainUnload;
+            proxy.Start(port);
+            proxy.BeforeRequest += OnProxyBeforeRequest;
+        }
+
+        private void OnBeforeRequest(ProxyRequestEventArgs eventArgs)
+        {
+            // Should probably raise an event for this..
+            var request = new Request { Method = eventArgs.Method, Address = eventArgs.RelativePath };
+
+            ReceivedRequests.Add(request);
+
+            SetResponse(eventArgs.Method, eventArgs.RelativePath);
         }
 
         private void OnCurrentDomainUnload(object sender, EventArgs e)
@@ -89,26 +98,22 @@
             }
         }
 
-        private void OnBeforeRequest(ProxyRequestEventArgs eventArgs)
+        private void OnProxyBeforeRequest(object sender, EventArgs e)
         {
-            // Should probably raise an event for this..
-            var request = new Request() { Method = eventArgs.Method, Address = eventArgs.RelativePath };
+            var requesteventArgs = e as ProxyRequestEventArgs;
+            if (requesteventArgs == null)
+            {
+                return;
+            }
 
-            ReceivedRequests.Add(request);
-
-            SetResponse(eventArgs.Method, eventArgs.RelativePath);
+            OnBeforeRequest(requesteventArgs);
         }
 
         private void SetResponse(string method, string relativePath)
         {
-            var expectedResponse = Registrations.GetNextResponseFor(method, relativePath);
+            Response expectedResponse = Registrations.GetNextResponseFor(method, relativePath);
 
             proxy.SetResponse(expectedResponse);
-        }
-
-        public IEnumerable<Request> GetAllReceivedRequests()
-        {
-            return ReceivedRequests;
         }
     }
 }

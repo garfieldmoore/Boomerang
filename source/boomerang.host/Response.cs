@@ -7,6 +7,9 @@
     /// </summary>
     public class Response
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public Response()
         {
             ContentType = "text/html; charset=UTF-8";

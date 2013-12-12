@@ -2,14 +2,20 @@
 {
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Handles registering responses to requests
+    /// </summary>
     public class RequestResponses : IRequestResponses
     {
+        public static string ResourceNotFoundMessage = "Boomerang error: Resource not found or no response configured for request";
+
         protected IDictionary<Request, Queue<Response>> RequestResponseRegistrations;
 
         private Request previousRequest;
 
-        public static string ResourceNotFoundMessage = "Boomerang error: Resource not found or no response configured for request";
-
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public RequestResponses()
         {
             RequestResponseRegistrations = new Dictionary<Request, Queue<Response>>();
@@ -18,15 +24,6 @@
         public IEnumerable<Queue<Response>> Requests()
         {
             return RequestResponseRegistrations.Values;
-        }
-
-        private static string ConvertToRelativeAddressFormat(string addressTarget)
-        {
-            if (!addressTarget.StartsWith("/"))
-            {
-                addressTarget = "/" + addressTarget;
-            }
-            return addressTarget;
         }
 
         public void AddAddress(Request request)
@@ -40,18 +37,25 @@
             if (!RequestResponseRegistrations.ContainsKey(newRegistration))
             {
                 this.previousRequest = newRegistration;
-                RequestResponseRegistrations.Add(new KeyValuePair<Request, Queue<Response>>(this.previousRequest, new Queue<Response>()));
+                RequestResponseRegistrations.Add(
+                    new KeyValuePair<Request, Queue<Response>>(this.previousRequest, new Queue<Response>()));
             }
         }
 
         public void AddResponse(string body, int statusCode)
         {
-            RequestResponseRegistrations[this.previousRequest].Enqueue(new Response() { Body = body, StatusCode = statusCode });
+            RequestResponseRegistrations[this.previousRequest].Enqueue(
+                new Response() { Body = body, StatusCode = statusCode });
         }
 
         public void AddResponse(string body, int statusCode, IDictionary<string, string> headers)
         {
-            var response = new Response() { Body = body, StatusCode = statusCode, Headers = new Dictionary<string, string>(headers) };
+            var response = new Response()
+                               {
+                                   Body = body,
+                                   StatusCode = statusCode,
+                                   Headers = new Dictionary<string, string>(headers)
+                               };
             RequestResponseRegistrations[this.previousRequest].Enqueue(response);
         }
 
@@ -65,7 +69,7 @@
             return RequestResponseRegistrations.Count;
         }
 
-        public bool GetAllResponsesFor(Request request, out  Queue<Response> req)
+        public bool GetAllResponsesFor(Request request, out Queue<Response> req)
         {
             return RequestResponseRegistrations.TryGetValue(request, out req);
         }
@@ -76,7 +80,9 @@
 
             addressTarget = ConvertToRelativeAddressFormat(addressTarget);
 
-            var foundRequest = RequestResponseRegistrations.TryGetValue(new Request() { Address = addressTarget, Method = method }, out requestResponse);
+            var foundRequest =
+                RequestResponseRegistrations.TryGetValue(
+                    new Request() { Address = addressTarget, Method = method }, out requestResponse);
 
             if (!foundRequest || requestResponse == null || requestResponse.Count == 0)
             {
@@ -84,6 +90,16 @@
             }
 
             return requestResponse.Dequeue();
+        }
+
+        private static string ConvertToRelativeAddressFormat(string addressTarget)
+        {
+            if (!addressTarget.StartsWith("/"))
+            {
+                addressTarget = "/" + addressTarget;
+            }
+
+            return addressTarget;
         }
     }
 }

@@ -6,7 +6,6 @@ namespace boomerang.tests.unit
 
     using Rainbow.Testing.Boomerang.Host;
 
-
     public class WhenConfiguringGetRequests
     {
         [Test]

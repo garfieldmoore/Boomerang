@@ -3,7 +3,7 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// 
+    /// Handles registering responses to requests
     /// </summary>
     public interface IRequestResponses
     {
@@ -17,7 +17,7 @@
 
         int GetCount();
 
-        bool GetAllResponsesFor(Request request, out  Queue<Response> req);
+        bool GetAllResponsesFor(Request request, out Queue<Response> req);
 
         Response GetNextResponseFor(string method, string addressTarget);
 

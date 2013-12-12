@@ -10,6 +10,8 @@
 
     public class ResponseSpecs
     {
+        #region Public Methods and Operators
+
         [Test]
         public void Should_set_headers_when_specified()
         {
@@ -24,5 +26,7 @@
             Spec.ResponseHeaders.TryGetValue("Content-Type", out header).ShouldBe(true);
             header.ShouldBe("application/json");
         }
+
+        #endregion
     }
 }

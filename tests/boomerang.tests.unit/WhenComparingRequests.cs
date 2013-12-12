@@ -11,7 +11,7 @@
     public class WhenComparingRequests
     {
         [Test]
-        public void Same_mehtod_and_address_means_equality()
+        public void Same_method_and_address_means_equality()
         {
             var request = Builder<Request>.CreateNew().Build();
             var request2 = Builder<Request>.CreateNew().Build();
@@ -40,6 +40,14 @@
             request.GetHashCode().ShouldBe(request2.GetHashCode());
         }
 
- 
+        [Test]
+        public void Relative_address_should_start_with_forward_slash()
+        {
+            var request = new Request();
+
+            request.Address = "address";
+
+            request.Address.ShouldBe("/address");
+        }
     }
 }

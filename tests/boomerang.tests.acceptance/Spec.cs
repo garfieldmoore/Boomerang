@@ -9,14 +9,17 @@
 
     internal class Spec
     {
-        private static IBoomerang defaultServer;
-
-        public static string StatusCode { get; set; }
-        public static string ResponseText { get; set; }
+        #region Static Fields
 
         public static readonly string HostAddress = "http://rainbow.co.uk/";
 
         public static IDictionary<string, string> ResponseHeaders;
+
+        private static IBoomerang defaultServer;
+
+        #endregion
+
+        #region Public Properties
 
         public static IList<Request> ReceivedRequests
         {
@@ -26,18 +29,19 @@
             }
         }
 
-        internal static IBoomerang GivenADefaultServer()
-        {
-            defaultServer = Boomerang.Server(5100);
-            return defaultServer;
-        }
+        public static string ResponseText { get; set; }
 
-        public static void WhenPostsSentTo(string webHostAddress, string data)
+        public static string StatusCode { get; set; }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        public static void WhenDeleteSentTo(string webAddress)
         {
-            var request = new RestRequest(webHostAddress, Method.POST);
-            request.AddBody(data);
+            var request = new RestRequest(webAddress, Method.DELETE);
             var client = new RestClient();
-            var response = client.Execute(request);
+            IRestResponse response = client.Execute(request);
 
             StatusCode = response.StatusCode.ToString();
             ResponseText = response.Content;
@@ -45,19 +49,30 @@
 
         public static void WhenGetRequestSent(string webHostAddress)
         {
-            ResponseHeaders=new Dictionary<string, string>();
+            ResponseHeaders = new Dictionary<string, string>();
             var request = new RestRequest(webHostAddress, Method.GET);
             var client = new RestClient();
-            
-            var response = client.Execute(request);
+
+            IRestResponse response = client.Execute(request);
 
             StatusCode = response.StatusCode.ToString();
             ResponseText = response.Content;
 
-            foreach (var parameter in response.Headers)
+            foreach (Parameter parameter in response.Headers)
             {
                 ResponseHeaders.Add(parameter.Name, parameter.Value.ToString());
             }
+        }
+
+        public static void WhenPostsSentTo(string webHostAddress, string data)
+        {
+            var request = new RestRequest(webHostAddress, Method.POST);
+            request.AddBody(data);
+            var client = new RestClient();
+            IRestResponse response = client.Execute(request);
+
+            StatusCode = response.StatusCode.ToString();
+            ResponseText = response.Content;
         }
 
         public static void WhenPutSentTo(string webHostAddress, string data)
@@ -65,20 +80,22 @@
             var request = new RestRequest(webHostAddress, Method.PUT);
             request.AddBody(data);
             var client = new RestClient();
-            var response = client.Execute(request);
+            IRestResponse response = client.Execute(request);
 
             StatusCode = response.StatusCode.ToString();
             ResponseText = response.Content;
         }
 
-        public static void WhenDeleteSentTo(string webAddress)
-        {
-            var request = new RestRequest(webAddress, Method.DELETE);
-            var client = new RestClient();
-            var response = client.Execute(request);
+        #endregion
 
-            StatusCode = response.StatusCode.ToString();
-            ResponseText = response.Content;
-        }        
+        #region Methods
+
+        internal static IBoomerang GivenADefaultServer()
+        {
+            defaultServer = Boomerang.Server(5100);
+            return defaultServer;
+        }
+
+        #endregion
     }
 }

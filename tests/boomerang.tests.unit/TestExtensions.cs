@@ -1,7 +1,9 @@
 namespace boomerang.tests.unit
 {
     using System.Collections.Generic;
+
     using Rainbow.Testing.Boomerang.Host;
+
     using Shouldly;
 
     public static class TestExtensions
@@ -49,8 +51,7 @@ namespace boomerang.tests.unit
         public static void ThenShouldContainPutResponse(this BoomarangImpl target, string address, string responseBody)
         {
             Queue<Response> req;
-            target.Registrations.GetAllResponsesFor(
-                    new Request() { Address = address, Method = "PUT" }, out req);
+            target.Registrations.GetAllResponsesFor(new Request() { Address = address, Method = "PUT" }, out req);
 
             req.ShouldNotBe(null);
             req.Count.ShouldBeGreaterThan(0);

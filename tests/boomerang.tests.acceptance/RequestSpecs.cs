@@ -11,6 +11,19 @@
 
     public class RequestSpecs
     {
+        #region Public Methods and Operators
+
+        [Test]
+        public void Should_intercept_relative_address_on_any_base_address()
+        {
+            Spec.GivenADefaultServer().Get("thisaddress").Returns("body", 201);
+
+            Spec.WhenGetRequestSent("http://www.UnknownBaseAddress/thisaddress");
+
+            Spec.StatusCode.ShouldBe(HttpStatusCode.Created.ToString());
+            Spec.ResponseText.ShouldBe("body");
+        }
+
         [Test]
         public void Should_record_all_requests()
         {
@@ -21,7 +34,7 @@
             Spec.WhenGetRequestSent(Spec.HostAddress + "thisaddress");
 
             Spec.ReceivedRequests.Count.ShouldBe(calls + 1);
-            Spec.ReceivedRequests.Contains(new Request() { Method = "GET", Address = "/thisaddress" }).ShouldBe(true);
+            Spec.ReceivedRequests.Contains(new Request { Method = "GET", Address = "/thisaddress" }).ShouldBe(true);
         }
 
         [Test]
@@ -36,16 +49,6 @@
             Spec.ResponseText.ShouldBe("Boomerang error: Resource not found or no response configured for request");
         }
 
-        [Test]
-        public void Should_intercept_relative_address_on_any_base_address()
-        {
-            Spec.GivenADefaultServer().Get("thisaddress").Returns("body", 201);
-
-            Spec.WhenGetRequestSent("http://www.UnknownBaseAddress/thisaddress");
-
-            Spec.StatusCode.ShouldBe(HttpStatusCode.Created.ToString());
-            Spec.ResponseText.ShouldBe("body");
-        }
-
+        #endregion
     }
 }

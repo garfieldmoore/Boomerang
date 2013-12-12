@@ -1,15 +1,21 @@
 ﻿namespace boomerang.tests.unit
 {
     using System.Linq;
+
     using NSubstitute;
+
     using NUnit.Framework;
+
     using Rainbow.Testing.Boomerang.Host;
+
     using Shouldly;
 
     public class GivenMoreRequestsThanResponses
     {
         private RequestResponses requestResponses;
+
         private IMasqarade masqarade;
+
         private BoomarangImpl boomerang;
 
         [Test]
@@ -24,9 +30,10 @@
             ThenShouldStoreRequest();
         }
 
-        private void GivenRegisteredResponse(string body, int statusCode)
+        private static void WhenRequestIsSent(IMasqarade masqarade)
         {
-            this.requestResponses.AddResponse(body, statusCode);
+            masqarade.BeforeRequest += Raise.EventWith(
+                masqarade, new ProxyRequestEventArgs() { Method = "GET", RelativePath = "address" });
         }
 
         private void GivenProxyIsRunning()
@@ -45,13 +52,5 @@
         {
             boomerang.GetAllReceivedRequests().Count().ShouldBe(1);
         }
-
-        private static void WhenRequestIsSent(IMasqarade masqarade)
-        {
-            masqarade.BeforeRequest += Raise.EventWith(
-                masqarade, new ProxyRequestEventArgs() { Method = "GET", RelativePath = "address" });
-        }
-
-
     }
 }

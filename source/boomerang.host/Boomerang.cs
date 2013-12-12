@@ -9,6 +9,7 @@
     public class Boomerang
     {
         private static IBoomerang server;
+
         private static IBoomerangConfigurationFactory configurationFactory;
 
         static Boomerang()

@@ -8,15 +8,15 @@
     public interface IMasqarade
     {
         /// <summary>
+        /// Fires when a request is received. Used to intercept requests and set the response using <see cref="SetResponse"/>
+        /// </summary>
+        event EventHandler BeforeRequest;
+
+        /// <summary>
         /// Starts the proxy server
         /// </summary>
         /// <param name="portNumber">Port number the proxy server should be listening on</param>
         void Start(int portNumber);
-
-        /// <summary>
-        /// Fires when a request is received. Used to intercept requests and set the response using <see cref="SetResponse"/>
-        /// </summary>
-        event EventHandler BeforeRequest;
 
         /// <summary>
         /// Stops the proxy server

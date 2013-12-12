@@ -8,6 +8,8 @@
 
     public class PostSpecs
     {
+        #region Public Methods and Operators
+
         [Test]
         public void Should_respond_with_expectation()
         {
@@ -18,5 +20,7 @@
             Spec.ResponseText.ShouldBe("this is my response");
             Spec.StatusCode.ShouldBe("Created");
         }
+
+        #endregion
     }
 }

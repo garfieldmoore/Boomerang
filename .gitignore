@@ -13,3 +13,6 @@ Visual Studio 2012/
 /source/boomerang.demo/demo.Api/*.user
 /source/boomerang.demo/demo.Specifications/*.user
 /source/boomerang.demo/demo.console/*.user
+/source/boomerang.host/*.Cache
+/tests/boomerang.tests.acceptance/*.Cache
+/tests/boomerang.tests.unit/*.Cache

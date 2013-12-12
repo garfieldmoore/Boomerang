@@ -8,6 +8,8 @@
 
     public class PutSpecs
     {
+        #region Public Methods and Operators
+
         [Test]
         public void Should_return_with_expected_status_code_and_response()
         {
@@ -18,5 +20,7 @@
             Spec.ResponseText.ShouldBe("data updated response");
             Spec.StatusCode.ShouldBe("OK");
         }
+
+        #endregion
     }
 }

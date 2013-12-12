@@ -6,17 +6,26 @@
 
     public class Examples
     {
-        [Test, Ignore]
+        #region Public Methods and Operators
+
+        [Test]
+        [Ignore]
+        public void Get_register_multiple_responses()
+        {
+            Boomerang.Server(5100)
+                     .Get("anaddress")
+                     .Returns("response body", 200)
+                     .Get("anotheraddress")
+                     .Returns("another response body", 201);
+        }
+
+        [Test]
+        [Ignore]
         public void Get_with_single_registration()
         {
             Boomerang.Server(5100).Get("myaddress").Returns("my response body", 200);
         }
 
-        [Test, Ignore]
-        public void Get_register_multiple_responses()
-        {
-            Boomerang.Server(5100).Get("anaddress").Returns("response body", 200).Get("anotheraddress").Returns("another response body", 201);
-        }
-
+        #endregion
     }
 }

@@ -3,14 +3,19 @@
     using System.Linq;
 
     using NSubstitute;
+
     using NUnit.Framework;
+
     using Rainbow.Testing.Boomerang.Host;
+
     using Shouldly;
 
     public class WhenProxyServerRecievesRequests
     {
         private RequestResponses requestResponses;
+
         private IMasqarade masqarade;
+
         private BoomarangImpl boomerang;
 
         [Test]
@@ -36,9 +41,16 @@
             WhenRequestIsSent(masqarade);
 
             boomerang.GetAllReceivedRequests().Count().ShouldBe(1);
-            boomerang.GetAllReceivedRequests().Contains(new Request(){Method="GET", Address = "address"}).ShouldBe(true);
+            boomerang.GetAllReceivedRequests()
+                     .Contains(new Request() { Method = "GET", Address = "address" })
+                     .ShouldBe(true);
         }
 
+        private static void WhenRequestIsSent(IMasqarade masqarade)
+        {
+            masqarade.BeforeRequest += Raise.EventWith(
+                masqarade, new ProxyRequestEventArgs() { Method = "GET", RelativePath = "address" });
+        }
 
         private void GivenRegisteredResponse(string body, int statusCode)
         {
@@ -61,12 +73,6 @@
         private void ThenShouldSetResponse()
         {
             masqarade.Received().SetResponse(Arg.Any<Response>());
-        }
-
-        private static void WhenRequestIsSent(IMasqarade masqarade)
-        {
-            masqarade.BeforeRequest += Raise.EventWith(
-                masqarade, new ProxyRequestEventArgs() { Method = "GET", RelativePath = "address" });
         }
     }
 }

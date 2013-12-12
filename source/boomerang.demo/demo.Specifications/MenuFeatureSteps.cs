@@ -21,7 +21,6 @@ namespace CoffeTime.Specifications
 
             var dictionary = new Dictionary<string, string>() { { "content-type", "application/json" } };
             Boomerang.Server(5100).Get("/api/menu").Returns(products.SerialiseToJsonString(), 200, dictionary);
-            dictionary.Remove("content-type");
         }
 
         [When(@"bobbie asks for the menu")]

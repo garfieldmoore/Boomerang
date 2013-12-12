@@ -82,6 +82,5 @@
 
             response.Headers.Count.ShouldBe(1);
         }
-
     }
 }

@@ -2,15 +2,21 @@
 {
     using System;
     using System.Threading;
+
     using Fiddler;
 
+    /// <summary>
+    /// Proxy server using FiddlerCore API
+    /// </summary>
     internal class FiddlerProxy : IMasqarade
     {
-        public event EventHandler BeforeRequest;
-
         private int listenPort;
-        private string listenHost;
         private Session currentSession;
+
+        /// <summary>
+        /// Fires when a session receives a request
+        /// </summary>
+        public event EventHandler BeforeRequest;
 
         public void Stop()
         {
@@ -30,6 +36,33 @@
             currentSession.utilSetResponseBody(response.Body);
         }
 
+        public void Start(int portNumber)
+        {
+            var flags = FiddlerCoreStartupFlags.Default | FiddlerCoreStartupFlags.RegisterAsSystemProxy;
+            listenPort = portNumber;
+            FiddlerApplication.Startup(portNumber, flags);
+            FiddlerApplication.BeforeRequest += this.OnBeforeRequest;
+        }
+
+        protected virtual void OnBeforeRequest(Session session)
+        {
+            currentSession = session;
+            if (HasSubscribers(BeforeRequest) && IsRequestOwner(session))
+            {
+                BeforeRequest(this, CreateRequestEventArgs(session));
+            }
+        }
+
+        private static bool HasSubscribers(EventHandler handler)
+        {
+            return handler != null;
+        }
+
+        private static ProxyRequestEventArgs CreateRequestEventArgs(Session session)
+        {
+            return new ProxyRequestEventArgs() { Method = session.RequestMethod, RelativePath = session.PathAndQuery };
+        }
+
         private void SetHeaders(Response response)
         {
             if (response.Headers.Count == 0)
@@ -46,41 +79,9 @@
             }
         }
 
-        protected virtual void OnBeforeRequest(Session session)
-        {
-            currentSession = session;
-            if (HasSubscribers(BeforeRequest) && (IsRequestOwner(session)))
-            {
-                BeforeRequest(this, CreateRequestEventArgs(session));
-            }
-        }
-
-        private static bool HasSubscribers(EventHandler handler)
-        {
-            return handler != null;
-        }
-
         private bool IsRequestOwner(Session session)
         {
-            // TODO: Might not need this
-            return (session.oRequest.pipeClient.LocalPort == this.listenPort);// && (session.hostname == this.listenHost);
-        }
-
-        private static ProxyRequestEventArgs CreateRequestEventArgs(Session session)
-        {
-            return new ProxyRequestEventArgs()
-                       {
-                           Method = session.RequestMethod,
-                           RelativePath = session.PathAndQuery
-                       };
-        }
-
-        public void Start(int portNumber)
-        {
-            var flags = FiddlerCoreStartupFlags.Default | FiddlerCoreStartupFlags.RegisterAsSystemProxy;
-            listenPort = portNumber;
-            FiddlerApplication.Startup(portNumber, flags);
-            FiddlerApplication.BeforeRequest += this.OnBeforeRequest;
+            return session.oRequest.pipeClient.LocalPort == this.listenPort;
         }
     }
 }

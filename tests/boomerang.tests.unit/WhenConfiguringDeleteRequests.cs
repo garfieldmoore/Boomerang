@@ -17,7 +17,5 @@
             boom.ThenShouldHaveRegisteredNumberOfRequests(1);
             boom.ThenShouldContainRequest("DELETE", "/address1");
         }
-
-
     }
 }
