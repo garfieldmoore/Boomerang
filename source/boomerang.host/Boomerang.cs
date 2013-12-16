@@ -34,14 +34,22 @@
         }
 
         /// <summary>
-        /// Creates a new web service
+        /// Creates a new web service listening
         /// </summary>
         /// <returns>Returns a proxy server listening on an available port</returns>
         /// <remarks>The server creates a single proxy.  Multiple calls will return the same proxy server</remarks>
-        internal static IBoomerang Server()
+        public static IBoomerang Server()
         {
-            // TODO not selecting port correctly
             return Server(0);
+        }
+
+        /// <summary>
+        /// Overrides the default factory for Boomerang
+        /// </summary>
+        /// <param name="boomerangFactory">The factory used for creating Boomerang</param>
+        public static void Initialize(IBoomerangConfigurationFactory boomerangFactory)
+        {
+            configurationFactory = boomerangFactory;
         }
     }
 }

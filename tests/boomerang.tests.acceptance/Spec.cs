@@ -92,7 +92,7 @@
 
         internal static IBoomerang GivenADefaultServer()
         {
-            defaultServer = Boomerang.Server(5100);
+            defaultServer = Boomerang.Server();
             return defaultServer;
         }
 

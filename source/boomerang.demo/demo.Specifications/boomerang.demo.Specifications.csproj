@@ -34,11 +34,11 @@
   <ItemGroup>
     <Reference Include="Boomerang, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\boomerang.0.1.27\lib\net40\Boomerang.dll</HintPath>
+      <HintPath>..\..\..\packages\boomerang.0.1.28\lib\net40\Boomerang.dll</HintPath>
     </Reference>
     <Reference Include="FiddlerCore4, Version=4.4.5.6, Culture=neutral, PublicKeyToken=67cb91587178ac5a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\boomerang.0.1.27\lib\net40\FiddlerCore4.dll</HintPath>
+      <HintPath>..\..\..\packages\boomerang.0.1.28\lib\net40\FiddlerCore4.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>

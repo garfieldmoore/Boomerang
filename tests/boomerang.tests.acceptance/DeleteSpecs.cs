@@ -8,8 +8,6 @@
 
     public class DeleteSpecs
     {
-        #region Public Methods and Operators
-
         [Test]
         public void Should_respond_with_expectation()
         {
@@ -20,7 +18,5 @@
             Spec.ResponseText.ShouldBe("202 (Accepted)");
             Spec.StatusCode.ShouldBe("Accepted");
         }
-
-        #endregion
     }
 }

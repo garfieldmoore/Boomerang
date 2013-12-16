@@ -2,16 +2,14 @@
 {
     using NUnit.Framework;
 
+    using Rainbow.Testing.Boomerang.Host;
+
     public class StartingHostSpecs
     {
-        #region Public Methods and Operators
-
         [Test]
         public void Should_start_host()
         {
             Spec.GivenADefaultServer();
         }
-
-        #endregion
     }
 }

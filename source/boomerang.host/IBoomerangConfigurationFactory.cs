@@ -3,7 +3,7 @@
     /// <summary>
     /// Interface for Boomerang implementations
     /// </summary>
-    internal interface IBoomerangConfigurationFactory
+    public interface IBoomerangConfigurationFactory
     {
         /// <summary>
         /// Creates the instance

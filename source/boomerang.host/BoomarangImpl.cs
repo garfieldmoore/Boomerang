@@ -11,6 +11,11 @@
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class BoomarangImpl : IBoomerang
     {
+        public BoomarangImpl()
+        {
+            
+        }
+
         /// <summary>
         /// Address and responses
         /// </summary>
@@ -86,7 +91,7 @@
         ///     Start the proxy server
         /// </summary>
         /// <param name="port">The port number to listen on</param>
-        public void Start(int port)
+        public virtual void Start(int port)
         {
             AppDomain.CurrentDomain.DomainUnload += OnCurrentDomainUnload;
             proxy.Start(port);

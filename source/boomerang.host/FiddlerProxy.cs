@@ -50,8 +50,8 @@
         public void Start(int portNumber)
         {
             var flags = FiddlerCoreStartupFlags.Default | FiddlerCoreStartupFlags.RegisterAsSystemProxy;
-            listenPort = portNumber;
             FiddlerApplication.Startup(portNumber, flags);
+            listenPort = FiddlerApplication.oProxy.ListenPort;
             FiddlerApplication.BeforeRequest += this.OnBeforeRequest;
         }
 
