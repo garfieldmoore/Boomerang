@@ -11,7 +11,7 @@
         [Test]
         public void Should_respond_with_expectation()
         {
-            Spec.GivenADefaultServer().Delete("resourceAddress").Returns("202 (Accepted)", 202);
+            Spec.GivenAServerOnSpecificPort().Delete("resourceAddress").Returns("202 (Accepted)", 202);
 
             Spec.WhenDeleteSentTo(Spec.HostAddress + "resourceAddress");
 

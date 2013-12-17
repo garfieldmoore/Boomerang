@@ -1,5 +1,8 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host
 {
+    using System.ComponentModel;
+    using System.Threading;
+
     /// <summary>
     /// Factory to create proxy servers
     /// </summary>
@@ -9,9 +12,11 @@
 
         private static IBoomerangConfigurationFactory configurationFactory;
 
+        private static object serverLock = new object();
+
         static Boomerang()
         {
-            configurationFactory = new BoomerangConfigurationFactory();
+            configurationFactory = new DefaultConfigurationFactory();
         }
 
         /// <summary>
@@ -22,13 +27,16 @@
         /// <remarks>The server creates a single proxy.  Multiple calls will return the same proxy server</remarks>
         public static IBoomerang Server(int listeningOnPort)
         {
-            if (server != null)
+            lock (serverLock)
             {
-                return server;
-            }
+                if (server != null)
+                {
+                    return server;
+                }
 
-            server = configurationFactory.Create();
-            ((BoomarangImpl)server).Start(listeningOnPort);
+                server = configurationFactory.Create();
+                ((BoomarangImpl)server).Start(listeningOnPort);                
+            }
 
             return server;
         }
@@ -47,9 +55,18 @@
         /// Overrides the default factory for Boomerang
         /// </summary>
         /// <param name="boomerangFactory">The factory used for creating Boomerang</param>
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void Initialize(IBoomerangConfigurationFactory boomerangFactory)
         {
-            configurationFactory = boomerangFactory;
+            lock (serverLock)
+            {
+                if (server!=null)
+                    ((BoomarangImpl)server).Stop();
+
+                server = null;
+                configurationFactory = boomerangFactory;
+            }
         }
     }
 }

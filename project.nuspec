@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/garfieldmoore/Boomerang</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>framework for faking external web services for acceptance tests</description>
-    <releaseNotes>Auto selects port number for proxy</releaseNotes>
+    <releaseNotes>Handles restarting the proxy server</releaseNotes>
     <copyright>Copyright 2013</copyright>
     <dependencies>
     </dependencies>

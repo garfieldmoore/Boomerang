@@ -15,7 +15,7 @@
         [Test]
         public void Should_allow_expectations_on_server_base_address()
         {
-            Spec.GivenADefaultServer().Get(string.Empty).Returns("Boomerang interception", 200);
+            Spec.GivenAServerOnSpecificPort().Get(string.Empty).Returns("Boomerang interception", 200);
 
             Spec.WhenGetRequestSent(Spec.HostAddress);
 
@@ -26,7 +26,7 @@
         [Test]
         public void Should_register_different_responses_against_same_address()
         {
-            Spec.GivenADefaultServer().Get("address1").Returns("body1", 200).Get("address1").Returns("body2", 201);
+            Spec.GivenAServerOnSpecificPort().Get("address1").Returns("body1", 200).Get("address1").Returns("body2", 201);
 
             Spec.WhenGetRequestSent(Spec.HostAddress + "address1");
 
@@ -42,7 +42,7 @@
         [Test]
         public void Should_use_address_body_and_statusCode()
         {
-            Spec.GivenADefaultServer().Get("address1").Returns("body1", 200);
+            Spec.GivenAServerOnSpecificPort().Get("address1").Returns("body1", 200);
 
             Spec.WhenGetRequestSent(Spec.HostAddress + "address1");
 
@@ -53,7 +53,7 @@
         [Test]
         public void Should_use_correct_responses_for_multiple_addresss()
         {
-            Spec.GivenADefaultServer().Get("address1").Returns("body1", 200).Get("address2").Returns("body2", 401);
+            Spec.GivenAServerOnSpecificPort().Get("address1").Returns("body1", 200).Get("address2").Returns("body2", 401);
 
             Spec.WhenGetRequestSent("http://example.com/address1");
 

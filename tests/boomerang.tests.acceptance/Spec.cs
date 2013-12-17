@@ -90,9 +90,10 @@
 
         #region Methods
 
-        internal static IBoomerang GivenADefaultServer()
+        internal static IBoomerang GivenAServerOnSpecificPort()
         {
-            defaultServer = Boomerang.Server();
+            // Starts on specific port so conflicts will be easier to detect in tests
+            defaultServer = Boomerang.Server(5100);
             return defaultServer;
         }
 

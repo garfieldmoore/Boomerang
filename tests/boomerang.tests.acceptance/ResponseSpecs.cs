@@ -18,7 +18,7 @@
             var headers = new Dictionary<string, string>();
             headers.Add("content-type", "application/json");
 
-            Spec.GivenADefaultServer().Get("address").Returns("body", 200, headers);
+            Spec.GivenAServerOnSpecificPort().Get("address").Returns("body", 200, headers);
 
             Spec.WhenGetRequestSent(Spec.HostAddress + "address");
 

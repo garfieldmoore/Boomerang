@@ -13,7 +13,7 @@
         [Test]
         public void Should_return_with_expected_status_code_and_response()
         {
-            Spec.GivenADefaultServer().Put("address").Returns("data updated response", 200);
+            Spec.GivenAServerOnSpecificPort().Put("address").Returns("data updated response", 200);
 
             Spec.WhenPutSentTo(Spec.HostAddress + "address", "data");
 

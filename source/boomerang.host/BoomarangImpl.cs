@@ -11,9 +11,12 @@
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class BoomarangImpl : IBoomerang
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public BoomarangImpl()
         {
-            
+
         }
 
         /// <summary>
@@ -96,6 +99,14 @@
             AppDomain.CurrentDomain.DomainUnload += OnCurrentDomainUnload;
             proxy.Start(port);
             proxy.BeforeRequest += OnProxyBeforeRequest;
+        }
+
+        public virtual void Stop()
+        {
+            if (proxy != null)
+            {
+                proxy.Stop();
+            }
         }
 
         private void OnBeforeRequest(ProxyRequestEventArgs eventArgs)

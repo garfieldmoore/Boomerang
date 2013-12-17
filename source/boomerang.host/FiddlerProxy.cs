@@ -23,9 +23,16 @@
         /// </summary>
         public void Stop()
         {
-            FiddlerApplication.oProxy.Detach();
-            Thread.Sleep(500);
-            FiddlerApplication.Shutdown();
+            if (FiddlerApplication.oProxy != null)
+            {
+                if (FiddlerApplication.oProxy.IsAttached)
+                {
+                    FiddlerApplication.oProxy.Detach();
+                }
+
+                Thread.Sleep(500);
+                FiddlerApplication.Shutdown();
+            }
         }
 
         /// <summary>

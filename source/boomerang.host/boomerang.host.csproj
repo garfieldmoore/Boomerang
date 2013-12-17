@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="BoomarangImpl.cs" />
     <Compile Include="Boomerang.cs" />
-    <Compile Include="BoomerangConfigurationFactory.cs" />
+    <Compile Include="DefaultConfigurationFactory.cs" />
     <Compile Include="FiddlerProxy.cs" />
     <Compile Include="IBoomerangConfigurationFactory.cs" />
     <Compile Include="IBoomerang.cs" />

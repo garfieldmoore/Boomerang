@@ -16,7 +16,7 @@
         [Test]
         public void Should_intercept_relative_address_on_any_base_address()
         {
-            Spec.GivenADefaultServer().Get("thisaddress").Returns("body", 201);
+            Spec.GivenAServerOnSpecificPort().Get("thisaddress").Returns("body", 201);
 
             Spec.WhenGetRequestSent("http://www.UnknownBaseAddress/thisaddress");
 
@@ -27,9 +27,9 @@
         [Test]
         public void Should_record_all_requests()
         {
-            int calls = Spec.GivenADefaultServer().GetAllReceivedRequests().Count();
+            int calls = Spec.GivenAServerOnSpecificPort().GetAllReceivedRequests().Count();
 
-            Spec.GivenADefaultServer().Get("thisaddress").Returns("body", 200);
+            Spec.GivenAServerOnSpecificPort().Get("thisaddress").Returns("body", 200);
 
             Spec.WhenGetRequestSent(Spec.HostAddress + "thisaddress");
 
@@ -40,7 +40,7 @@
         [Test]
         public void Should_send_bad_request_when_no_responses_configured()
         {
-            Spec.GivenADefaultServer().Get("thisaddress").Returns("body", 200);
+            Spec.GivenAServerOnSpecificPort().Get("thisaddress").Returns("body", 200);
 
             Spec.WhenGetRequestSent(Spec.HostAddress + "thisaddress");
             Spec.WhenGetRequestSent(Spec.HostAddress + "thisaddress");

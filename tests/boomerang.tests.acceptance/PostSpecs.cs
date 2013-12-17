@@ -13,7 +13,7 @@
         [Test]
         public void Should_respond_with_expectation()
         {
-            Spec.GivenADefaultServer().Post("myentity").Returns("this is my response", 201);
+            Spec.GivenAServerOnSpecificPort().Post("myentity").Returns("this is my response", 201);
 
             Spec.WhenPostsSentTo(Spec.HostAddress + "myentity", "my data");
 
