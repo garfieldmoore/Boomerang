@@ -7,7 +7,7 @@
     /// </summary>
     [Browsable(false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public class DefaultConfigurationFactory   : IBoomerangConfigurationFactory
+    public class DefaultConfigurationFactory : IBoomerangConfigurationFactory
     {
         /// <summary>
         /// Create boomerang instance

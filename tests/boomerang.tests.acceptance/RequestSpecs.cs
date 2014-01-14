@@ -13,7 +13,7 @@
     {
         #region Public Methods and Operators
 
-        [Test]
+        [Test, Ignore]
         public void Should_intercept_relative_address_on_any_base_address()
         {
             Spec.GivenAServerOnSpecificPort().Get("thisaddress").Returns("body", 201);

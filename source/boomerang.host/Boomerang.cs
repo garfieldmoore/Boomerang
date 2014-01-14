@@ -35,7 +35,7 @@
                 }
 
                 server = configurationFactory.Create();
-                ((BoomarangImpl)server).Start(listeningOnPort);                
+                ((BoomarangImpl)server).Start(listeningOnPort);
             }
 
             return server;
@@ -61,8 +61,10 @@
         {
             lock (serverLock)
             {
-                if (server!=null)
+                if (server != null)
+                {
                     ((BoomarangImpl)server).Stop();
+                }
 
                 server = null;
                 configurationFactory = boomerangFactory;

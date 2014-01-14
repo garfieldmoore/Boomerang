@@ -11,7 +11,7 @@
     {
         #region Static Fields
 
-        public static readonly string HostAddress = "http://rainbow.co.uk/";
+        public static readonly string HostAddress = "http://localhost:5100/";
 
         public static IDictionary<string, string> ResponseHeaders;
 

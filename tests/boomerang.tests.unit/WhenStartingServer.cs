@@ -62,7 +62,6 @@
             Boomerang.Server();
 
             boomerang.Received(1).Stop();
-
         }
 
         private void GivenConfigurationFactoryCreatesProxyListener()

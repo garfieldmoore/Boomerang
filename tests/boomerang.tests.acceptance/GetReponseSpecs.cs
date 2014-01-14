@@ -37,6 +37,9 @@
 
             Spec.ResponseText.ShouldBe("body2");
             Spec.StatusCode.ShouldBe(HttpStatusCode.Created.ToString());
+
+            var req = Spec.ReceivedRequests;
+
         }
 
         [Test]
@@ -55,7 +58,7 @@
         {
             Spec.GivenAServerOnSpecificPort().Get("address1").Returns("body1", 200).Get("address2").Returns("body2", 401);
 
-            Spec.WhenGetRequestSent("http://example.com/address1");
+            Spec.WhenGetRequestSent( Spec.HostAddress +"address1");
 
             Spec.StatusCode.ShouldBe("OK");
             Spec.ResponseText.ShouldBe("body1");

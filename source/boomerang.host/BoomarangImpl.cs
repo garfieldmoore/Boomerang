@@ -12,14 +12,6 @@
     public class BoomarangImpl : IBoomerang
     {
         /// <summary>
-        /// Default constructor
-        /// </summary>
-        public BoomarangImpl()
-        {
-
-        }
-
-        /// <summary>
         /// Address and responses
         /// </summary>
         public IRequestResponses Registrations;
@@ -27,6 +19,13 @@
         protected IList<Request> ReceivedRequests;
 
         private readonly IMasqarade proxy;
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public BoomarangImpl()
+        {
+        }
 
         /// <summary>
         /// Creates a a manager for the supplied proxy server implementation
@@ -101,6 +100,9 @@
             proxy.BeforeRequest += OnProxyBeforeRequest;
         }
 
+        /// <summary>
+        /// Stops the proxy server
+        /// </summary>
         public virtual void Stop()
         {
             if (proxy != null)

@@ -1,6 +1,7 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host
 {
     using System;
+    using System.Diagnostics;
     using System.Threading;
 
     using Fiddler;
@@ -56,7 +57,7 @@
         /// <param name="portNumber">The port number the proxy will listen on. Zero to select an unused port</param>
         public void Start(int portNumber)
         {
-            var flags = FiddlerCoreStartupFlags.Default | FiddlerCoreStartupFlags.RegisterAsSystemProxy;
+            var flags = FiddlerCoreStartupFlags.Default ^ FiddlerCoreStartupFlags.RegisterAsSystemProxy;
             FiddlerApplication.Startup(portNumber, flags);
             listenPort = FiddlerApplication.oProxy.ListenPort;
             FiddlerApplication.BeforeRequest += this.OnBeforeRequest;
