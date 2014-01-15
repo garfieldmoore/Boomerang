@@ -14,6 +14,8 @@
     {
         private static int receivedRequests;
 
+        private static AutoResetEvent waitHandle;
+
         [Test, Ignore]
         public void Should_intercept_relative_address_on_any_base_address()
         {
@@ -57,15 +59,21 @@
             Spec.GivenAServerOnSpecificPort().Get("thisaddress").Returns("body", 200);
             Spec.GivenAServerOnSpecificPort().OnReceivedRequest += OnReceivedRequest;
 
+            waitHandle = new AutoResetEvent(false);
             Spec.WhenGetRequestSent(Spec.HostAddress + "thisaddress");
-            // TODO how to make this test better??...
-            Thread.Sleep(100);
+
+            if (!waitHandle.WaitOne(1000, false))
+            {
+                Assert.Fail("Test timed out; 'RequestSpecs.Should_raise_event_when_request_received()'");
+            }
+
             receivedRequests.ShouldBe(1);
         }
 
         private static void OnReceivedRequest(object sender, ProxyRequestEventArgs e)
         {
             receivedRequests++;
+            waitHandle.Set();
         }
 
     }
