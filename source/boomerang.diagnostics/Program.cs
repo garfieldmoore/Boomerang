@@ -8,10 +8,12 @@ namespace boomerang.diagnostics
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Starting boomerang server");
+            var listeningOnPort = 5100;
+
+            Console.WriteLine("Starting boomerang server at http://localhost:{0}", listeningOnPort);
             DisplayInstructions();
 
-            Boomerang.Server(5100).OnReceivedRequest += OnReceivedRequest_Display;
+            Boomerang.Server(listeningOnPort).OnReceivedRequest += OnReceivedRequest_Display;
 
             while (true)
             {
