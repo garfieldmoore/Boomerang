@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace boomerang.diagnostics
 {
@@ -8,54 +6,62 @@ namespace boomerang.diagnostics
 
     class Program
     {
-        private static List<Request> requests;
         static void Main(string[] args)
         {
-            requests = new List<Request>();
             Console.WriteLine("Starting boomerang server");
-            Boomerang.Server(5100).Get("/api/menu").Returns("blah", 200).Returns("blah blah", 201);
+            DisplayInstructions();
+
+            Boomerang.Server(5100).OnReceivedRequest += OnReceivedRequest_Display;
 
             while (true)
             {
-                // TODO this should be done using events....
-                var req = Boomerang.Server().GetAllReceivedRequests().ToList();
-
-                if (HasNewRequests(req))
-                {
-                    DisplayNewRequests(req);
-                }
-
                 if (Console.KeyAvailable)
                 {
-                    if (Console.ReadKey().Key == ConsoleKey.X)
+                    var consoleKeyInfo = Console.ReadKey();
+
+                    if (consoleKeyInfo.Key == ConsoleKey.X)
                     {
                         break;
+                    }
+
+                    if (consoleKeyInfo.Key == ConsoleKey.D1)
+                    {
+                        AddRequest();
                     }
                 }
             }
         }
 
-        private static void DisplayNewRequests(List<Request> req)
+        private static void OnReceivedRequest_Display(object sender, ProxyRequestEventArgs e)
         {
-            foreach (var request in req)
-            {
-                if (IsNew(request))
-                {
-                    Console.WriteLine(request);
-                }
-            }
-
-            requests.AddRange(req);
+            if (null != e)
+                Console.WriteLine(string.Format("{0}: received for address: {1}", e.Method, e.RelativePath));
         }
 
-        private static bool IsNew(Request request)
+        private static void AddRequest()
         {
-            return requests.Contains(request) == false;
+            Console.Clear();
+
+            Console.WriteLine("Enter the HTTP verb for the request");
+            var method = Console.ReadLine();
+            Console.WriteLine("enter the relative address for the response");
+            var address = Console.ReadLine();
+            Console.WriteLine("Enter the required response content");
+            var response = Console.ReadLine();
+            Console.WriteLine("Enter the response status code");
+            var statusCodeText = Console.ReadLine() + "";
+            var statusCode = int.Parse(statusCodeText);
+
+            Boomerang.Server(5100).Request(address, method).Returns(response, statusCode);
+
+            Console.Clear();
+            DisplayInstructions();
         }
 
-        private static bool HasNewRequests(List<Request> req)
+        private static void DisplayInstructions()
         {
-            return null != req && req.Count > 0 && req.Count != requests.Count;
+            Console.WriteLine("Choose from the below options or start sending requests to boomerang;\r\n");
+            Console.WriteLine("1. To enter an expected request response");
         }
     }
 }

@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using System.Net;
+    using System.Threading;
 
     using NUnit.Framework;
 
@@ -11,7 +12,7 @@
 
     public class RequestSpecs
     {
-        #region Public Methods and Operators
+        private static int receivedRequests;
 
         [Test, Ignore]
         public void Should_intercept_relative_address_on_any_base_address()
@@ -49,6 +50,23 @@
             Spec.ResponseText.ShouldBe("Boomerang error: Resource not found or no response configured for request");
         }
 
-        #endregion
+        [Test]
+        public void Should_raise_event_when_request_received()
+        {
+            receivedRequests = 0;
+            Spec.GivenAServerOnSpecificPort().Get("thisaddress").Returns("body", 200);
+            Spec.GivenAServerOnSpecificPort().OnReceivedRequest += OnReceivedRequest;
+
+            Spec.WhenGetRequestSent(Spec.HostAddress + "thisaddress");
+            // TODO how to make this test better??...
+            Thread.Sleep(100);
+            receivedRequests.ShouldBe(1);
+        }
+
+        private static void OnReceivedRequest(object sender, ProxyRequestEventArgs e)
+        {
+            receivedRequests++;
+        }
+
     }
 }

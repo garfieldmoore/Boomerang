@@ -10,7 +10,7 @@
         /// <summary>
         /// Fires when a request is received. Used to intercept requests and set the response using <see cref="SetResponse"/>
         /// </summary>
-        event EventHandler BeforeRequest;
+        event EventHandler<ProxyRequestEventArgs> BeforeRequest;
 
         /// <summary>
         /// Starts the proxy server

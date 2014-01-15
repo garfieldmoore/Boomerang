@@ -1,6 +1,7 @@
 ﻿namespace boomerang.tests.unit
 {
     using System.Linq;
+    using System.Threading;
 
     using NSubstitute;
 
@@ -28,22 +29,6 @@
             WhenRequestIsSent(masqarade);
 
             ThenShouldSetResponse();
-        }
-
-        [Test]
-        public void Should_store_request()
-        {
-            GivenProxyForRequest(new Request() { Address = "address", Method = "GET" });
-            GivenRegisteredResponse("body", 200);
-
-            GivenProxyIsRunning();
-
-            WhenRequestIsSent(masqarade);
-
-            boomerang.GetAllReceivedRequests().Count().ShouldBe(1);
-            boomerang.GetAllReceivedRequests()
-                     .Contains(new Request() { Method = "GET", Address = "address" })
-                     .ShouldBe(true);
         }
 
         private static void WhenRequestIsSent(IMasqarade masqarade)

@@ -27,7 +27,7 @@ namespace CoffeTime.Specifications
         public void WhenBobbieAsksForTheMenu()
         {
             var service = new MenuService();
-            var menuItems = service.GetMenu("http://localhost:5100/api/menu");
+            var menuItems = service.GetMenu("http://rainbow.co.uk:5100/api/menu");
             ScenarioContext.Current.Add("menu", menuItems);
         }
 

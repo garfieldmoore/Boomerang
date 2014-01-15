@@ -2,11 +2,18 @@
 {
     using System.Collections.Generic;
 
+    using System.Linq;
+
     /// <summary>
     /// Helper methods to configure requests to intercept and desired responses from proxy server
     /// </summary>
     public static class UniformInterfaceExtensions
     {
+        private static bool collectingEvents;
+        private static object locker = new object();
+        private static IList<Request> ReceivedRequests = new List<Request>();
+
+
         /// <summary>
         /// Add a GET request to be intercepted
         /// </summary>
@@ -15,6 +22,7 @@
         /// <returns>Configuration handler</returns>
         public static IBoomerang Get(this IBoomerang host, string relativeAddress)
         {
+            CollectEvents(host);
             var requestResponse = new Request { Address = relativeAddress, Method = "GET" };
             ((BoomarangImpl)host).AddAddress(requestResponse);
             return host;
@@ -28,6 +36,8 @@
         /// <returns>Configuration handler</returns>
         public static IBoomerang Post(this IBoomerang host, string relativeAddress)
         {
+            CollectEvents(host);
+
             host.Request(relativeAddress, "POST");
             return host;
         }
@@ -40,6 +50,8 @@
         /// <returns>Configuration handler</returns>
         public static IBoomerang Put(this IBoomerang target, string relativeAddress)
         {
+            CollectEvents(target);
+
             target.Request(relativeAddress, "PUT");
             return target;
         }
@@ -52,6 +64,8 @@
         /// <returns>Configuration handler</returns>
         public static IBoomerang Delete(this IBoomerang target, string relativeAddress)
         {
+            CollectEvents(target);
+
             target.Request(relativeAddress, "DELETE");
             return target;
         }
@@ -70,6 +84,8 @@
         /// <seealso cref="Delete"/>
         public static IBoomerang Request(this IBoomerang host, string relativeAddress, string httpMethod)
         {
+            CollectEvents(host);
+
             var requestResponse = new Request { Address = relativeAddress, Method = httpMethod };
             ((BoomarangImpl)host).AddAddress(requestResponse);
             return host;
@@ -111,7 +127,27 @@
         /// <seealso cref="Request"/>
         public static IEnumerable<Request> GetAllReceivedRequests(this IBoomerang target)
         {
-            return ((BoomarangImpl)target).GetAllReceivedRequests();
+            return ReceivedRequests.ToArray();
+        }
+
+        private static void CollectEvents(IBoomerang host)
+        {
+            if (!collectingEvents)
+            {
+                lock (locker)
+                {
+                    if (!collectingEvents)
+                    {
+                        collectingEvents = true;
+                        host.OnReceivedRequest += host_OnReceivedRequest;
+                    }
+                }
+            }
+        }
+
+        private static void host_OnReceivedRequest(object sender, ProxyRequestEventArgs e)
+        {
+            ReceivedRequests.Add(new Request(){Method=e.Method, Address = e.RelativePath});
         }
     }
 }

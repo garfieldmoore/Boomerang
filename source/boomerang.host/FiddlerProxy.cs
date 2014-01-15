@@ -17,7 +17,7 @@
         /// <summary>
         /// Fires when a session receives a request
         /// </summary>
-        public event EventHandler BeforeRequest;
+        public event EventHandler<ProxyRequestEventArgs> BeforeRequest;
 
         /// <summary>
         /// Stop the proxy server
@@ -76,7 +76,7 @@
             }
         }
 
-        private static bool HasSubscribers(EventHandler handler)
+        private static bool HasSubscribers(EventHandler<ProxyRequestEventArgs> handler)
         {
             return handler != null;
         }

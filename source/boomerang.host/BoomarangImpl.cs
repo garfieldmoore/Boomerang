@@ -16,7 +16,10 @@
         /// </summary>
         public IRequestResponses Registrations;
 
-        protected IList<Request> ReceivedRequests;
+        /// <summary>
+        /// Fired when requests are received and before the request is processed
+        /// </summary>
+        public event EventHandler<ProxyRequestEventArgs> OnReceivedRequest;
 
         private readonly IMasqarade proxy;
 
@@ -33,7 +36,6 @@
         /// <param name="proxy">proxy server implementation</param>
         public BoomarangImpl(IMasqarade proxy)
         {
-            ReceivedRequests = new List<Request>();
             this.proxy = proxy;
             Registrations = new RequestResponses();
         }
@@ -45,7 +47,6 @@
         /// <param name="responses">Responses expected</param>
         public BoomarangImpl(IMasqarade proxy, IRequestResponses responses)
         {
-            ReceivedRequests = new List<Request>();
             this.proxy = proxy;
             Registrations = responses;
         }
@@ -81,15 +82,6 @@
         }
 
         /// <summary>
-        /// Returns the requests the proxy server has received.
-        /// </summary>
-        /// <returns>The Requests received</returns>
-        public IEnumerable<Request> GetAllReceivedRequests()
-        {
-            return ReceivedRequests;
-        }
-
-        /// <summary>
         ///     Start the proxy server
         /// </summary>
         /// <param name="port">The port number to listen on</param>
@@ -111,16 +103,6 @@
             }
         }
 
-        private void OnBeforeRequest(ProxyRequestEventArgs eventArgs)
-        {
-            // Should probably raise an event for this..
-            var request = new Request { Method = eventArgs.Method, Address = eventArgs.RelativePath };
-
-            ReceivedRequests.Add(request);
-
-            SetResponse(eventArgs.Method, eventArgs.RelativePath);
-        }
-
         private void OnCurrentDomainUnload(object sender, EventArgs e)
         {
             if (proxy != null)
@@ -137,7 +119,16 @@
                 return;
             }
 
-            OnBeforeRequest(requesteventArgs);
+            FireReceivedRequest(requesteventArgs);
+            SetResponse(requesteventArgs.Method, requesteventArgs.RelativePath);
+        }
+
+        private void FireReceivedRequest(ProxyRequestEventArgs eventArgs)
+        {
+            if (OnReceivedRequest != null)
+            {
+                OnReceivedRequest(this, eventArgs);
+            }
         }
 
         private void SetResponse(string method, string relativePath)
