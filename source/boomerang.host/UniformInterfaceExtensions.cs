@@ -22,10 +22,7 @@
         /// <returns>Configuration handler</returns>
         public static IBoomerang Get(this IBoomerang host, string relativeAddress)
         {
-            CollectEvents(host);
-            var requestResponse = new Request { Address = relativeAddress, Method = "GET" };
-            ((BoomarangImpl)host).AddAddress(requestResponse);
-            return host;
+            return Request(host, relativeAddress, "GET");
         }
 
         /// <summary>
@@ -36,10 +33,7 @@
         /// <returns>Configuration handler</returns>
         public static IBoomerang Post(this IBoomerang host, string relativeAddress)
         {
-            CollectEvents(host);
-
-            host.Request(relativeAddress, "POST");
-            return host;
+            return Request(host, relativeAddress, "POST");
         }
 
         /// <summary>
@@ -50,10 +44,7 @@
         /// <returns>Configuration handler</returns>
         public static IBoomerang Put(this IBoomerang target, string relativeAddress)
         {
-            CollectEvents(target);
-
-            target.Request(relativeAddress, "PUT");
-            return target;
+            return Request(target, relativeAddress, "PUT");
         }
 
         /// <summary>
@@ -64,10 +55,7 @@
         /// <returns>Configuration handler</returns>
         public static IBoomerang Delete(this IBoomerang target, string relativeAddress)
         {
-            CollectEvents(target);
-
-            target.Request(relativeAddress, "DELETE");
-            return target;
+            return Request(target, relativeAddress, "DELETE");
         }
 
         /// <summary>
