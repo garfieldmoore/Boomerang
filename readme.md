@@ -25,7 +25,7 @@ Register response to a single address;
     Boomerang.Server(5100)
 		.Get("/myaddress").Returns("my response body", 200);
 
-A request on any base address on the relative path '/myaddress' will now return 'my response body' and a status code of OK
+A request on the relative path '/myaddress' will now return 'my response body' and a status code of OK.  Only the first request will return the configured response. Subsequent requets will respond with a 400 error.  A response is required for every HTTP request.
 
 Register response to multiple addresses;
 
