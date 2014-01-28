@@ -21,6 +21,37 @@
             Spec.StatusCode.ShouldBe("OK");
         }
 
+        [Test]
+        public void Should_register_posts_for_multiple_addresses()
+        {
+            Spec.GivenAServerOnSpecificPort()
+                .Put("address1").Returns("response 1", 201)
+                .Put("address2").Returns("response 2", 200);
+
+            Spec.WhenPutSentTo(Spec.HostAddress + "address1", "my data");
+            Spec.ResponseText.ShouldBe("response 1");
+            Spec.StatusCode.ShouldBe("Created");
+
+            Spec.WhenPutSentTo(Spec.HostAddress + "address2", "my data");
+            Spec.ResponseText.ShouldBe("response 2");
+            Spec.StatusCode.ShouldBe("OK");
+        }
+
+        [Test]
+        public void Should_register_multiple_responses_for_same_address()
+        {
+            Spec.GivenAServerOnSpecificPort()
+                .Put("address1").Returns("response 1", 201)
+                .Put("address1").Returns("response 2", 200);
+
+            Spec.WhenPutSentTo(Spec.HostAddress + "address1", "my data");
+            Spec.ResponseText.ShouldBe("response 1");
+            Spec.StatusCode.ShouldBe("Created");
+
+            Spec.WhenPutSentTo(Spec.HostAddress + "address1", "my data");
+            Spec.ResponseText.ShouldBe("response 2");
+            Spec.StatusCode.ShouldBe("OK");
+        }
         #endregion
     }
 }
