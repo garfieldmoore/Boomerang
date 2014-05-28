@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/garfieldmoore/Boomerang</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>framework for faking external web services for acceptance tests</description>
-    <releaseNotes>Handles restarting the proxy server</releaseNotes>
+    <releaseNotes>Configure repeating responses</releaseNotes>
     <copyright>Copyright 2013</copyright>
     <dependencies>
     </dependencies>
@@ -18,7 +18,9 @@
   </metadata>
    <files>
         <file src="source\boomerang.host\bin\Release\Boomerang.dll" target="lib\net40\Boomerang.dll" />
+        <file src="source\Boomerang.Extensions\bin\Release\Boomerang.Extensions.dll" target="lib\net40\Boomerang.Extensions.dll" />
 		<file src="source\boomerang.host\bin\Release\FiddlerCore4.dll" target="lib\net40\FiddlerCore4.dll" />
-		<file src="source\boomerang.host\bin\Release\Boomerang.xml" target="lib\net40\Boomerang.xml" />
+        <file src="source\boomerang.host\bin\Release\Boomerang.xml" target="lib\net40\Boomerang.xml" />
+        <file src="source\boomerang.Extensions\bin\Release\Boomerang.Extensions.xml" target="lib\net40\Boomerang.Extensions.xml" />
     </files>
 </package>
