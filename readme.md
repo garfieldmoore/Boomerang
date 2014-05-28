@@ -41,7 +41,14 @@ You can specify different responses from the same address;
 		.Get("anaddress").Returns("response body", 200)
 		.Get("anotheraddress").Returns("another response body", 201);
 
+Register Repeated responses
+
+	This registers 10 gets to anadress that returns a 200 response and one that returns a 400
+
+    Boomerang.Server(5100)
+    	.Repeat(x=>{x.Get("anaddress").Returns("response body", 200);}, 10)
+    	.Get("anaddress").returns("an erorr occurred", 404);
+
 Aknowledgments
 --------------
-I took inspiration from mimic - https://github.com/lukeredpath/mimic
-
+Our build server has been provided by [CodeBetter](http://www.codebetter.com) and [JetBrains](http://www.jetbrains.com)
