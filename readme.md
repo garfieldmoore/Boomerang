@@ -43,7 +43,7 @@ You can specify different responses from the same address;
 
 Register Repeated responses
 
-	This registers 10 gets to anadress that returns a 200 response and one that returns a 400
+This registers 10 gets to anadress that returns a 200 response and one that returns a 400
 
     Boomerang.Server(5100)
     	.Repeat(x=>{x.Get("anaddress").Returns("response body", 200);}, 10)
@@ -51,4 +51,4 @@ Register Repeated responses
 
 Aknowledgments
 --------------
-Our build server has been provided by [CodeBetter](http://www.codebetter.com) and [JetBrains](http://www.jetbrains.com)
+Our build servers has been provided by [CodeBetter](http://www.codebetter.com) and [JetBrains](http://www.jetbrains.com)
