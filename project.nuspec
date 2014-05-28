@@ -14,7 +14,7 @@
     <copyright>Copyright 2013</copyright>
     <dependencies>
     </dependencies>
-	<tags>fake acceptance test testing stubs web services faking bdd</tags>
+	<tags>fake http server web service bdd acceptance test testing stubs</tags>
   </metadata>
    <files>
         <file src="source\boomerang.host\bin\Release\Boomerang.dll" target="lib\net40\Boomerang.dll" />
