@@ -1,7 +1,7 @@
 ﻿using System;
 using Rainbow.Testing.Boomerang.Host;
 
-namespace Boomerang.Extensions
+namespace Rainbow.Testing.Boomerang.Extensions
 {
     public static class BoomerangExtensions
     {

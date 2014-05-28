@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Boomerang.Extensions;
 using NSubstitute;
 using NUnit.Framework;
+using Rainbow.Testing.Boomerang.Extensions;
 using Rainbow.Testing.Boomerang.Host;
 using Shouldly;
 
@@ -21,6 +20,5 @@ namespace boomerang.tests.unit
 
             queue.Count.ShouldBe(2);
         }
-
     }
 }

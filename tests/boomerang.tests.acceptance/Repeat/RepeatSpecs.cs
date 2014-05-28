@@ -1,5 +1,5 @@
-﻿using Boomerang.Extensions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using Rainbow.Testing.Boomerang.Extensions;
 using Rainbow.Testing.Boomerang.Host;
 using Shouldly;
 
