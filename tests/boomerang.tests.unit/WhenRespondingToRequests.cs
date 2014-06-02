@@ -1,4 +1,6 @@
-﻿namespace boomerang.tests.unit
+﻿using System.Linq;
+
+namespace boomerang.tests.unit
 {
     using System.Collections.Generic;
 
@@ -81,6 +83,18 @@
             var response = responder.GetNextResponseFor("GET", "address");
 
             response.Headers.Count.ShouldBe(1);
+        }
+
+        [Test]
+        public void Should_set_response_headers()
+        {
+            var responder = new RequestResponses();
+            responder.AddAddress(new Request() { Address = "address", Method = "GET" });
+            var headers = new Dictionary<string, string>() { { "content-type", "application/json" } };
+            responder.AddResponse("body", 201, headers);
+
+            var response = responder.GetNextResponseFor("GET", "address");
+            response.Headers.Values.ToList()[0].ShouldBe("application/json");
         }
     }
 }
