@@ -31,6 +31,20 @@
             ThenShouldSetResponse();
         }
 
+        [Test]
+        public void Should_fire_recieved_request_event()
+        {
+            GivenProxyForRequest(new Request() { Method = "GET", Address = "address", Body = "mybody" });
+            GivenProxyIsRunning();
+            bool localArgs=false;
+            boomerang.OnReceivedRequest += (sender, args) => localArgs = true;
+
+            masqarade.BeforeRequest +=
+                Raise.EventWith(new ProxyRequestEventArgs() { Method = "GET", RelativePath = "address",Body="body" });
+            
+            localArgs.ShouldBe(true);
+        }
+
         private static void WhenRequestIsSent(IMasqarade masqarade)
         {
             masqarade.BeforeRequest += Raise.EventWith(
@@ -44,7 +58,7 @@
 
         private void GivenProxyIsRunning()
         {
-            this.boomerang = this.boomerang = new BoomarangImpl(this.masqarade, this.requestResponses);
+            this.boomerang = new BoomarangImpl(this.masqarade, this.requestResponses);
             this.boomerang.Start(5100);
         }
 

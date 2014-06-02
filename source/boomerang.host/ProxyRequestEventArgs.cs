@@ -16,5 +16,7 @@
         /// Gets or sets the relative uri of the request
         /// </summary>
         public string RelativePath { get; set; }
+
+        public object Body   { get; set; }
     }
 }

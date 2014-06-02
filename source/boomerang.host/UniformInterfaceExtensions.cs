@@ -74,7 +74,7 @@
         {
             CollectEvents(host);
 
-            var requestResponse = new Request { Address = relativeAddress, Method = httpMethod };
+            var requestResponse = new Request { Address = relativeAddress, Method = httpMethod};
             ((BoomarangImpl)host).AddAddress(requestResponse);
             return host;
         }
@@ -135,7 +135,7 @@
 
         private static void host_OnReceivedRequest(object sender, ProxyRequestEventArgs e)
         {
-            ReceivedRequests.Add(new Request(){Method=e.Method, Address = e.RelativePath});
+            ReceivedRequests.Add(new Request() {Method = e.Method, Address = e.RelativePath, Body = e.Body});
         }
     }
 }

@@ -68,6 +68,7 @@
         public static void WhenPostsSentTo(string webHostAddress, string data)
         {
             var request = new RestRequest(webHostAddress, Method.POST);
+            request.RequestFormat = DataFormat.Json;
             request.AddBody(data);
             var client = new RestClient();
             IRestResponse response = client.Execute(request);

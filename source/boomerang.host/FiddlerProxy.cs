@@ -83,7 +83,8 @@
 
         private static ProxyRequestEventArgs CreateRequestEventArgs(Session session)
         {
-            return new ProxyRequestEventArgs() { Method = session.RequestMethod, RelativePath = session.PathAndQuery };
+            var requestBodyBytes = session.GetRequestBodyAsString();
+            return new ProxyRequestEventArgs() { Method = session.RequestMethod, RelativePath = session.PathAndQuery,Body = requestBodyBytes};
         }
 
         private void SetHeaders(Response response)
