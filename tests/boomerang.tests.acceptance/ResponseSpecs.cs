@@ -1,4 +1,6 @@
-﻿namespace boomerang.tests.acceptance
+﻿using System.Threading;
+
+namespace boomerang.tests.acceptance
 {
     using System.Collections.Generic;
 
@@ -10,23 +12,18 @@
 
     public class ResponseSpecs
     {
-        #region Public Methods and Operators
-
         [Test]
         public void Should_set_headers_when_specified()
         {
             var headers = new Dictionary<string, string>();
             headers.Add("content-type", "application/json");
 
-            Spec.GivenAServerOnSpecificPort().Get("address").Returns("body", 200, headers);
-
-            Spec.WhenGetRequestSent(Spec.HostAddress + "address");
+            Spec.GivenAServerOnSpecificPort().Get("address21").Returns("body", 200, headers);
+            Spec.WhenGetRequestSent(Spec.HostAddress + "address21");
 
             string header;
             Spec.ResponseHeaders.TryGetValue("Content-Type", out header).ShouldBe(true);
             header.ShouldBe("application/json");
         }
-
-        #endregion
     }
 }

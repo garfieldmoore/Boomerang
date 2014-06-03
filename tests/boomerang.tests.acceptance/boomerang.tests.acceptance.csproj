@@ -33,6 +33,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FizzWare.NBuilder">
+      <HintPath>..\..\packages\NBuilder.3.0.1.1\lib\FizzWare.NBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
@@ -53,12 +60,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Coffee.cs" />
     <Compile Include="DeleteSpecs.cs" />
     <Compile Include="Examples.cs" />
     <Compile Include="GetReponseSpecs.cs" />
+    <Compile Include="ComplexTypesSerialisationSpecs.cs" />
     <Compile Include="PostSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PutSpecs.cs" />
+    <Compile Include="Repeat\RepeatSpecs.cs" />
     <Compile Include="RequestSpecs.cs" />
     <Compile Include="ResponseSpecs.cs" />
     <Compile Include="StartingHostSpecs.cs" />
@@ -68,6 +78,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\source\Boomerang.Extensions\Boomerang.Extensions.csproj">
+      <Project>{d8348cd0-eb13-427c-bd36-892fda050976}</Project>
+      <Name>Boomerang.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\source\boomerang.host\boomerang.host.csproj">
       <Project>{d319b04c-384a-40f7-baf9-12557efcb29c}</Project>
       <Name>boomerang.host</Name>

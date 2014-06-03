@@ -67,6 +67,7 @@
     <Compile Include="WhenConfiguringGetRequests.cs" />
     <Compile Include="WhenConfiguringPosts.cs" />
     <Compile Include="WhenConfiguringPutRequests.cs" />
+    <Compile Include="WhenConfiguringRepeats.cs" />
     <Compile Include="WhenProxyServerRecievesRequests.cs" />
     <Compile Include="WhenRespondingToRequests.cs" />
     <Compile Include="WhenStartingServer.cs" />
@@ -75,6 +76,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\source\Boomerang.Extensions\Boomerang.Extensions.csproj">
+      <Project>{d8348cd0-eb13-427c-bd36-892fda050976}</Project>
+      <Name>Boomerang.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\source\boomerang.host\boomerang.host.csproj">
       <Project>{d319b04c-384a-40f7-baf9-12557efcb29c}</Project>
       <Name>boomerang.host</Name>

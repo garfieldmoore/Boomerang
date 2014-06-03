@@ -32,6 +32,7 @@
         public static string ResponseText { get; set; }
 
         public static string StatusCode { get; set; }
+        public static object Data { get; set; }
 
         #endregion
 
@@ -67,6 +68,7 @@
         public static void WhenPostsSentTo(string webHostAddress, string data)
         {
             var request = new RestRequest(webHostAddress, Method.POST);
+            request.RequestFormat = DataFormat.Json;
             request.AddBody(data);
             var client = new RestClient();
             IRestResponse response = client.Execute(request);
@@ -82,6 +84,18 @@
             var client = new RestClient();
             IRestResponse response = client.Execute(request);
 
+            StatusCode = response.StatusCode.ToString();
+            ResponseText = response.Content;
+        }
+
+        public static void WhenGetRequestSentOf<T>(string address) where T : new()
+        {
+            ResponseHeaders = new Dictionary<string, string>();
+            var request = new RestRequest(address, Method.GET);
+            var client = new RestClient();
+
+            var response = client.ExecuteAsGet<T>(request,"GET");
+            Data = response.Data;
             StatusCode = response.StatusCode.ToString();
             ResponseText = response.Content;
         }

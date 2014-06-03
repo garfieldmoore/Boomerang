@@ -1,4 +1,7 @@
-﻿namespace boomerang.tests.acceptance
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace boomerang.tests.acceptance
 {
     using NUnit.Framework;
 
@@ -8,8 +11,6 @@
 
     public class PostSpecs
     {
-        #region Public Methods and Operators
-
         [Test]
         public void Should_respond_with_expectation()
         {
@@ -52,6 +53,20 @@
             Spec.ResponseText.ShouldBe("response 2");
             Spec.StatusCode.ShouldBe("OK");
         }
-        #endregion
+
+        [Test]
+        public void Should_set_request_body()
+        {
+            Spec.GivenAServerOnSpecificPort()
+                .Post("myaddress1").Returns("response 1", 201);
+
+            Spec.WhenPostsSentTo(Spec.HostAddress + "myaddress1", "my data");
+
+            var received = Spec.GivenAServerOnSpecificPort().GetAllReceivedRequests().Where(x=>x.Method=="POST" && x.Address=="/myaddress1").ToList();
+
+            received[0].Method.ShouldBe("POST");
+            received[0].Address.ShouldBe("/myaddress1");
+            received[0].Body.ToString().ShouldContain("my data");
+        }
     }
 }

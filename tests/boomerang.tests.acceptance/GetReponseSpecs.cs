@@ -10,8 +10,6 @@
 
     public class GetReponseSpecs
     {
-        #region Public Methods and Operators
-
         [Test]
         public void Should_allow_expectations_on_server_base_address()
         {
@@ -68,7 +66,5 @@
             Spec.ResponseText.ShouldBe("body2");
             Spec.StatusCode.ShouldBe(HttpStatusCode.Unauthorized.ToString());
         }
-
-        #endregion
     }
 }
