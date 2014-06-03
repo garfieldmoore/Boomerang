@@ -1,6 +1,7 @@
 Boomerang
 ---------
 ---------
+[![Build Status](http://teamcity.codebetter.com/app/rest/builds/buildType:%28id:bt1142%29/statusIcon)](http://teamcity.codebetter.com/viewType.html?buildTypeId=bt1142&guest=1)
 
 Boomerang is a framework for faking external web services in acceptance/integration tests.  
 
