@@ -23,7 +23,6 @@
         [Test, Ignore]
         public void Should_automatically_select_port()
         {
-            Boomerang.Initialize(new DefaultConfigurationFactory());
             Boomerang.Server().Get("address").Returns("started", 201);
 
             Spec.WhenGetRequestSent(Spec.HostAddress + "address");

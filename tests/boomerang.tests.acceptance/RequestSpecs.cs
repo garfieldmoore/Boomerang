@@ -16,12 +16,12 @@
 
         private static AutoResetEvent waitHandle;
 
-        [Test, Ignore]
-        public void Should_intercept_relative_address_on_any_base_address()
+        [Test]
+        public void Should_intercept_relative_address()
         {
             Spec.GivenAServerOnSpecificPort().Get("thisaddress").Returns("body", 201);
 
-            Spec.WhenGetRequestSent("http://www.UnknownBaseAddress/thisaddress");
+            Spec.WhenGetRequestSent(Spec.HostAddress +"thisaddress");
 
             Spec.StatusCode.ShouldBe(HttpStatusCode.Created.ToString());
             Spec.ResponseText.ShouldBe("body");

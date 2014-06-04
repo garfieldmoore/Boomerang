@@ -10,12 +10,12 @@
     public class DefaultConfigurationFactory : IBoomerangConfigurationFactory
     {
         /// <summary>
-        /// Create boomerang instance
+        /// Create default proxy instance
         /// </summary>
-        /// <returns>Returns an instance of IBoomerang</returns>        
-        public IBoomerang Create()
+        /// <returns>Returns an instance of proxy</returns>        
+        public IMasqarade Create()
         {
-            return new BoomarangImpl(new FiddlerProxy());
+            return new FiddlerProxy();
         }
     }
 }

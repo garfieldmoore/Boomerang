@@ -34,7 +34,7 @@
                     return server;
                 }
 
-                server = configurationFactory.Create();
+                server = new BoomarangImpl(configurationFactory.Create());
                 ((BoomarangImpl)server).Start(listeningOnPort);
             }
 

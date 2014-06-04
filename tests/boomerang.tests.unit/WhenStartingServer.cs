@@ -12,7 +12,7 @@
     {
         private IBoomerangConfigurationFactory boomerangConfigurationFactory;
 
-        private BoomarangImpl boomerang;
+        private IMasqarade proxy;
 
         [Test]
         public void Should_call_proxy_start()
@@ -33,7 +33,7 @@
             Boomerang.Initialize(boomerangConfigurationFactory);
             Boomerang.Server();
 
-            boomerang.Received(1).Start(0);
+            proxy.Received(1).Start(0);
         }
 
         [Test]
@@ -61,14 +61,14 @@
             Boomerang.Initialize(boomerangConfigurationFactory);
             Boomerang.Server();
 
-            boomerang.Received(1).Stop();
+            proxy.Received(1).Stop();
         }
 
         private void GivenConfigurationFactoryCreatesProxyListener()
         {
             boomerangConfigurationFactory = Substitute.For<IBoomerangConfigurationFactory>();
-            boomerang = Substitute.For<BoomarangImpl>();
-            boomerangConfigurationFactory.Create().Returns(boomerang);
+            proxy = Substitute.For<IMasqarade>();
+            boomerangConfigurationFactory.Create().Returns(proxy);
         }
     }
 }

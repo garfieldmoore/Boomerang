@@ -22,14 +22,15 @@ namespace CoffeTime.Specifications
             
             var dictionary = new Dictionary<string, string>() { { "content-type", "application/json" } };
 
-            Boomerang.Server(5100).Get("/api/menu").Returns(JsonConvert.SerializeObject(products), 200, dictionary);
+            var serializeObject = JsonConvert.SerializeObject(products);
+            Boomerang.Server(5100).Get("/api/menu").Returns(serializeObject, 200, dictionary);
         }
 
         [When(@"bobbie asks for the menu")]
         public void WhenBobbieAsksForTheMenu()
         {
             var service = new MenuService();
-            var menuItems = service.GetMenu("http://rainbow.co.uk:5100/api/menu");
+            var menuItems = service.GetMenu("http://localhost:5100/api/menu");
             ScenarioContext.Current.Add("menu", menuItems);
         }
 

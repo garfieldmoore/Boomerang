@@ -8,7 +8,7 @@
         /// <summary>
         /// Creates the instance
         /// </summary>
-        /// <returns>An instance of IBoomerang</returns>
-        IBoomerang Create();
+        /// <returns>An instance of IBoomerang proxy</returns>
+        IMasqarade Create();
     }
 }
