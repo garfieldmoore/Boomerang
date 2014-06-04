@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>framework for faking external web services for acceptance tests</description>
     <releaseNotes>Extension made easier by changing interface of configuration factory</releaseNotes>
-    <summary>Extensible framework to improve acceptance testing by allowing developers to specify fake http responses. Fluent interface directly supports GET, POST, PUT & DELETE.  Less common verbs can be configured with the Request(string address, string verb) method.</summary>
+    <summary>Extensible framework to improve acceptance testing by allowing developers to specify fake http responses.</summary>
     <copyright>Copyright 2013</copyright>
     <dependencies>
     </dependencies>
