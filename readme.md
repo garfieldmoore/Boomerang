@@ -52,4 +52,4 @@ This registers 10 gets to anadress that returns a 200 response and one that retu
 
 Aknowledgments
 --------------
-Our build servers has been provided by [CodeBetter](http://www.codebetter.com) and [JetBrains](http://www.jetbrains.com)
+Our build servers have been provided by the awesome [CodeBetter](http://www.codebetter.com) and [JetBrains](http://www.jetbrains.com)
