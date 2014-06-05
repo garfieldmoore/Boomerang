@@ -120,7 +120,7 @@
             }
 
             FireReceivedRequest(requesteventArgs);
-            SetResponse(requesteventArgs.Method, requesteventArgs.RelativePath);
+            SetResponse(requesteventArgs.Method, requesteventArgs.RelativePath, requesteventArgs.Body);
         }
 
         private void FireReceivedRequest(ProxyRequestEventArgs eventArgs)
@@ -131,9 +131,9 @@
             }
         }
 
-        private void SetResponse(string method, string relativePath)
+        private void SetResponse(string method, string relativePath, object body)
         {
-            Response expectedResponse = Registrations.GetNextResponseFor(method, relativePath);
+            Response expectedResponse = Registrations.GetNextResponseFor(method, relativePath, body);
 
             proxy.SetResponse(expectedResponse);
         }

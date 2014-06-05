@@ -20,7 +20,7 @@
         }
 
         /// <summary>
-        /// Creates a new web service
+        /// Creates a new web service or returns an existing one.
         /// </summary>
         /// <param name="listeningOnPort">The port number to listen on.</param>
         /// <returns>Returns a proxy server listening on [port]</returns>
@@ -42,7 +42,7 @@
         }
 
         /// <summary>
-        /// Creates a new web service listening
+        /// Creates a new web service or returns an existing one.
         /// </summary>
         /// <returns>Returns a proxy server listening on an available port</returns>
         /// <remarks>The server creates a single proxy.  Multiple calls will return the same proxy server</remarks>

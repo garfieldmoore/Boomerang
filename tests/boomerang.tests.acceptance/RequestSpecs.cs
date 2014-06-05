@@ -6,6 +6,8 @@
 
     using NUnit.Framework;
 
+    using Newtonsoft.Json;
+
     using Rainbow.Testing.Boomerang.Host;
 
     using Shouldly;
@@ -21,7 +23,7 @@
         {
             Spec.GivenAServerOnSpecificPort().Get("thisaddress").Returns("body", 201);
 
-            Spec.WhenGetRequestSent(Spec.HostAddress +"thisaddress");
+            Spec.WhenGetRequestSent(Spec.HostAddress + "thisaddress");
 
             Spec.StatusCode.ShouldBe(HttpStatusCode.Created.ToString());
             Spec.ResponseText.ShouldBe("body");
@@ -68,6 +70,25 @@
             }
 
             receivedRequests.ShouldBe(1);
+        }
+
+        [Test]
+        public void Should_intercept_relative_address_with_body()
+        {
+            Spec.GivenAServerOnSpecificPort().Request("address", "POST", JsonConvert.SerializeObject("body")).Returns("new body", 201);
+            Spec.WhenPostsSentTo(Spec.HostAddress + "address", "body");
+            Spec.StatusCode.ShouldBe("Created");
+            Spec.ResponseText.ShouldBe("new body");
+        }
+
+        [Test]
+        public void Should_return_not_configured_error_when_no_body_matched()
+        {
+            Spec.GivenAServerOnSpecificPort().Request("address", "POST", JsonConvert.SerializeObject("body")).Returns("new body", 201);
+            Spec.WhenPostsSentTo(Spec.HostAddress + "address", "body1");
+
+            Spec.StatusCode.ShouldBe("BadRequest");
+            Spec.ResponseText.ShouldContain("Boomerang error");
         }
 
         private static void OnReceivedRequest(object sender, ProxyRequestEventArgs e)

@@ -31,7 +31,7 @@
                     FiddlerApplication.oProxy.Detach();
                 }
 
-                Thread.Sleep(500);
+                //Thread.Sleep(500);
                 FiddlerApplication.Shutdown();
             }
         }

@@ -23,6 +23,27 @@ namespace boomerang.tests.acceptance
         }
 
         [Test]
+        public void Should_respond_with_expectation_for_body()
+        {
+            Spec.GivenAServerOnSpecificPort().Post("myentity", "\"my body\"").Returns("this is my response", 201);
+
+            Spec.WhenPostsSentTo(Spec.HostAddress + "myentity", "my body");
+
+            Spec.ResponseText.ShouldBe("this is my response");
+            Spec.StatusCode.ShouldBe("Created");
+        }
+
+        [Test]
+        public void Should_respond_with__error_for_unregistered_body()
+        {
+            Spec.GivenAServerOnSpecificPort().Post("myentity", "my body").Returns("this is my response", 201);
+
+            Spec.WhenPostsSentTo(Spec.HostAddress + "myentity", "other body");
+
+            Spec.StatusCode.ShouldBe("BadRequest");
+        }
+
+        [Test]
         public void Should_register_posts_for_multiple_addresses()
         {
             Spec.GivenAServerOnSpecificPort()
@@ -62,7 +83,7 @@ namespace boomerang.tests.acceptance
 
             Spec.WhenPostsSentTo(Spec.HostAddress + "myaddress1", "my data");
 
-            var received = Spec.GivenAServerOnSpecificPort().GetAllReceivedRequests().Where(x=>x.Method=="POST" && x.Address=="/myaddress1").ToList();
+            var received = Spec.GivenAServerOnSpecificPort().GetAllReceivedRequests().Where(x => x.Method == "POST" && x.Address == "/myaddress1").ToList();
 
             received[0].Method.ShouldBe("POST");
             received[0].Address.ShouldBe("/myaddress1");

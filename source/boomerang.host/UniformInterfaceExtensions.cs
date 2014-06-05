@@ -42,6 +42,28 @@
         /// <param name="target">Configuration handler for proxy server</param>
         /// <param name="relativeAddress">Relative uri of the request</param>
         /// <returns>Configuration handler</returns>
+        public static IBoomerang Put(this IBoomerang target, string relativeAddress, string body)
+        {
+            return Request(target, relativeAddress, "PUT", body);
+        }
+
+        /// <summary>
+        /// Add a POST request to be intercepted at the given address
+        /// </summary>
+        /// <param name="host">Configuration handler for proxy server</param>
+        /// <param name="relativeAddress">Relative uri of the request</param>
+        /// <returns>Configuration handler</returns>
+        public static IBoomerang Post(this IBoomerang host, string relativeAddress, string body)
+        {
+            return Request(host, relativeAddress, "POST", body);
+        }
+
+        /// <summary>
+        /// Add a PUT request to be intercepted at the given address
+        /// </summary>
+        /// <param name="target">Configuration handler for proxy server</param>
+        /// <param name="relativeAddress">Relative uri of the request</param>
+        /// <returns>Configuration handler</returns>
         public static IBoomerang Put(this IBoomerang target, string relativeAddress)
         {
             return Request(target, relativeAddress, "PUT");
@@ -74,7 +96,7 @@
         {
             CollectEvents(host);
 
-            var requestResponse = new Request { Address = relativeAddress, Method = httpMethod};
+            var requestResponse = new Request { Address = relativeAddress, Method = httpMethod };
             ((BoomarangImpl)host).AddAddress(requestResponse);
             return host;
         }
@@ -135,7 +157,18 @@
 
         private static void host_OnReceivedRequest(object sender, ProxyRequestEventArgs e)
         {
-            ReceivedRequests.Add(new Request() {Method = e.Method, Address = e.RelativePath, Body = e.Body});
+            ReceivedRequests.Add(new Request() { Method = e.Method, Address = e.RelativePath, Body = e.Body });
+        }
+
+        public static IBoomerang Request(this IBoomerang host, string relativeAddress, string httpMethod, string body)
+        {
+            CollectEvents(host);
+
+            var requestResponse = new Request { Address = relativeAddress, Method = httpMethod, Body = body };
+            ((BoomarangImpl)host).AddAddress(requestResponse);
+            return host;
+
+            return host;
         }
     }
 }

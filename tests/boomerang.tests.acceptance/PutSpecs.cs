@@ -52,6 +52,29 @@
             Spec.ResponseText.ShouldBe("response 2");
             Spec.StatusCode.ShouldBe("OK");
         }
+
+        [Test]
+        public void Should_respond_with_expectation_for_body()
+        {
+            Spec.GivenAServerOnSpecificPort().Put("myentity", "\"my body\"").Returns("this is my response", 201);
+
+            Spec.WhenPutSentTo(Spec.HostAddress + "myentity", "my body");
+
+            Spec.ResponseText.ShouldBe("this is my response");
+            Spec.StatusCode.ShouldBe("Created");
+        }
+
+        [Test]
+        public void Should_respond_with__error_for_unregistered_body()
+        {
+            Spec.GivenAServerOnSpecificPort().Post("myentity", "my body").Returns("this is my response", 201);
+
+            Spec.WhenPostsSentTo(Spec.HostAddress + "myentity", "other body");
+
+            Spec.StatusCode.ShouldBe("BadRequest");
+        }
+
+
         #endregion
     }
 }

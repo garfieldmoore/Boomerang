@@ -48,7 +48,7 @@
         /// <param name="other">An object to compare with this object.</param>
         public bool Equals(Request other)
         {
-            return AreAddressEqual(other) && AreMethodSame(other);
+            return AreAddressEqual(other) && AreMethodSame(other) && AreSameBody(other);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@
         /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
-            return (this.Method + this.Address).ToLower().GetHashCode();
+            return (this.Method + this.Address + (Body ?? string.Empty)).ToLower().GetHashCode();
         }
 
         private bool AreMethodSame(Request other)
@@ -83,6 +83,26 @@
         private bool AreAddressEqual(Request other)
         {
             return string.Compare(other.Address, this.Address, StringComparison.OrdinalIgnoreCase) == 0;
+        }
+
+        private bool AreSameBody(Request other)
+        {
+            if ((other.Body == null || other.Body == string.Empty) && (Body == null || Body == string.Empty))
+            {
+                return true;
+            }
+
+            if ((Body == null && Body != string.Empty) && other.Body != null)
+            {
+                return false;
+            }
+
+            if ((Body != null && Body != string.Empty) && other.Body == null)
+            {
+                return false;
+            }
+
+            return string.Compare(other.Body.ToString(), this.Body.ToString(), StringComparison.OrdinalIgnoreCase) == 0;
         }
     }
 }
