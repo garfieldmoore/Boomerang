@@ -45,9 +45,9 @@
             }
 
             var newRegistration = new Request() { Method = request.Method, Address = request.Address };
+            this.previousRequest = newRegistration;
             if (!RequestResponseRegistrations.ContainsKey(newRegistration))
             {
-                this.previousRequest = newRegistration;
                 RequestResponseRegistrations.Add(
                     new KeyValuePair<Request, Queue<Response>>(this.previousRequest, new Queue<Response>()));
             }

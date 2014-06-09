@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/garfieldmoore/Boomerang</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>framework for faking external web services for acceptance tests</description>
-    <releaseNotes>Extension made easier by changing interface of configuration factory</releaseNotes>
+    <releaseNotes>Fixed registrations defect</releaseNotes>
     <summary>Extensible framework to improve acceptance testing by allowing developers to specify fake http responses.</summary>
     <copyright>Copyright 2013</copyright>
     <dependencies>
