@@ -43,18 +43,8 @@
             {
                 request.Address = "/" + request.Address;
             }
-            Request newRegistration;
-            if (request.Body == null)
-            {
-                newRegistration = new Request() { Method = request.Method, Address = request.Address };
 
-            }
-            else
-            {
-                newRegistration = new Request() { Method = request.Method, Address = request.Address, Body = request.Body };
-
-            }
-
+            var newRegistration = new Request() { Method = request.Method, Address = request.Address };
             if (!RequestResponseRegistrations.ContainsKey(newRegistration))
             {
                 this.previousRequest = newRegistration;
@@ -129,11 +119,20 @@
         /// <returns>The next response if there is one registered, otherwise a HTTP Resource Not Found (400) response</returns>
         public Response GetNextResponseFor(string method, string addressTarget)
         {
+            Queue<Response> requestResponse;
+
             addressTarget = ConvertToRelativeAddressFormat(addressTarget);
 
-            var request = new Request() { Address = addressTarget, Method = method };
+            var foundRequest =
+                RequestResponseRegistrations.TryGetValue(
+                    new Request() { Address = addressTarget, Method = method }, out requestResponse);
 
-            return GetNextResponseFor(request);
+            if (!foundRequest || requestResponse == null || requestResponse.Count == 0)
+            {
+                return new Response() { StatusCode = 400, Body = ResourceNotFoundMessage };
+            }
+
+            return requestResponse.Dequeue();
         }
 
         private static string ConvertToRelativeAddressFormat(string addressTarget)
@@ -144,47 +143,6 @@
             }
 
             return addressTarget;
-        }
-
-        /// <summary>
-        /// Returns the next Response for a Request
-        /// </summary>
-        /// <param name="method">The HTTP request method</param>
-        /// <param name="addressTarget">The relative uri we want a response for</param>
-        /// <param name="requestBody">The body of the request to match.</param>
-        /// <returns>The next response if there is one registered, otherwise a HTTP Resource Not Found (400) response</returns>
-        /// <remarks>If thre are no responses configured with the method, address and body combination a Not Found response will be returned.</remarks>
-        public Response GetNextResponseFor(string method, string addressTarget, object requestBody)
-        {
-            addressTarget = ConvertToRelativeAddressFormat(addressTarget);
-
-            var request = new Request() { Address = addressTarget, Method = method, Body = requestBody };
-
-            return GetNextResponseFor(request);
-        }
-
-        protected Response GetNextResponseFor(Request request)
-        {
-            Queue<Response> requestResponse;
-            var foundRequest =
-                RequestResponseRegistrations.TryGetValue(
-                    request, out requestResponse);
-
-            if (!foundRequest)
-            {
-                var newRequest = new Request() { Address = request.Address, Method = request.Method };
-                foundRequest =
-                RequestResponseRegistrations.TryGetValue(
-                    newRequest, out requestResponse);
-            }
-
-            if (!foundRequest || requestResponse == null || requestResponse.Count == 0)
-            {
-                return new Response() { StatusCode = 400, Body = ResourceNotFoundMessage };
-            }
-
-            return requestResponse.Dequeue();
-
         }
     }
 }

@@ -80,7 +80,6 @@
         public static void WhenPutSentTo(string webHostAddress, string data)
         {
             var request = new RestRequest(webHostAddress, Method.PUT);
-            request.RequestFormat=DataFormat.Json;
             request.AddBody(data);
             var client = new RestClient();
             IRestResponse response = client.Execute(request);

@@ -70,7 +70,6 @@
     <Compile Include="WhenConfiguringRepeats.cs" />
     <Compile Include="WhenProxyServerRecievesRequests.cs" />
     <Compile Include="WhenRespondingToRequests.cs" />
-    <Compile Include="WhenRespondingToRequestsWithBody.cs" />
     <Compile Include="WhenStartingServer.cs" />
   </ItemGroup>
   <ItemGroup>

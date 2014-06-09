@@ -8,8 +8,6 @@
 
     using Rainbow.Testing.Boomerang.Host;
 
-    using Rainbow.Testing.Boomerang.Extensions;
-
     public class WhenStartingServer
     {
         private IBoomerangConfigurationFactory boomerangConfigurationFactory;

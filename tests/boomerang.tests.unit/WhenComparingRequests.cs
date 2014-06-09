@@ -41,36 +41,6 @@
         }
 
         [Test]
-        public void Different_body_should_unequal_with_missing_body()
-        {
-            var request = new Request() { Address = "Address1", Method = "put", Body = "body" };
-            var request2 = new Request() { Address = "Address1", Method = "PUT" };
-
-            request.Equals(request2).ShouldBe(false);
-            request.GetHashCode().ShouldNotBe(request2.GetHashCode());
-        }
-
-        [Test]
-        public void Null_body_should_equal_empty_body()
-        {
-            var request = new Request() { Address = "Address1", Method = "put", Body = "" };
-            var request2 = new Request() { Address = "Address1", Method = "PUT", Body = null };
-
-            request.Equals(request2).ShouldBe(true);
-            request.GetHashCode().ShouldBe(request2.GetHashCode());
-        }
-
-        [Test]
-        public void Null_other_body_should_equal_empty_body()
-        {
-            var request = new Request() { Address = "Address1", Method = "put", Body = null };
-            var request2 = new Request() { Address = "Address1", Method = "PUT", Body = "" };
-
-            request.Equals(request2).ShouldBe(true);
-            request.GetHashCode().ShouldBe(request2.GetHashCode());
-        }
-
-        [Test]
         public void Relative_address_should_start_with_forward_slash()
         {
             var request = new Request();

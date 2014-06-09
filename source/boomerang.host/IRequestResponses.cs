@@ -62,15 +62,5 @@
         /// <param name="statusCode">the response status code</param>
         /// <param name="headers">The headers expected in the response. If setting this the default headers will not be set.</param>
         void AddResponse(string body, int statusCode, IDictionary<string, string> headers);
-
-        /// <summary>
-        /// Returns the next Response for a Request
-        /// </summary>
-        /// <param name="method">The HTTP request method</param>
-        /// <param name="addressTarget">The relative uri we want a response for</param>
-        /// <param name="requestBody">The body of the request to match.</param>
-        /// <returns>The next response if there is one registered, otherwise a HTTP Resource Not Found (400) response</returns>
-        /// <remarks>If thre are no responses configured with the method, address and body combination a Not Found response will be returned.</remarks>
-        Response GetNextResponseFor(string method, string addressTarget, object requestBody);
     }
 }
