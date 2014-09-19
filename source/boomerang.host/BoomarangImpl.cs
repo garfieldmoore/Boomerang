@@ -85,11 +85,13 @@
         ///     Start the proxy server
         /// </summary>
         /// <param name="port">The port number to listen on</param>
-        public virtual void Start(int port)
+        public virtual BoomerangExitCode Start(int port)
         {
             AppDomain.CurrentDomain.DomainUnload += OnCurrentDomainUnload;
             proxy.Start(port);
             proxy.BeforeRequest += OnProxyBeforeRequest;
+
+            return 0;
         }
 
         /// <summary>

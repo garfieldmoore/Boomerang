@@ -1,7 +1,9 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host
 {
+    using System;
     using System.ComponentModel;
-    using System.Threading;
+
+    using Rainbow.Testing.Boomerang.Host.Configuration;
 
     /// <summary>
     /// Factory to create proxy servers
@@ -9,22 +11,21 @@
     public class Boomerang
     {
         private static IBoomerang server;
-
-        private static IBoomerangConfigurationFactory configurationFactory;
+        private static IBoomerangConfigurationFactory hostFactory;
 
         private static object serverLock = new object();
 
         static Boomerang()
         {
-            configurationFactory = new DefaultConfigurationFactory();
+            hostFactory=new DefaultConfigurationFactory();
         }
-
         /// <summary>
         /// Creates a new web service
         /// </summary>
         /// <param name="listeningOnPort">The port number to listen on.</param>
         /// <returns>Returns a proxy server listening on [port]</returns>
         /// <remarks>The server creates a single proxy.  Multiple calls will return the same proxy server</remarks>
+        [Obsolete("Use the create factory method")]
         public static IBoomerang Server(int listeningOnPort)
         {
             lock (serverLock)
@@ -34,8 +35,8 @@
                     return server;
                 }
 
-                server = new BoomarangImpl(configurationFactory.Create());
-                ((BoomarangImpl)server).Start(listeningOnPort);
+                server = new BoomarangImpl(hostFactory.Create());
+                server.Start(listeningOnPort);
             }
 
             return server;
@@ -46,6 +47,7 @@
         /// </summary>
         /// <returns>Returns a proxy server listening on an available port</returns>
         /// <remarks>The server creates a single proxy.  Multiple calls will return the same proxy server</remarks>
+        [Obsolete("Use the create method.")]
         public static IBoomerang Server()
         {
             return Server(0);
@@ -57,6 +59,7 @@
         /// <param name="boomerangFactory">The factory used for creating Boomerang</param>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use Create() method and set Host builder with the UseHostBuilder() method")]
         public static void Initialize(IBoomerangConfigurationFactory boomerangFactory)
         {
             lock (serverLock)
@@ -67,8 +70,28 @@
                 }
 
                 server = null;
-                configurationFactory = boomerangFactory;
+                hostFactory = boomerangFactory;
             }
+        }
+
+        /// <summary>
+        /// Create a new proxy server.
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static IBoomerang Create(Action<IHostConfiguration> configuration)
+        {
+            var hostConfigurator = new HostConfigurator();
+
+            configuration(hostConfigurator);
+
+            return hostConfigurator.CreateHost();
+        }
+
+        public static BoomerangExitCode Start(Action<IHostConfiguration> configuration)
+        {
+            return Create(configuration).Start(0);
         }
     }
 }

@@ -11,5 +11,7 @@
         /// Fired when requests are received and before the request is processed
         /// </summary>
         event EventHandler<ProxyRequestEventArgs> OnReceivedRequest;
+
+        BoomerangExitCode Start(int port);
     }
 }

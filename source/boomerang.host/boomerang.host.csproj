@@ -47,10 +47,13 @@
   <ItemGroup>
     <Compile Include="BoomarangImpl.cs" />
     <Compile Include="Boomerang.cs" />
+    <Compile Include="BoomerangExitCode.cs" />
     <Compile Include="DefaultConfigurationFactory.cs" />
     <Compile Include="FiddlerProxy.cs" />
+    <Compile Include="Configuration\HostConfigurator.cs" />
     <Compile Include="IBoomerangConfigurationFactory.cs" />
     <Compile Include="IBoomerang.cs" />
+    <Compile Include="Configuration\IHostConfiguration.cs" />
     <Compile Include="IMasqarade.cs" />
     <Compile Include="IRequestResponses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -60,6 +63,7 @@
     <Compile Include="Response.cs" />
     <Compile Include="UniformInterfaceExtensions.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
