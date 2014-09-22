@@ -18,13 +18,7 @@
         {
             Boomerang.Create(Substitute.For<Action<IHostConfiguration>>()).ShouldBeTypeOf<IBoomerang>();
         }
-
-        [Test]
-        public void Should_set_port()
-        {
-            var proxy = Boomerang.Create(x => x.OnPort(10));
-        }
-
+       
         [Test]
         public void Should_set_fake_factory()
         {

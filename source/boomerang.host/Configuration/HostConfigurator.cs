@@ -2,19 +2,18 @@
 {
     public class HostConfigurator : IHostConfiguration
     {
-        private int startingPort;
-
-        private static IBoomerangConfigurationFactory hostFactory;
+        HostSettings settings;
 
         public HostConfigurator()
         {
+            settings=new HostSettings();
             hostFactory = new DefaultConfigurationFactory();
-
         }
+        private static IBoomerangConfigurationFactory hostFactory;
 
         public void OnPort(int portNumber)
         {
-            startingPort = portNumber;
+            settings.Port = portNumber;
         }
 
         public void UseHostBuilder(IBoomerangConfigurationFactory hostFactory)
@@ -24,7 +23,7 @@
 
         public IBoomerang CreateHost()
         {
-            return new BoomarangImpl(hostFactory.Create());
+            return new BoomarangImpl(hostFactory.Create(), settings);
         }
     }
 }

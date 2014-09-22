@@ -11,6 +11,8 @@
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class BoomarangImpl : IBoomerang
     {
+        private readonly HostSettings settings;
+
         /// <summary>
         /// Address and responses
         /// </summary>
@@ -49,6 +51,11 @@
         {
             this.proxy = proxy;
             Registrations = responses;
+        }
+
+        public BoomarangImpl(IMasqarade create, HostSettings settings): this(create)
+        {
+            this.settings = settings;
         }
 
         /// <summary>
@@ -92,6 +99,11 @@
             proxy.BeforeRequest += OnProxyBeforeRequest;
 
             return 0;
+        }
+
+        public BoomerangExitCode Start()
+        {
+            return Start(settings.Port);
         }
 
         /// <summary>

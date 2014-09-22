@@ -83,15 +83,16 @@
         public static IBoomerang Create(Action<IHostConfiguration> configuration)
         {
             var hostConfigurator = new HostConfigurator();
+            if (hostFactory != null)
+                hostConfigurator.UseHostBuilder(hostFactory);
 
             configuration(hostConfigurator);
-
             return hostConfigurator.CreateHost();
         }
 
         public static BoomerangExitCode Start(Action<IHostConfiguration> configuration)
         {
-            return Create(configuration).Start(0);
+            return Create(configuration).Start();
         }
     }
 }

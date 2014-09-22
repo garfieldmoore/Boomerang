@@ -13,5 +13,11 @@
         event EventHandler<ProxyRequestEventArgs> OnReceivedRequest;
 
         BoomerangExitCode Start(int port);
+        BoomerangExitCode Start();
+    }
+
+    public class HostSettings
+    {
+        public int Port { get; set; }
     }
 }
