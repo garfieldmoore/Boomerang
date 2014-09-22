@@ -87,7 +87,9 @@
                 hostConfigurator.UseHostBuilder(hostFactory);
 
             configuration(hostConfigurator);
-            return hostConfigurator.CreateHost();
+            server = hostConfigurator.CreateHost();
+
+            return server;
         }
 
         public static BoomerangExitCode Start(Action<IHostConfiguration> configuration)
