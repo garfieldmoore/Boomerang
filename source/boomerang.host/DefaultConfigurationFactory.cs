@@ -2,6 +2,8 @@
 {
     using System.ComponentModel;
 
+    using Rainbow.Testing.Boomerang.Host.HttpListenerProxy;
+
     /// <summary>
     /// Default proxy server factory
     /// </summary>
@@ -15,7 +17,8 @@
         /// <returns>Returns an instance of proxy</returns>        
         public IMasqarade Create()
         {
-            return new FiddlerProxy();
+            //return new FiddlerProxy();
+            return new HttpListenerFactory().Create();
         }
     }
 }

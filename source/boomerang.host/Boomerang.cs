@@ -12,12 +12,13 @@
     {
         private static IBoomerang server;
         private static IBoomerangConfigurationFactory hostFactory;
-
         private static object serverLock = new object();
+
+        public static readonly int DefaultHttpPort = 5100;
 
         static Boomerang()
         {
-            hostFactory=new DefaultConfigurationFactory();
+            hostFactory = new DefaultConfigurationFactory();
         }
         /// <summary>
         /// Creates a new web service
@@ -36,6 +37,7 @@
                 }
 
                 server = new BoomarangImpl(hostFactory.Create());
+
                 server.Start(listeningOnPort);
             }
 
@@ -50,7 +52,7 @@
         [Obsolete("Use the create method.")]
         public static IBoomerang Server()
         {
-            return Server(0);
+            return Server(DefaultHttpPort);
         }
 
         /// <summary>

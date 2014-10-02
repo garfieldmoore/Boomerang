@@ -26,14 +26,14 @@
         }
 
         [Test]
-        public void Should_auto_select_unused_port()
+        public void Should_start_on_default_port()
         {
             GivenConfigurationFactoryCreatesProxyListener();
 
             Boomerang.Initialize(boomerangConfigurationFactory);
             Boomerang.Server();
 
-            proxy.Received(1).Start(0);
+            proxy.Received(1).Start(5100);
         }
 
         [Test]

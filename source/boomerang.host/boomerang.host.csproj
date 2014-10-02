@@ -51,6 +51,10 @@
     <Compile Include="DefaultConfigurationFactory.cs" />
     <Compile Include="FiddlerProxy.cs" />
     <Compile Include="Configuration\HostConfigurator.cs" />
+    <Compile Include="HttpListenerProxy\HttpListenerProxy.cs" />
+    <Compile Include="HttpListenerProxy\HttpListenerRequestArgs.cs" />
+    <Compile Include="HttpListenerProxy\MasqaradeWrapper.cs" />
+    <Compile Include="HttpListenerProxy\OsVersionException.cs" />
     <Compile Include="IBoomerangConfigurationFactory.cs" />
     <Compile Include="IBoomerang.cs" />
     <Compile Include="Configuration\IHostConfiguration.cs" />
