@@ -5,26 +5,27 @@
     using NUnit.Framework;
 
     using Rainbow.Testing.Boomerang.Host;
+    using Rainbow.Testing.Boomerang.Host.HttpListenerProxy;
 
     using Shouldly;
 
     public class LamdaConfiguration
     {
-        [Test,Ignore]
-        public void Should_configure_port()
+        [Test]
+        public void Should_configure_address()
         {
-            Boomerang.Initialize(new DefaultConfigurationFactory());
-            var proxy = Boomerang.Create(x=>x.OnPort(5200)).Get("test").Returns("test 1", 201);
+            var proxy = Boomerang.Create(x =>
+                {
+                    x.AtAddress("http://localhost:5600/");
+                    x.UseHostBuilder(new HttpListenerFactory());
+                }).Get("newtest").Returns("test 1", 201);
 
             proxy.Start();
 
-            Spec.WhenGetRequestSent("http://localhost:5200/test");
+            Spec.WhenGetRequestSent("http://localhost:5600/newtest");
             Spec.StatusCode.ShouldBe(HttpStatusCode.Created.ToString());
             Spec.ResponseText.ShouldBe("test 1");
-
-            Boomerang.Initialize(new DefaultConfigurationFactory());
-
+            
         }
-    
     }
 }

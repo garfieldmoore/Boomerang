@@ -31,5 +31,7 @@
         /// </summary>
         /// <param name="response">The response to set</param>
         void SetResponse(Response response);
+
+        void Start(string address);
     }
 }

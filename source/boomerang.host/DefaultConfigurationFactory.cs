@@ -17,7 +17,6 @@
         /// <returns>Returns an instance of proxy</returns>        
         public IMasqarade Create()
         {
-            //return new FiddlerProxy();
             return new HttpListenerFactory().Create();
         }
     }

@@ -13,12 +13,12 @@
         public MasqaradeWrapper(Server server)
         {
             this.server = server;
+            server.ReceivedRequest += ServerReceivedRequest;
+
         }
 
         public void Start(int portNumber)
         {
-            server.ReceivedRequest += ServerReceivedRequest;
-
             server.Start(string.Format("http://localhost:{0}", portNumber));
         }
 
@@ -30,6 +30,11 @@
         public void SetResponse(Response response)
         {
             server.WriteResponse(response.Body, response.StatusCode, response.Headers, response.ContentType, response.CacheControl);
+        }
+
+        public void Start(string address)
+        {
+            server.Start(address);
         }
 
         private void ServerReceivedRequest(object sender, HttpListenerRequestArgs e)

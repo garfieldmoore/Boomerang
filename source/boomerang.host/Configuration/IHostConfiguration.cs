@@ -5,8 +5,8 @@
     /// </summary>
     public interface IHostConfiguration
     {
-        void OnPort(int portNumber);
-
         void UseHostBuilder(IBoomerangConfigurationFactory hostFactory);
+
+        void AtAddress(string url);
     }
 }

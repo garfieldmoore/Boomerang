@@ -1,6 +1,8 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Interface for proxy server controllers
@@ -18,6 +20,11 @@
 
     public class HostSettings
     {
-        public int Port { get; set; }
+        public HostSettings()
+        {
+            Prefixes = new List<string>();
+        }
+
+        public IList<string> Prefixes { get; set; }
     }
 }

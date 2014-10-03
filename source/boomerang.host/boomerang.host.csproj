@@ -49,7 +49,6 @@
     <Compile Include="Boomerang.cs" />
     <Compile Include="BoomerangExitCode.cs" />
     <Compile Include="DefaultConfigurationFactory.cs" />
-    <Compile Include="FiddlerProxy.cs" />
     <Compile Include="Configuration\HostConfigurator.cs" />
     <Compile Include="HttpListenerProxy\HttpListenerProxy.cs" />
     <Compile Include="HttpListenerProxy\HttpListenerRequestArgs.cs" />

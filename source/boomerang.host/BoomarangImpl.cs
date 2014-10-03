@@ -53,7 +53,8 @@
             Registrations = responses;
         }
 
-        public BoomarangImpl(IMasqarade create, HostSettings settings): this(create)
+        public BoomarangImpl(IMasqarade create, HostSettings settings)
+            : this(create)
         {
             this.settings = settings;
         }
@@ -89,9 +90,10 @@
         }
 
         /// <summary>
-        ///     Start the proxy server
+        /// Start the proxy server
         /// </summary>
         /// <param name="port">The port number to listen on</param>
+        [Obsolete("Use parameterless Start() method after configuring server with settings ")]
         public virtual BoomerangExitCode Start(int port)
         {
             AppDomain.CurrentDomain.DomainUnload += OnCurrentDomainUnload;
@@ -101,9 +103,27 @@
             return 0;
         }
 
+        /// <summary>
+        /// Starts the web server.
+        /// </summary>
+        /// <example>
+        /// <code>
+        ///     proxy = Boomerang.Create(
+        //                x =>
+        //                    {
+        //                        x.AtAddress("http://localhost/index/");
+        //                    });
+        //      proxy.Start();
+        /// </code>
+        /// </example>
+        /// <returns>IBoomerang instance that can be configured with requests</returns>
         public BoomerangExitCode Start()
         {
-            return Start(settings.Port);
+            AppDomain.CurrentDomain.DomainUnload += OnCurrentDomainUnload;
+            proxy.Start(settings.Prefixes[0]);
+            proxy.BeforeRequest += OnProxyBeforeRequest;
+
+            return 0;
         }
 
         /// <summary>

@@ -31,6 +31,5 @@
             var proxy = new BoomarangImpl(Substitute.For<IMasqarade>());
             proxy.Start(0).ShouldBe(BoomerangExitCode.Ok);
         }
-
     }
 }
