@@ -91,10 +91,5 @@
             configuration(hostConfigurator);
             return hostConfigurator.CreateHost();
         }
-
-        public static BoomerangExitCode Start(Action<IHostConfiguration> configuration)
-        {
-            return Create(configuration).Start();
-        }
     }
 }

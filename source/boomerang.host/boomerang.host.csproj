@@ -50,6 +50,7 @@
     <Compile Include="BoomerangExitCode.cs" />
     <Compile Include="DefaultConfigurationFactory.cs" />
     <Compile Include="Configuration\HostConfigurator.cs" />
+    <Compile Include="HostSettings.cs" />
     <Compile Include="HttpListenerProxy\HttpListenerProxy.cs" />
     <Compile Include="HttpListenerProxy\HttpListenerRequestArgs.cs" />
     <Compile Include="HttpListenerProxy\MasqaradeWrapper.cs" />
