@@ -8,5 +8,7 @@
         void UseHostBuilder(IBoomerangConfigurationFactory hostFactory);
 
         void AtAddress(string url);
+
+        void AlwaysRespondWithLastConfiguredResponse();
     }
 }

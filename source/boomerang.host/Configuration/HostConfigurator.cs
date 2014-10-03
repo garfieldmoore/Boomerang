@@ -21,6 +21,11 @@
             settings.Prefixes.Add(url);
         }
 
+        public void AlwaysRespondWithLastConfiguredResponse()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IBoomerang CreateHost()
         {
             return new BoomarangImpl(hostFactory.Create(), settings);

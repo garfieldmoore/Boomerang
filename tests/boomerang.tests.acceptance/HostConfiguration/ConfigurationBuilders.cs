@@ -28,7 +28,11 @@
         [Test]
         public void Should_configure_default_url()
         {
-            var proxy = Boomerang.Create(x => x.AtAddress("http://localhost:9900/"));
+            var proxy = Boomerang.Create(x =>
+                { 
+                    x.AtAddress("http://localhost:9900/");
+                    x.AlwaysRespondWithLastConfiguredResponse();
+                });
             proxy.Get("singleresponse").Returns("singleresponse", 200);
 
             proxy.Start();
