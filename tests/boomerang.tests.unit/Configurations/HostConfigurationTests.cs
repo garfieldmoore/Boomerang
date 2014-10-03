@@ -14,18 +14,6 @@
     public class HostConfigurationTests
     {
         [Test]
-        public void Should_create_host()
-        {
-            Boomerang.Create(Substitute.For<Action<IHostConfiguration>>()).ShouldBeTypeOf<IBoomerang>();
-        }
-       
-        [Test]
-        public void Should_set_fake_factory()
-        {
-            var proxy = Boomerang.Create(x => x.UseHostBuilder(new DefaultConfigurationFactory()));
-        }
-
-        [Test]
         public void Starts_returns_ok()
         {
             var proxy = new BoomarangImpl(Substitute.For<IMasqarade>());
