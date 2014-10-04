@@ -32,7 +32,7 @@
         public BoomarangImpl(IMasqarade proxy)
         {
             this.proxy = proxy;
-            RequestHandlers.Handler = new RequestResponses();
+            RequestHandlers.Handler = new ResponseRepository();
         }
 
         /// <summary>
@@ -40,7 +40,7 @@
         /// </summary>
         /// <param name="proxy">Proxy server to use</param>
         /// <param name="responses">Responses expected</param>
-        public BoomarangImpl(IMasqarade proxy, IRequestResponses responses)
+        public BoomarangImpl(IMasqarade proxy, IResponseRepository responses)
         {
             this.proxy = proxy;
             RequestHandlers.Handler = responses;

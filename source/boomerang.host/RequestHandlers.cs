@@ -5,6 +5,6 @@
         /// <summary>
         /// Address and responses
         /// </summary>
-        public static IRequestResponses Handler;
+        public static IResponseRepository Handler;
     }
 }

@@ -5,7 +5,7 @@
     /// <summary>
     /// Handles registering responses to requests
     /// </summary>
-    public class RequestResponses : IRequestResponses
+    public class ResponseRepository : IResponseRepository
     {
         /// <summary>
         /// Response message for requests that have no configured response
@@ -19,7 +19,7 @@
         /// <summary>
         /// Default constructor
         /// </summary>
-        public RequestResponses()
+        public ResponseRepository()
         {
             RequestResponseRegistrations = new Dictionary<Request, Queue<Response>>();
         }

@@ -53,14 +53,14 @@
     <Compile Include="IBoomerang.cs" />
     <Compile Include="IMasqarade.cs" />
     <Compile Include="IRequestHandler.cs" />
-    <Compile Include="IRequestResponses.cs" />
+    <Compile Include="IResponseRepository.cs" />
     <Compile Include="IResponseHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProxyRequestEventArgs.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="RequestConfigurator.cs" />
     <Compile Include="RequestHandlers.cs" />
-    <Compile Include="RequestResponses.cs" />
+    <Compile Include="ResponseRepository.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="ResponseConfigurator.cs" />
     <Compile Include="UniformInterfaceExtensions.cs" />

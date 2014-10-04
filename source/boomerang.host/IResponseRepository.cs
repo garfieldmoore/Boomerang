@@ -5,7 +5,7 @@
     /// <summary>
     /// Handles registering responses to requests
     /// </summary>
-    public interface IRequestResponses
+    public interface IResponseRepository
     {
         /// <summary>
         /// Returns the responses registered for all addresses
