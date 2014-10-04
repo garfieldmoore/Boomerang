@@ -63,6 +63,7 @@
     <Compile Include="ResponseRepository.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="ResponseConfigurator.cs" />
+    <Compile Include="SingleResponseRepository.cs" />
     <Compile Include="UniformInterfaceExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
