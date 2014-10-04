@@ -3,7 +3,7 @@
     internal class RequestHandlers
     {
         /// <summary>
-        /// Address and responses
+        /// returns the repository for http requests and responses.
         /// </summary>
         public static IResponseRepository Handler;
     }

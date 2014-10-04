@@ -2,6 +2,10 @@ using System.Collections.Generic;
 
 namespace Rainbow.Testing.Boomerang.Host
 {
+    /// <summary>
+    /// Stores requests and resposnes as a list.  It only stores one response for each url and http verb combination.
+    /// If more than one response is configured for a url and verb, the most recently configured response will always be used.
+    /// </summary>
     internal class SingleResponseRepository : IResponseRepository
     {
         public IDictionary<Request, Response> RegisteredAddresses = new Dictionary<Request, Response>();

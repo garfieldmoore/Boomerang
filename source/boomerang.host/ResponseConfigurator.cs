@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace Rainbow.Testing.Boomerang.Host
 {
     /// <summary>
-    /// 
+    /// Configures the response for a request
     /// </summary>
     internal class ResponseConfigurator : IResponseHandler
     {
