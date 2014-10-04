@@ -27,6 +27,14 @@
         void AddResponse(string body, int statusCode);
 
         /// <summary>
+        /// Add response to the last address added
+        /// </summary>
+        /// <param name="body">the response body</param>
+        /// <param name="statusCode">the response status code</param>
+        /// <param name="headers">The headers expected in the response. If setting this the default headers will not be set.</param>
+        void AddResponse(string body, int statusCode, IDictionary<string, string> headers);
+
+        /// <summary>
         /// Determines if a request has been registered
         /// </summary>
         /// <param name="request">The request to check</param>
@@ -54,13 +62,5 @@
         /// <param name="addressTarget">The relative uri we want a response for</param>
         /// <returns>The next response if there is one registered, otherwise a HTTP Resource Not Found (400) response</returns>
         Response GetNextResponseFor(string method, string addressTarget);
-
-        /// <summary>
-        /// Add response to the last address added
-        /// </summary>
-        /// <param name="body">the response body</param>
-        /// <param name="statusCode">the response status code</param>
-        /// <param name="headers">The headers expected in the response. If setting this the default headers will not be set.</param>
-        void AddResponse(string body, int statusCode, IDictionary<string, string> headers);
     }
 }

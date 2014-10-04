@@ -10,14 +10,14 @@ namespace boomerang.tests.unit
     {
         public static void ThenShouldContainRequestWithAddress(this BoomarangImpl target, string address)
         {
-            target.Registrations.Contains(new Request() { Address = address, Method = "GET" }).ShouldBe(true);
+            RequestHandlers.Handler.Contains(new Request() { Address = address, Method = "GET" }).ShouldBe(true);
         }
 
         public static void ThenShouldHaveRegisteredNumberOfResponses(this BoomarangImpl target, int count)
         {
             var numberOfResponses = 0;
 
-            foreach (var requestResponseRegistration in target.Registrations.Requests())
+            foreach (var requestResponseRegistration in RequestHandlers.Handler.Requests())
             {
                 numberOfResponses += requestResponseRegistration.Count;
             }
@@ -27,12 +27,12 @@ namespace boomerang.tests.unit
 
         public static void ThenShouldHaveRegisteredNumberOfRequests(this BoomarangImpl target, int count)
         {
-            target.Registrations.GetCount().ShouldBe(count);
+            RequestHandlers.Handler.GetCount().ShouldBe(count);
         }
 
         public static void ThenShouldContainRequest(this BoomarangImpl target, string method, string address)
         {
-            var contains = target.Registrations.Contains(new Request() { Address = address, Method = method });
+            var contains = RequestHandlers.Handler.Contains(new Request() { Address = address, Method = method });
 
             contains.ShouldBe(true);
         }
@@ -40,7 +40,7 @@ namespace boomerang.tests.unit
         public static void ThenShouldContainPostResponse(this BoomarangImpl target, string address, string responseBody)
         {
             Queue<Response> req;
-            target.Registrations.GetAllResponsesFor(new Request() { Address = address, Method = "POST" }, out req);
+            RequestHandlers.Handler.GetAllResponsesFor(new Request() { Address = address, Method = "POST" }, out req);
 
             req.ShouldNotBe(null);
             req.Count.ShouldBeGreaterThan(0);
@@ -51,7 +51,7 @@ namespace boomerang.tests.unit
         public static void ThenShouldContainPutResponse(this BoomarangImpl target, string address, string responseBody)
         {
             Queue<Response> req;
-            target.Registrations.GetAllResponsesFor(new Request() { Address = address, Method = "PUT" }, out req);
+            RequestHandlers.Handler.GetAllResponsesFor(new Request() { Address = address, Method = "PUT" }, out req);
 
             req.ShouldNotBe(null);
             req.Count.ShouldBeGreaterThan(0);

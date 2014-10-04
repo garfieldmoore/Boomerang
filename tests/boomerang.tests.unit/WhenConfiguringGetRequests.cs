@@ -42,8 +42,8 @@ namespace boomerang.tests.unit
             var boom = new BoomarangImpl(Substitute.For<IMasqarade>());
 
             boom.Get("/address1");
-            boom.AddResponse("body1", 200);
-            boom.AddResponse("body1", 200);
+            RequestHandlers.Handler.AddResponse("body1", 200);
+            RequestHandlers.Handler.AddResponse("body1", 200);
 
             boom.ThenShouldHaveRegisteredNumberOfResponses(2);
         }

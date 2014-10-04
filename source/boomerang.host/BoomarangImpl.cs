@@ -12,11 +12,6 @@
     public class BoomarangImpl : IBoomerang
     {
         /// <summary>
-        /// Address and responses
-        /// </summary>
-        public IRequestResponses Registrations;
-
-        /// <summary>
         /// Fired when requests are received and before the request is processed
         /// </summary>
         public event EventHandler<ProxyRequestEventArgs> OnReceivedRequest;
@@ -37,7 +32,7 @@
         public BoomarangImpl(IMasqarade proxy)
         {
             this.proxy = proxy;
-            Registrations = new RequestResponses();
+            RequestHandlers.Handler = new RequestResponses();
         }
 
         /// <summary>
@@ -48,41 +43,11 @@
         public BoomarangImpl(IMasqarade proxy, IRequestResponses responses)
         {
             this.proxy = proxy;
-            Registrations = responses;
+            RequestHandlers.Handler = responses;
         }
 
         /// <summary>
-        /// Registers a HTTP method for interception at a relative address
-        /// </summary>
-        /// <param name="request">Method and address</param>
-        public void AddAddress(Request request)
-        {
-            Registrations.AddAddress(request);
-        }
-
-        /// <summary>
-        ///     Adds a response for the previously added address
-        /// </summary>
-        /// <param name="body">The response body for the request</param>
-        /// <param name="statusCode">The status code to respond with</param>
-        public void AddResponse(string body, int statusCode)
-        {
-            Registrations.AddResponse(body, statusCode);
-        }
-
-        /// <summary>
-        ///     Adds a response for the previously added address
-        /// </summary>
-        /// <param name="body">The response body for the request</param>
-        /// <param name="statusCode">The status code to respond with</param>
-        /// <param name="headers">Headers to add. These will replace the defaults</param>
-        public void AddResponse(string body, int statusCode, IDictionary<string, string> headers)
-        {
-            Registrations.AddResponse(body, statusCode, headers);
-        }
-
-        /// <summary>
-        ///     Start the proxy server
+        ///  Start the proxy server
         /// </summary>
         /// <param name="port">The port number to listen on</param>
         public virtual void Start(int port)
@@ -133,7 +98,7 @@
 
         private void SetResponse(string method, string relativePath)
         {
-            Response expectedResponse = Registrations.GetNextResponseFor(method, relativePath);
+            Response expectedResponse = RequestHandlers.Handler.GetNextResponseFor(method, relativePath);
 
             proxy.SetResponse(expectedResponse);
         }

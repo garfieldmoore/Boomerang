@@ -22,8 +22,7 @@
         public void Should_add_response()
         {
             var boom = new BoomarangImpl(Substitute.For<IMasqarade>());
-            boom.Put("address1");
-            boom.Returns("body", 200);
+            boom.Put("address1").Returns("body", 200);
 
             boom.ThenShouldHaveRegisteredNumberOfResponses(1);
             boom.ThenShouldContainPutResponse("/address1", "body");
