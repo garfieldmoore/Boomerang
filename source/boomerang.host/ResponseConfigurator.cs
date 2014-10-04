@@ -5,7 +5,7 @@ namespace Rainbow.Testing.Boomerang.Host
     /// <summary>
     /// 
     /// </summary>
-    public class ResponseConfigurator : IResponseHandler
+    internal class ResponseConfigurator : IResponseHandler
     {
         public ResponseConfigurator(string body, int statusCode, IDictionary<string, string> headers)
         {

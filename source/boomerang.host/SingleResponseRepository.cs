@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Rainbow.Testing.Boomerang.Host
 {
-    public class SingleResponseRepository : IResponseRepository
+    internal class SingleResponseRepository : IResponseRepository
     {
         public IDictionary<Request, Response> RegisteredAddresses = new Dictionary<Request, Response>();
         private Request previouseRequest;

@@ -5,7 +5,7 @@
     /// <summary>
     /// Handles registering responses to requests
     /// </summary>
-    public class ResponseRepository : IResponseRepository
+    internal class ResponseRepository : IResponseRepository
     {
         /// <summary>
         /// Response message for requests that have no configured response

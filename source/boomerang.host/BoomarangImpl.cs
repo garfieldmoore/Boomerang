@@ -9,7 +9,7 @@
     /// </summary>
     [Browsable(false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public class BoomarangImpl : IBoomerang
+    internal class BoomarangImpl : IBoomerang
     {
         /// <summary>
         /// Fired when requests are received and before the request is processed
@@ -40,7 +40,7 @@
         /// </summary>
         /// <param name="proxy">Proxy server to use</param>
         /// <param name="responses">Responses expected</param>
-        public BoomarangImpl(IMasqarade proxy, IResponseRepository responses)
+        internal BoomarangImpl(IMasqarade proxy, IResponseRepository responses)
         {
             this.proxy = proxy;
             RequestHandlers.Handler = responses;

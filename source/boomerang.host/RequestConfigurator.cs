@@ -3,7 +3,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public class RequestConfigurator : IRequestHandler
+    internal class RequestConfigurator : IRequestHandler
     {
         public RequestConfigurator(string relativeAddress, string httpMethod)
         {

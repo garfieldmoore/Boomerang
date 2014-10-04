@@ -1,6 +1,6 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host
 {
-    public class RequestHandlers
+    internal class RequestHandlers
     {
         /// <summary>
         /// Address and responses
