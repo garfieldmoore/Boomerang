@@ -14,7 +14,7 @@ namespace boomerang.tests.unit
         public void Contains_returns_false_if_request_not_added()
         {
             GivenASingleResponseRepository();
-            _repository.Contains(new Request()).ShouldBe(false);
+            _repository.RegisteredAddresses.ContainsKey(new Request()).ShouldBe(false);
         }
 
         [Test]
@@ -25,7 +25,7 @@ namespace boomerang.tests.unit
             var request = Builder<Request>.CreateNew().Build();
             repository.AddAddress(request);
 
-            repository.Contains(request).ShouldBe(true);
+            repository.RegisteredAddresses.ContainsKey(request).ShouldBe(true);
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace boomerang.tests.unit
             GivenASingleResponseRepository();
             _repository.AddAddress(new Request());
 
-            _repository.GetCount().ShouldBe(1);
+            _repository.RegisteredAddresses.Count.ShouldBe(1);
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace boomerang.tests.unit
             _repository.AddAddress(Builder<Request>.CreateNew().Build());
             _repository.AddAddress(Builder<Request>.CreateNew().With(x => x.Method = "GET").Build());
 
-            _repository.GetCount().ShouldBe(2);
+            _repository.RegisteredAddresses.Count.ShouldBe(2);
         }
 
         [Test]

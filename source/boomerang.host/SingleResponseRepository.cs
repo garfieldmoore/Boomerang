@@ -11,11 +11,6 @@ namespace Rainbow.Testing.Boomerang.Host
         public IDictionary<Request, Response> RegisteredAddresses = new Dictionary<Request, Response>();
         private Request previouseRequest;
 
-        public IEnumerable<Queue<Response>> Requests()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public void AddAddress(Request request)
         {
             previouseRequest = request;
@@ -46,21 +41,6 @@ namespace Rainbow.Testing.Boomerang.Host
                 RegisteredAddresses.Remove(new KeyValuePair<Request, Response>(previouseRequest, response));
                 RegisteredAddresses.Add(new KeyValuePair<Request, Response>(previouseRequest, new Response() { Body = body, StatusCode = statusCode, Headers = headers }));
             }
-        }
-
-        public bool Contains(Request request)
-        {
-            return RegisteredAddresses.ContainsKey(request);
-        }
-
-        public int GetCount()
-        {
-            return RegisteredAddresses.Count;
-        }
-
-        public bool GetAllResponsesFor(Request request, out Queue<Response> req)
-        {
-            throw new System.NotImplementedException();
         }
 
         public Response GetNextResponseFor(string method, string addressTarget)

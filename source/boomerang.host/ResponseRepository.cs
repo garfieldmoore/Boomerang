@@ -13,7 +13,7 @@
         public static string ResourceNotFoundMessage =
             "Boomerang error: Resource not found or no response configured for request";
 
-        protected IDictionary<Request, Queue<Response>> RequestResponseRegistrations;
+        public IDictionary<Request, Queue<Response>> RequestResponseRegistrations;
 
         private Request previousRequest;
 
@@ -23,15 +23,6 @@
         public ResponseRepository()
         {
             RequestResponseRegistrations = new Dictionary<Request, Queue<Response>>();
-        }
-
-        /// <summary>
-        /// Returns the responses registered for all addresses
-        /// </summary>
-        /// <returns>Returns all responses for all address</returns>
-        public IEnumerable<Queue<Response>> Requests()
-        {
-            return RequestResponseRegistrations.Values;
         }
 
         /// <summary>
@@ -83,36 +74,6 @@
         }
 
         /// <summary>
-        /// Determines if a request has been registered
-        /// </summary>
-        /// <param name="request">The request to check</param>
-        /// <returns>True if the method and uri has been configured, false otherwise</returns>
-        public bool Contains(Request request)
-        {
-            return RequestResponseRegistrations.ContainsKey(request);
-        }
-
-        /// <summary>
-        /// Returns the number of registered uri's
-        /// </summary>
-        /// <returns>Number of registered uri's</returns>
-        public int GetCount()
-        {
-            return RequestResponseRegistrations.Count;
-        }
-
-        /// <summary>
-        /// Return all responses for a request
-        /// </summary>
-        /// <param name="request">The request to return responses for</param>
-        /// <param name="req">Set this to the configured responses if they exist for the request, otherwise null</param>
-        /// <returns>True if there were responses for the request</returns>
-        public bool GetAllResponsesFor(Request request, out Queue<Response> req)
-        {
-            return RequestResponseRegistrations.TryGetValue(request, out req);
-        }
-
-        /// <summary>
         /// Returns the next Response for a Request
         /// </summary>
         /// <param name="method">The HTTP request method</param>
@@ -120,20 +81,41 @@
         /// <returns>The next response if there is one registered, otherwise a HTTP Resource Not Found (400) response</returns>
         public Response GetNextResponseFor(string method, string addressTarget)
         {
-            Queue<Response> requestResponse;
-
             addressTarget = ConvertToRelativeAddressFormat(addressTarget);
 
-            var foundRequest =
-                RequestResponseRegistrations.TryGetValue(
-                    new Request() {Address = addressTarget, Method = method}, out requestResponse);
+            var requestResponses = GetResponsesFor(CreateNewRequest(method, addressTarget));
 
-            if (!foundRequest || requestResponse == null || requestResponse.Count == 0)
+            if (HasResponses(requestResponses))
             {
-                return new Response() {StatusCode = 400, Body = ResourceNotFoundMessage};
+                return requestResponses.Dequeue();
             }
 
-            return requestResponse.Dequeue();
+            return CreateNotFoundResponse();
+        }
+
+        private static bool HasResponses(Queue<Response> requestResponses)
+        {
+            return requestResponses != null && requestResponses.Count > 0;
+        }
+
+        private Queue<Response> GetResponsesFor(Request request)
+        {
+            Queue<Response> requestResponse;
+
+            var foundRequest =
+                RequestResponseRegistrations.TryGetValue(request, out requestResponse);
+
+            return foundRequest ? requestResponse : null;
+        }
+
+        private static Request CreateNewRequest(string method, string addressTarget)
+        {
+            return new Request() {Address = addressTarget, Method = method};
+        }
+
+        private static Response CreateNotFoundResponse()
+        {
+            return new Response() {StatusCode = 400, Body = ResourceNotFoundMessage};
         }
 
         private static string ConvertToRelativeAddressFormat(string addressTarget)
