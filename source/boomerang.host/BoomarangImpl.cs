@@ -1,7 +1,6 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
 
     /// <summary>

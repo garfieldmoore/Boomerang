@@ -30,7 +30,7 @@ namespace Rainbow.Testing.Boomerang.Host
         {
             if (RegisteredAddresses.ContainsKey(previouseRequest))
             {
-                Response response = null;
+                Response response;
                 RegisteredAddresses.TryGetValue(previouseRequest, out response);
                 RegisteredAddresses.Remove(new KeyValuePair<Request, Response>(previouseRequest, response));
                 RegisteredAddresses.Add(new KeyValuePair<Request, Response>(previouseRequest, new Response() { Body = body, StatusCode = statusCode }));
@@ -41,7 +41,7 @@ namespace Rainbow.Testing.Boomerang.Host
         {
             if (RegisteredAddresses.ContainsKey(previouseRequest))
             {
-                Response response = null;
+                Response response;
                 RegisteredAddresses.TryGetValue(previouseRequest, out response);
                 RegisteredAddresses.Remove(new KeyValuePair<Request, Response>(previouseRequest, response));
                 RegisteredAddresses.Add(new KeyValuePair<Request, Response>(previouseRequest, new Response() { Body = body, StatusCode = statusCode, Headers = headers }));
@@ -65,7 +65,7 @@ namespace Rainbow.Testing.Boomerang.Host
 
         public Response GetNextResponseFor(string method, string addressTarget)
         {
-            Response response=null;
+            Response response;
             RegisteredAddresses.TryGetValue(new Request() {Address = addressTarget, Method = method}, out response);
 
             return response;

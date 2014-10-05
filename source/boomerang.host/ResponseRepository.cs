@@ -3,14 +3,15 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// Handles registering responses to requests
+    /// Handles registering responses to requests.
     /// </summary>
     internal class ResponseRepository : IResponseRepository
     {
         /// <summary>
         /// Response message for requests that have no configured response
         /// </summary>
-        public static string ResourceNotFoundMessage = "Boomerang error: Resource not found or no response configured for request";
+        public static string ResourceNotFoundMessage =
+            "Boomerang error: Resource not found or no response configured for request";
 
         protected IDictionary<Request, Queue<Response>> RequestResponseRegistrations;
 
@@ -44,12 +45,12 @@
                 request.Address = "/" + request.Address;
             }
 
-            var newRegistration = new Request() { Method = request.Method, Address = request.Address };
-            this.previousRequest = newRegistration;
+            var newRegistration = new Request() {Method = request.Method, Address = request.Address};
+            previousRequest = newRegistration;
             if (!RequestResponseRegistrations.ContainsKey(newRegistration))
             {
                 RequestResponseRegistrations.Add(
-                    new KeyValuePair<Request, Queue<Response>>(this.previousRequest, new Queue<Response>()));
+                    new KeyValuePair<Request, Queue<Response>>(previousRequest, new Queue<Response>()));
             }
         }
 
@@ -60,8 +61,8 @@
         /// <param name="statusCode">the response status code</param>
         public void AddResponse(string body, int statusCode)
         {
-            RequestResponseRegistrations[this.previousRequest].Enqueue(
-                new Response() { Body = body, StatusCode = statusCode });
+            RequestResponseRegistrations[previousRequest].Enqueue(
+                new Response() {Body = body, StatusCode = statusCode});
         }
 
         /// <summary>
@@ -73,12 +74,12 @@
         public void AddResponse(string body, int statusCode, IDictionary<string, string> headers)
         {
             var response = new Response()
-                               {
-                                   Body = body,
-                                   StatusCode = statusCode,
-                                   Headers = new Dictionary<string, string>(headers)
-                               };
-            RequestResponseRegistrations[this.previousRequest].Enqueue(response);
+            {
+                Body = body,
+                StatusCode = statusCode,
+                Headers = new Dictionary<string, string>(headers)
+            };
+            RequestResponseRegistrations[previousRequest].Enqueue(response);
         }
 
         /// <summary>
@@ -125,11 +126,11 @@
 
             var foundRequest =
                 RequestResponseRegistrations.TryGetValue(
-                    new Request() { Address = addressTarget, Method = method }, out requestResponse);
+                    new Request() {Address = addressTarget, Method = method}, out requestResponse);
 
             if (!foundRequest || requestResponse == null || requestResponse.Count == 0)
             {
-                return new Response() { StatusCode = 400, Body = ResourceNotFoundMessage };
+                return new Response() {StatusCode = 400, Body = ResourceNotFoundMessage};
             }
 
             return requestResponse.Dequeue();

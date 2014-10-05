@@ -37,7 +37,10 @@
             }
         }
 
-        public object Body { get; set; }
+        /// <summary>
+        /// Gets/sets the request body content
+        /// </summary>
+        public string Body { get; set; }
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.

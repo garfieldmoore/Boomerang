@@ -67,10 +67,18 @@ namespace Rainbow.Testing.Boomerang.Host
         /// <param name="httpMethod">The method of the request to register on this address</param>
         /// <returns>Configuration handler</returns>
         /// <remarks>This should only be used for unsupported HTTP requests. Use the extension methods for supported requests</remarks>
-        /// <seealso cref="Get"/>
-        /// <seealso cref="Put"/>
-        /// <seealso cref="Post"/>
-        /// <seealso cref="Delete"/>
+        /// <seealso>
+        ///     <cref>Get</cref>
+        /// </seealso>
+        /// <seealso>
+        ///     <cref>Put</cref>
+        /// </seealso>
+        /// <seealso>
+        ///     <cref>Post</cref>
+        /// </seealso>
+        /// <seealso>
+        ///     <cref>Delete</cref>
+        /// </seealso>
         public static IRequestHandler Request(this IBoomerang host, string relativeAddress, string httpMethod)
         {
             CollectEvents(host);
@@ -131,10 +139,18 @@ namespace Rainbow.Testing.Boomerang.Host
         /// <param name="httpMethod">The method of the request to register on this address</param>
         /// <returns>Configuration handler</returns>
         /// <remarks>This should only be used for unsupported HTTP requests. Use the extension methods for supported requests</remarks>
-        /// <seealso cref="Get"/>
-        /// <seealso cref="Put"/>
-        /// <seealso cref="Post"/>
-        /// <seealso cref="Delete"/>
+        /// <seealso>
+        ///     <cref>Get</cref>
+        /// </seealso>
+        /// <seealso>
+        ///     <cref>Put</cref>
+        /// </seealso>
+        /// <seealso>
+        ///     <cref>Post</cref>
+        /// </seealso>
+        /// <seealso>
+        ///     <cref>Delete</cref>
+        /// </seealso>
         public static IRequestHandler Request(this IResponseHandler host, string relativeAddress, string httpMethod)
         {
            // CollectEvents(host);
@@ -173,7 +189,7 @@ namespace Rainbow.Testing.Boomerang.Host
         /// </summary>
         /// <param name="target">Configuration handler for proxy server</param>
         /// <returns>List of requests</returns>
-        /// <seealso cref="Request"/>
+        /// <seealso cref="Rainbow.Testing.Boomerang.Host.Request"/>
         public static IEnumerable<Request> GetAllReceivedRequests(this IBoomerang target)
         {
             return ReceivedRequests.ToArray();
