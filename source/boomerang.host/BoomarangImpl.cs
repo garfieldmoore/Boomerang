@@ -1,7 +1,6 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
 
     /// <summary>
@@ -9,14 +8,9 @@
     /// </summary>
     [Browsable(false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public class BoomarangImpl : IBoomerang
+    internal class BoomarangImpl : IBoomerang
     {
         private readonly HostSettings settings;
-
-        /// <summary>
-        /// Address and responses
-        /// </summary>
-        public IRequestResponses Registrations;
 
         /// <summary>
         /// Fired when requests are received and before the request is processed
@@ -39,7 +33,7 @@
         public BoomarangImpl(IMasqarade proxy)
         {
             this.proxy = proxy;
-            Registrations = new RequestResponses();
+            RequestHandlers.Handler = new ResponseRepository();
         }
 
         /// <summary>
@@ -47,46 +41,16 @@
         /// </summary>
         /// <param name="proxy">Proxy server to use</param>
         /// <param name="responses">Responses expected</param>
-        public BoomarangImpl(IMasqarade proxy, IRequestResponses responses)
+        internal BoomarangImpl(IMasqarade proxy, IResponseRepository responses)
         {
             this.proxy = proxy;
-            Registrations = responses;
+            RequestHandlers.Handler = responses;
         }
 
         public BoomarangImpl(IMasqarade create, HostSettings settings)
             : this(create)
         {
             this.settings = settings;
-        }
-
-        /// <summary>
-        /// Registers a HTTP method for interception at a relative address
-        /// </summary>
-        /// <param name="request">Method and address</param>
-        public void AddAddress(Request request)
-        {
-            Registrations.AddAddress(request);
-        }
-
-        /// <summary>
-        ///     Adds a response for the previously added address
-        /// </summary>
-        /// <param name="body">The response body for the request</param>
-        /// <param name="statusCode">The status code to respond with</param>
-        public void AddResponse(string body, int statusCode)
-        {
-            Registrations.AddResponse(body, statusCode);
-        }
-
-        /// <summary>
-        ///     Adds a response for the previously added address
-        /// </summary>
-        /// <param name="body">The response body for the request</param>
-        /// <param name="statusCode">The status code to respond with</param>
-        /// <param name="headers">Headers to add. These will replace the defaults</param>
-        public void AddResponse(string body, int statusCode, IDictionary<string, string> headers)
-        {
-            Registrations.AddResponse(body, statusCode, headers);
         }
 
         /// <summary>
@@ -167,7 +131,7 @@
 
         private void SetResponse(string method, string relativePath)
         {
-            Response expectedResponse = Registrations.GetNextResponseFor(method, relativePath);
+            Response expectedResponse = RequestHandlers.Handler.GetNextResponseFor(method, relativePath);
 
             proxy.SetResponse(expectedResponse);
         }

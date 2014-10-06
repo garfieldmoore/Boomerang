@@ -21,6 +21,6 @@
         /// The message body of the recieved request
         /// <remarks>For HTTP GETs this will be null. For HTTP POSTS and PUTS this will be the data in the request body.</remarks>
         /// </summary>
-        public object Body   { get; set; }
+        public string Body   { get; set; }
     }
 }

@@ -13,7 +13,7 @@
 
     public class WhenProxyServerRecievesRequests
     {
-        private RequestResponses requestResponses;
+        private ResponseRepository _responseRepository;
 
         private IMasqarade masqarade;
 
@@ -53,20 +53,20 @@
 
         private void GivenRegisteredResponse(string body, int statusCode)
         {
-            this.requestResponses.AddResponse(body, statusCode);
+            this._responseRepository.AddResponse(body, statusCode);
         }
 
         private void GivenProxyIsRunning()
         {
-            this.boomerang = new BoomarangImpl(this.masqarade, this.requestResponses);
+            this.boomerang = new BoomarangImpl(this.masqarade, this._responseRepository);
             this.boomerang.Start(5100);
         }
 
         private void GivenProxyForRequest(Request request)
         {
             this.masqarade = Substitute.For<IMasqarade>();
-            this.requestResponses = new RequestResponses();
-            this.requestResponses.AddAddress(request);
+            this._responseRepository = new ResponseRepository();
+            this._responseRepository.AddAddress(request);
         }
 
         private void ThenShouldSetResponse()

@@ -1,4 +1,6 @@
-﻿namespace Rainbow.Testing.Boomerang.Host
+﻿using System;
+
+namespace Rainbow.Testing.Boomerang.Host
 {
     using System.Collections.Generic;
 
@@ -13,14 +15,13 @@
         private static object locker = new object();
         private static IList<Request> ReceivedRequests = new List<Request>();
 
-
         /// <summary>
         /// Add a GET request to be intercepted
         /// </summary>
         /// <param name="host">Configuration handler for proxy server</param>
         /// <param name="relativeAddress">Relative uri of the request</param>
         /// <returns>Configuration handler</returns>
-        public static IBoomerang Get(this IBoomerang host, string relativeAddress)
+        public static IRequestHandler Get(this IBoomerang host, string relativeAddress)
         {
             return Request(host, relativeAddress, "GET");
         }
@@ -31,7 +32,7 @@
         /// <param name="host">Configuration handler for proxy server</param>
         /// <param name="relativeAddress">Relative uri of the request</param>
         /// <returns>Configuration handler</returns>
-        public static IBoomerang Post(this IBoomerang host, string relativeAddress)
+        public static IRequestHandler Post(this IBoomerang host, string relativeAddress)
         {
             return Request(host, relativeAddress, "POST");
         }
@@ -42,7 +43,7 @@
         /// <param name="target">Configuration handler for proxy server</param>
         /// <param name="relativeAddress">Relative uri of the request</param>
         /// <returns>Configuration handler</returns>
-        public static IBoomerang Put(this IBoomerang target, string relativeAddress)
+        public static IRequestHandler Put(this IBoomerang target, string relativeAddress)
         {
             return Request(target, relativeAddress, "PUT");
         }
@@ -53,7 +54,7 @@
         /// <param name="target">Configuration handler for proxy server</param>
         /// <param name="relativeAddress">Relative uri of the request</param>
         /// <returns>Configuration handler</returns>
-        public static IBoomerang Delete(this IBoomerang target, string relativeAddress)
+        public static IRequestHandler Delete(this IBoomerang target, string relativeAddress)
         {
             return Request(target, relativeAddress, "DELETE");
         }
@@ -66,17 +67,96 @@
         /// <param name="httpMethod">The method of the request to register on this address</param>
         /// <returns>Configuration handler</returns>
         /// <remarks>This should only be used for unsupported HTTP requests. Use the extension methods for supported requests</remarks>
-        /// <seealso cref="Get"/>
-        /// <seealso cref="Put"/>
-        /// <seealso cref="Post"/>
-        /// <seealso cref="Delete"/>
-        public static IBoomerang Request(this IBoomerang host, string relativeAddress, string httpMethod)
+        /// <seealso>
+        ///     <cref>Get</cref>
+        /// </seealso>
+        /// <seealso>
+        ///     <cref>Put</cref>
+        /// </seealso>
+        /// <seealso>
+        ///     <cref>Post</cref>
+        /// </seealso>
+        /// <seealso>
+        ///     <cref>Delete</cref>
+        /// </seealso>
+        public static IRequestHandler Request(this IBoomerang host, string relativeAddress, string httpMethod)
         {
             CollectEvents(host);
 
-            var requestResponse = new Request { Address = relativeAddress, Method = httpMethod };
-            ((BoomarangImpl)host).AddAddress(requestResponse);
-            return host;
+            return new RequestConfigurator(relativeAddress, httpMethod);
+
+        }
+
+        /// <summary>
+        /// Add a GET request to be intercepted
+        /// </summary>
+        /// <param name="host">Configuration handler for proxy server</param>
+        /// <param name="relativeAddress">Relative uri of the request</param>
+        /// <returns>Configuration handler</returns>
+        public static IRequestHandler Get(this IResponseHandler host, string relativeAddress)
+        {
+            return Request(host, relativeAddress, "GET");
+        }
+
+        /// <summary>
+        /// Add a POST request to be intercepted at the given address
+        /// </summary>
+        /// <param name="host">Configuration handler for proxy server</param>
+        /// <param name="relativeAddress">Relative uri of the request</param>
+        /// <returns>Configuration handler</returns>
+        public static IRequestHandler Post(this IResponseHandler host, string relativeAddress)
+        {
+            return Request(host, relativeAddress, "POST");
+        }
+
+        /// <summary>
+        /// Add a PUT request to be intercepted at the given address
+        /// </summary>
+        /// <param name="target">Configuration handler for proxy server</param>
+        /// <param name="relativeAddress">Relative uri of the request</param>
+        /// <returns>Configuration handler</returns>
+        public static IRequestHandler Put(this IResponseHandler target, string relativeAddress)
+        {
+            return Request(target, relativeAddress, "PUT");
+        }
+
+        /// <summary>
+        /// Add a DELETE request to be intercepted at the given address
+        /// </summary>
+        /// <param name="target">Configuration handler for proxy server</param>
+        /// <param name="relativeAddress">Relative uri of the request</param>
+        /// <returns>Configuration handler</returns>
+        public static IRequestHandler Delete(this IResponseHandler target, string relativeAddress)
+        {
+            return Request(target, relativeAddress, "DELETE");
+        }
+
+        /// <summary>
+        /// Add a request to be intercepted at the given relative address
+        /// </summary>
+        /// <param name="host">Configuration handler for proxy server</param>
+        /// <param name="relativeAddress">Relative uri of the request</param>
+        /// <param name="httpMethod">The method of the request to register on this address</param>
+        /// <returns>Configuration handler</returns>
+        /// <remarks>This should only be used for unsupported HTTP requests. Use the extension methods for supported requests</remarks>
+        /// <seealso>
+        ///     <cref>Get</cref>
+        /// </seealso>
+        /// <seealso>
+        ///     <cref>Put</cref>
+        /// </seealso>
+        /// <seealso>
+        ///     <cref>Post</cref>
+        /// </seealso>
+        /// <seealso>
+        ///     <cref>Delete</cref>
+        /// </seealso>
+        public static IRequestHandler Request(this IResponseHandler host, string relativeAddress, string httpMethod)
+        {
+           // CollectEvents(host);
+
+            return new RequestConfigurator(relativeAddress, httpMethod);
+
         }
 
         /// <summary>
@@ -86,10 +166,9 @@
         /// <param name="body">The required response body</param>
         /// <param name="statusCode">The required status code for the response</param>
         /// <returns>Configuration handler</returns>
-        public static IBoomerang Returns(this IBoomerang host, string body, int statusCode)
+        public static IResponseHandler Returns(this IRequestHandler host, string body, int statusCode)
         {
-            ((BoomarangImpl)host).AddResponse(body, statusCode);
-            return host;
+            return new ResponseConfigurator(body, statusCode);
         }
 
         /// <summary>
@@ -100,11 +179,9 @@
         /// <param name="statusCode">The required status code for the response</param>
         /// <param name="headers">Headers to set in response</param>
         /// <returns>Configuration handler</returns>
-        public static IBoomerang Returns(
-            this IBoomerang host, string body, int statusCode, IDictionary<string, string> headers)
+        public static IResponseHandler Returns(this IRequestHandler host, string body, int statusCode, IDictionary<string, string> headers)
         {
-            ((BoomarangImpl)host).AddResponse(body, statusCode, headers);
-            return host;
+            return new ResponseConfigurator(body, statusCode, headers);
         }
 
         /// <summary>
@@ -112,7 +189,7 @@
         /// </summary>
         /// <param name="target">Configuration handler for proxy server</param>
         /// <returns>List of requests</returns>
-        /// <seealso cref="Request"/>
+        /// <seealso cref="Rainbow.Testing.Boomerang.Host.Request"/>
         public static IEnumerable<Request> GetAllReceivedRequests(this IBoomerang target)
         {
             return ReceivedRequests.ToArray();

@@ -49,5 +49,25 @@
 
             request.Address.ShouldBe("/address");
         }
+
+        [Test]
+        public void Different_address_should_not_be_equal()
+        {
+            var request1 = new Request() { Address = "a1", Method = "GET" };
+            var request2 = new Request() { Address = "a2", Method = "GET" };
+
+            request1.Equals(request2).ShouldBe(false);
+            request1.GetHashCode().ShouldNotBe(request2.GetHashCode());
+        }
+
+        [Test]
+        public void Different_method_should_not_be_equal()
+        {
+            var request1 = new Request() { Address = "a1", Method = "GET" };
+            var request2 = new Request() { Address = "a1", Method = "PUT" };
+
+            request1.Equals(request2).ShouldBe(false);
+            request1.GetHashCode().ShouldNotBe(request2.GetHashCode());
+        }
     }
 }

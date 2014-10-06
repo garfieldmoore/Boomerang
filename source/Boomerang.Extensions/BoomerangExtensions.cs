@@ -3,6 +3,9 @@ using Rainbow.Testing.Boomerang.Host;
 
 namespace Rainbow.Testing.Boomerang.Extensions
 {
+    /// <summary>
+    /// Boomerang configuration extensions
+    /// </summary>
     public static class BoomerangExtensions
     {
         /// <summary>

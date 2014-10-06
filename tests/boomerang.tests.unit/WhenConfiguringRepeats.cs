@@ -16,7 +16,7 @@ namespace boomerang.tests.unit
             var configurator = boom.Repeat(x => x.Get("test").Returns("response", 201), 2) as BoomarangImpl;
 
             Queue<Response> queue;
-            configurator.Registrations.GetAllResponsesFor(new Request() { Address = "test", Method = "GET" }, out queue);
+            ((ResponseRepository)RequestHandlers.Handler).GetAllResponsesFor(new Request() { Address = "test", Method = "GET" }, out queue);
 
             queue.Count.ShouldBe(2);
         }
