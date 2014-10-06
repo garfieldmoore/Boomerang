@@ -4,6 +4,7 @@
     using System.ComponentModel;
 
     using Rainbow.Testing.Boomerang.Host.Configuration;
+    using Rainbow.Testing.Boomerang.Host.HttpListenerProxy;
 
     /// <summary>
     /// Factory to create proxy servers
@@ -20,6 +21,7 @@
         {
             hostFactory = new DefaultConfigurationFactory();
         }
+
         /// <summary>
         /// Creates a new web service
         /// </summary>
@@ -29,6 +31,8 @@
         [Obsolete("Use the create factory method")]
         public static IBoomerang Server(int listeningOnPort)
         {
+            EnsureBackwardCompatible();
+
             lock (serverLock)
             {
                 if (server != null)
@@ -40,7 +44,6 @@
 
                 server.Start(listeningOnPort);
             }
-
             return server;
         }
 
@@ -86,10 +89,18 @@
         {
             var hostConfigurator = new HostConfigurator();
             if (hostFactory != null)
-                hostConfigurator.UseHostBuilder(hostFactory);
+                hostConfigurator.UseHostBuilder(()=>new HttpListenerFactory().Create());
 
             configuration(hostConfigurator);
             return hostConfigurator.CreateHost();
+        }
+
+        private static void EnsureBackwardCompatible()
+        {
+            if (RequestHandlers.Handler != null && RequestHandlers.Handler.GetType() != typeof(ResponseRepository))
+            {
+                RequestHandlers.Handler = new ResponseRepository();
+            }
         }
     }
 }

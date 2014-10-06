@@ -8,6 +8,7 @@
 
     using Shouldly;
 
+    [TestFixture]
     public class ConfigurationBuilders
     {
         [Test]
@@ -31,7 +32,7 @@
             var proxy = Boomerang.Create(x =>
                 {
                     x.AtAddress("http://localhost:9900/");
-                    x.AlwaysRespondWithLastConfiguredResponse();
+                    x.UseStaticResponseRequestHandler();
                 });
             proxy.Get("singleresponse").Returns("singleresponse", 200);
 

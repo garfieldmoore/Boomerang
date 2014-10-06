@@ -8,6 +8,7 @@
 
     using Rainbow.Testing.Boomerang.Host;
     using Rainbow.Testing.Boomerang.Host.Configuration;
+    using Rainbow.Testing.Boomerang.Host.HttpListenerProxy;
 
     using Shouldly;
 
@@ -42,13 +43,11 @@
 
         private void GivenServerConfiguredWithEndpoint()
         {
+            webProxy = Substitute.For<IMasqarade>();
             proxy = Boomerang.Create(
                 x =>
                 {
-                    var boomerangConfigurationFactory = Substitute.For<IBoomerangConfigurationFactory>();
-                    webProxy = Substitute.For<IMasqarade>();
-                    boomerangConfigurationFactory.Create().Returns(webProxy);
-                    x.UseHostBuilder(boomerangConfigurationFactory);
+                    x.UseHostBuilder(() => webProxy);
                     serverHostPrefix = "http://localhost/index/";
                     x.AtAddress(serverHostPrefix);
                 });

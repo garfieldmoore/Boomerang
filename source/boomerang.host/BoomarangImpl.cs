@@ -10,6 +10,8 @@
     [EditorBrowsable(EditorBrowsableState.Never)]
     internal class BoomarangImpl : IBoomerang
     {
+        private readonly Func<IResponseRepository> requestHandlerFactory;
+
         private readonly HostSettings settings;
 
         /// <summary>
@@ -33,7 +35,8 @@
         public BoomarangImpl(IMasqarade proxy)
         {
             this.proxy = proxy;
-            RequestHandlers.Handler = new ResponseRepository();
+            requestHandlerFactory=()=>new ResponseRepository();
+            RequestHandlers.Handler = requestHandlerFactory();
         }
 
         /// <summary>
@@ -47,10 +50,16 @@
             RequestHandlers.Handler = responses;
         }
 
-        public BoomarangImpl(IMasqarade create, HostSettings settings)
-            : this(create)
+        public BoomarangImpl(IMasqarade proxy, HostSettings settings)
+            : this(proxy)
         {
             this.settings = settings;
+        }
+
+        public BoomarangImpl(IMasqarade proxy, HostSettings settings, Func<IResponseRepository> requestHandlerFactory):this(proxy, settings)
+        {
+            this.requestHandlerFactory = requestHandlerFactory;
+            RequestHandlers.Handler = requestHandlerFactory();
         }
 
         /// <summary>

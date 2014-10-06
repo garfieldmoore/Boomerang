@@ -1,19 +1,26 @@
 ﻿namespace Rainbow.Testing.Boomerang.Host.Configuration
 {
+    using System;
+
+    using Rainbow.Testing.Boomerang.Host.HttpListenerProxy;
+
     public class HostConfigurator : IHostConfiguration
     {
         HostSettings settings;
 
+        private Func<IResponseRepository> requestHandlerFactory;
+        private Func<IMasqarade> hostFactoryFunc;
+
+
         public HostConfigurator()
         {
-            settings=new HostSettings();
-            hostFactory = new DefaultConfigurationFactory();
+            settings = new HostSettings();
+            requestHandlerFactory = () => new ResponseRepository();
         }
-        private static IBoomerangConfigurationFactory hostFactory;
-     
-        public void UseHostBuilder(IBoomerangConfigurationFactory hostFactory)
+
+        public void UseHostBuilder(Func<IMasqarade> hostFactoryFunc)
         {
-            HostConfigurator.hostFactory = hostFactory;
+            this.hostFactoryFunc = hostFactoryFunc;
         }
 
         public void AtAddress(string url)
@@ -21,14 +28,14 @@
             settings.Prefixes.Add(url);
         }
 
-        public void AlwaysRespondWithLastConfiguredResponse()
+        public void UseStaticResponseRequestHandler()
         {
-            throw new System.NotImplementedException();
+            requestHandlerFactory = () => new SingleResponseRepository();
         }
 
         public IBoomerang CreateHost()
         {
-            return new BoomarangImpl(hostFactory.Create(), settings);
+            return new BoomarangImpl(hostFactoryFunc(), settings, requestHandlerFactory);
         }
     }
 }
