@@ -13,11 +13,11 @@
         [Test]
         public void Should_configure_address()
         {
-            var proxy = Boomerang.Create(x =>
-                {
-                    x.AtAddress("http://localhost:5600/");
-                }).Get("newtest").Returns("test 1", 201);
+            var proxy = Boomerang.Create(
+                x =>
+                    { x.AtAddress("http://localhost:5600/"); });
 
+            proxy.Get("newtest").Returns("test 1", 201);
             proxy.Start();
 
             Spec.WhenGetRequestSent("http://localhost:5600/newtest");
