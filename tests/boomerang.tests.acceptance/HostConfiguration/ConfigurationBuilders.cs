@@ -26,10 +26,10 @@
         }
 
         [Test]
-        public void Should_configure_default_url()
+        public void Should_configure_default_responses()
         {
             var proxy = Boomerang.Create(x =>
-                { 
+                {
                     x.AtAddress("http://localhost:9900/");
                     x.AlwaysRespondWithLastConfiguredResponse();
                 });
