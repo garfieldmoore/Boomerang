@@ -11,6 +11,6 @@
 
         void AtAddress(string url);
 
-        void UseStaticResponseRequestHandler();
+        void UseSingleResponsePerRequestHandler();
     }
 }

@@ -28,7 +28,7 @@
             settings.Prefixes.Add(url);
         }
 
-        public void UseStaticResponseRequestHandler()
+        public void UseSingleResponsePerRequestHandler()
         {
             requestHandlerFactory = () => new SingleResponseRepository();
         }

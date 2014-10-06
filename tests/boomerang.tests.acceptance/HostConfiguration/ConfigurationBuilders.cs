@@ -32,7 +32,7 @@
             var proxy = Boomerang.Create(x =>
                 {
                     x.AtAddress("http://localhost:9900/");
-                    x.UseStaticResponseRequestHandler();
+                    x.UseSingleResponsePerRequestHandler();
                 });
             proxy.Get("singleresponse").Returns("singleresponse", 200);
 
