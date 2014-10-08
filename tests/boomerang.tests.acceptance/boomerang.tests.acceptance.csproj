@@ -65,7 +65,7 @@
     <Compile Include="Examples.cs" />
     <Compile Include="GetReponseSpecs.cs" />
     <Compile Include="ComplexTypesSerialisationSpecs.cs" />
-    <Compile Include="HostConfiguration\ConfigurationBuilders.cs" />
+    <Compile Include="HostConfiguration\ConfigurationBuilderSpecs.cs" />
     <Compile Include="PerformanceTests.cs" />
     <Compile Include="PostSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

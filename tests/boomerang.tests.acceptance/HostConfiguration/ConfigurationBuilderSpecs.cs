@@ -9,7 +9,7 @@
     using Shouldly;
 
     [TestFixture]
-    public class ConfigurationBuilders
+    public class ConfigurationBuilderSpecs
     {
         [Test]
         public void Should_configure_address()
@@ -45,6 +45,14 @@
             Spec.WhenGetRequestSent("http://localhost:9900/singleresponse");
             Spec.StatusCode.ShouldBe(HttpStatusCode.OK.ToString());
             Spec.ResponseText.ShouldBe("singleresponse");
+        }
+
+        [Test]
+        public void Start_should_start_server()
+        {
+            BoomerangExitCode result = Boomerang.Start(x => x.AtAddress("http://localhost:9091"));
+
+            result.ShouldBe(BoomerangExitCode.Ok);
 
         }
 

@@ -20,8 +20,6 @@
 
         private HttpListenerContext context;
 
-        private readonly ManualResetEvent serviceStarted;
-
         private bool running;
 
         private bool isDisposed;
@@ -38,7 +36,6 @@
         protected Server()
         {
             running = true;
-            serviceStarted = new ManualResetEvent(false);
         }
         protected void OnReceivedRequest(Server server, HttpListenerRequestArgs httpListenerRequestArgs)
         {
@@ -67,13 +64,8 @@
             {
                 while (running)
                 {
-                    serviceStarted.Reset();
                     context = listener.GetContext();
-                    
                     OnReceivedRequest(this, new HttpListenerRequestArgs(context.Request));
-                    serviceStarted.Set();
-
-                    serviceStarted.WaitOne(Timeout.Infinite);
                 }
             });
         }
