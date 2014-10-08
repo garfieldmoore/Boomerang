@@ -6,7 +6,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class HttpListenerFactory : IBoomerangConfigurationFactory
+    internal class HttpListenerFactory : IBoomerangConfigurationFactory
     {
         public IMasqarade Create()
         {
@@ -14,7 +14,7 @@
         }
     }
 
-    public class Server : IDisposable
+    internal class Server : IDisposable
     {
         private HttpListener listener;
 

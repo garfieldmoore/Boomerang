@@ -5,7 +5,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public class HostSettings
+    internal class HostSettings
     {
         public HostSettings()
         {

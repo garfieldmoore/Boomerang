@@ -19,6 +19,7 @@
         /// Starts the proxy server
         /// </summary>
         /// <param name="portNumber">Port number the proxy server should be listening on</param>
+        [Obsolete("Use Start(string address method")]
         void Start(int portNumber);
 
         /// <summary>

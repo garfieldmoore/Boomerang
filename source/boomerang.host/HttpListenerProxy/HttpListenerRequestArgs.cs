@@ -3,7 +3,7 @@
     using System;
     using System.Net;
 
-    public class HttpListenerRequestArgs : EventArgs
+    internal class HttpListenerRequestArgs : EventArgs
     {
         public HttpListenerRequestArgs(HttpListenerRequest request)
         {

@@ -3,7 +3,7 @@
     using System;
     using System.Runtime.Serialization;
 
-    internal class OsVersionException : Exception
+    public class OsVersionException : Exception
     {
         public OsVersionException()
             : base()
