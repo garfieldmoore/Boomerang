@@ -37,6 +37,7 @@
         {
             running = true;
         }
+
         protected void OnReceivedRequest(Server server, HttpListenerRequestArgs httpListenerRequestArgs)
         {
             if (ReceivedRequest != null)
