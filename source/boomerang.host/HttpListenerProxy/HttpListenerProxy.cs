@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Net;
-    using System.Threading;
     using System.Threading.Tasks;
 
     internal class HttpListenerFactory : IBoomerangConfigurationFactory
@@ -54,14 +53,14 @@
             }
 
             // URI prefixes are required, 
-            // for example "http://+/activeefficiency1/".
+            // for example "http://+/contoso.com".
             var prefixes = new[] { url };
 
             listener = new HttpListener();
 
             AddPrefixes(prefixes, listener);
             listener.Start();
-            Task.Factory.StartNew(()=>
+            Task.Factory.StartNew(() =>
             {
                 while (running)
                 {
