@@ -33,9 +33,6 @@
     <DocumentationFile>bin\Release\Boomerang.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FiddlerCore4">
-      <HintPath>..\..\packages_manual\Fiddler\DotNet4\FiddlerCore4.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
