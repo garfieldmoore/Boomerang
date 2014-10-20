@@ -116,7 +116,6 @@
                 try
                 {
                     listener.Stop();
-                    listener.Close();
                 }
                 catch (Exception e)
                 {

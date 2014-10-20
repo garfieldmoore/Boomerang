@@ -24,5 +24,7 @@
         /// </summary>
         /// <returns></returns>
         BoomerangExitCode Start();
+
+        void Stop();
     }
 }
