@@ -1,6 +1,5 @@
 ﻿namespace boomerang.tests.acceptance.HostConfiguration
 {
-    using System;
     using System.Net;
 
     using NUnit.Framework;
@@ -17,7 +16,9 @@
         {
             var proxy = Boomerang.Create(
                 x =>
-                    { x.AtAddress("http://localhost:5602/"); });
+                    {
+                        x.AtAddress("http://localhost:5602/");
+                    });
 
             proxy.Get("newtest").Returns("test 1", 201);
             proxy.Start();
@@ -56,7 +57,6 @@
             var proxy = Boomerang.Create(x =>
             {
                 x.AtAddress("http://localhost:5601/");
-                
             });
 
             proxy.Start();
@@ -70,6 +70,5 @@
             proxy2.Start();
             proxy2.Stop();
         }
-
     }
 }
