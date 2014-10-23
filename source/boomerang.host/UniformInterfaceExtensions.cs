@@ -11,8 +11,6 @@ namespace Rainbow.Testing.Boomerang.Host
     /// </summary>
     public static class UniformInterfaceExtensions
     {
-        private static bool collectingEvents;
-        private static object locker = new object();
         private static IList<Request> ReceivedRequests = new List<Request>();
 
         /// <summary>

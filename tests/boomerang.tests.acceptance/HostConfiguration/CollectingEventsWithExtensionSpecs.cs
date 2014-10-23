@@ -33,10 +33,7 @@
             p.Get("test").Returns("ran a test", 201);
             p.Start();
             Spec.WhenGetRequestSent("http://localhost:5603/test");
-
-            p.GetAllReceivedRequests().Count().ShouldBe(1);
             p.Stop();
-            p.ClearReceivedRequests();
 
             p = Boomerang.Create(x => x.AtAddress("http://localhost:5603/"));
             p.ClearReceivedRequests();
@@ -46,8 +43,6 @@
             Spec.WhenGetRequestSent("http://localhost:5603/test");
 
             p.GetAllReceivedRequests().Count().ShouldBe(1);
-
-            p.ClearReceivedRequests();
         }
     }
 }
