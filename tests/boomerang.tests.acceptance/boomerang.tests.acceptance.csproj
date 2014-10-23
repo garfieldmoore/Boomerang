@@ -65,6 +65,8 @@
     <Compile Include="Examples.cs" />
     <Compile Include="GetReponseSpecs.cs" />
     <Compile Include="ComplexTypesSerialisationSpecs.cs" />
+    <Compile Include="HostConfiguration\CollectingEventsWithEventMethod.cs" />
+    <Compile Include="HostConfiguration\CollectingEventsWithExtensionSpecs.cs" />
     <Compile Include="HostConfiguration\ConfigurationBuilderSpecs.cs" />
     <Compile Include="PerformanceTests.cs" />
     <Compile Include="PostSpecs.cs" />

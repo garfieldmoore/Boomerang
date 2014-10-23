@@ -153,7 +153,7 @@ namespace Rainbow.Testing.Boomerang.Host
         /// </seealso>
         public static IRequestHandler Request(this IResponseHandler host, string relativeAddress, string httpMethod)
         {
-           // CollectEvents(host);
+            // CollectEvents(host);
 
             return new RequestConfigurator(relativeAddress, httpMethod);
 
@@ -207,17 +207,8 @@ namespace Rainbow.Testing.Boomerang.Host
 
         private static void CollectEvents(IBoomerang host)
         {
-            if (!collectingEvents)
-            {
-                lock (locker)
-                {
-                    if (!collectingEvents)
-                    {
-                        collectingEvents = true;
-                        host.OnReceivedRequest += host_OnReceivedRequest;
-                    }
-                }
-            }
+            host.OnReceivedRequest -= host_OnReceivedRequest;
+            host.OnReceivedRequest += host_OnReceivedRequest;
         }
 
         private static void host_OnReceivedRequest(object sender, ProxyRequestEventArgs e)

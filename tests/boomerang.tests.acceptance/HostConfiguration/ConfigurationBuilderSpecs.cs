@@ -8,6 +8,7 @@
 
     using Shouldly;
 
+
     [TestFixture]
     public class ConfigurationBuilderSpecs
     {
@@ -16,9 +17,9 @@
         {
             var proxy = Boomerang.Create(
                 x =>
-                    {
-                        x.AtAddress("http://localhost:5602/");
-                    });
+                {
+                    x.AtAddress("http://localhost:5602/");
+                });
 
             proxy.Get("newtest").Returns("test 1", 201);
             proxy.Start();
@@ -70,5 +71,6 @@
             proxy2.Start();
             proxy2.Stop();
         }
+
     }
 }
