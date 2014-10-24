@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CollectingEventExtensionTests.cs" />
     <Compile Include="ConfigurationBuilders\ConfigurationBuildersSpec.cs" />
     <Compile Include="Configurations\HostConfigurationTests.cs" />
     <Compile Include="GivenARequest.cs" />
