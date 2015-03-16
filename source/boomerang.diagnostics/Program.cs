@@ -10,12 +10,14 @@ namespace boomerang.diagnostics
 
         static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.DomainUnload+=CurrentDomain_DomainUnload;
             var listeningOnPort = 5100;
-
-            Console.WriteLine("Starting boomerang server at http://localhost:{0}", listeningOnPort);
+            var address = "http://localhost";
+            Console.WriteLine("Starting boomerang server at :'{0}:{1}'", address, listeningOnPort);
             DisplayInstructions();
 
-            _webHost = Boomerang.Create(x => x.AtAddress("http://myserver:8080"));
+            _webHost = Boomerang.Create(x => x.AtAddress(string.Format("{0}:{1}", address, listeningOnPort)));
+            _webHost.Start();
             _webHost.OnReceivedRequest += OnReceivedRequest_Display;
 
             while (true)
@@ -35,6 +37,13 @@ namespace boomerang.diagnostics
                     }
                 }
             }
+
+            _webHost.Stop();
+        }
+
+        private static void CurrentDomain_DomainUnload(object sender, EventArgs e)
+        {
+            _webHost.Stop();
         }
 
         private static void OnReceivedRequest_Display(object sender, ProxyRequestEventArgs e)
