@@ -16,7 +16,7 @@
         /// <summary>
         /// Defines the address the proxy is listening at
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="url">The url to listen to requests at</param>
         void AtAddress(string url);
 
         /// <summary>

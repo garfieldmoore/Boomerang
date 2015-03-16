@@ -3,11 +3,11 @@
     using System;
 
     /// <summary>
-    /// Used to configure framework
+    /// Configures Boomerang
     /// </summary>
     public class HostConfigurator : IHostConfiguration
     {
-        HostSettings settings;
+        readonly HostSettings settings;
 
         private Func<IResponseRepository> requestHandlerFactory;
         private Func<IMasqarade> hostFactoryFunc;
