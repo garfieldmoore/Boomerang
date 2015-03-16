@@ -12,32 +12,42 @@
     public class GivenARequest
     {
         private int wasCalled;
+        private BoomarangImpl _boomerang;
+        private IMasqarade _masqarade;
+        private HostSettings _hostSettings;
 
         [Test]
         public void Should_raise_event()
         {
-            var masqarade = Substitute.For<IMasqarade>();
-            var boomerang = new BoomarangImpl(masqarade);
+            
+            GivenAWebProxy();
 
             wasCalled = 0;
-            boomerang.OnReceivedRequest += boomerang_OnReceivedRequest;
+            _boomerang.OnReceivedRequest += boomerang_OnReceivedRequest;
 
-            boomerang.Start();
+            _boomerang.Start();
 
-            masqarade.BeforeRequest += Raise.EventWith(masqarade, new ProxyRequestEventArgs() { Method = "GET", RelativePath = "thisaddress" });
+            _masqarade.BeforeRequest += Raise.EventWith(_masqarade, new ProxyRequestEventArgs() { Method = "GET", RelativePath = "thisaddress" });
 
             wasCalled.ShouldBe(1);
+        }
+
+        private void GivenAWebProxy()
+        {
+            _masqarade = Substitute.For<IMasqarade>();
+            _hostSettings = new HostSettings();
+            _hostSettings.Prefixes.Add("http://localhost");
+            _boomerang = new BoomarangImpl(_masqarade, _hostSettings);
         }
 
         [Test]
         public void Should_not_throw_exception_when_no_subscribers()
         {
-            var masqarade = Substitute.For<IMasqarade>();
-            var boomerang = new BoomarangImpl(masqarade);
+            GivenAWebProxy();
 
-            boomerang.Start();
+            _boomerang.Start();
 
-            masqarade.BeforeRequest += Raise.EventWith(masqarade, new ProxyRequestEventArgs() { Method = "GET", RelativePath = "thisaddress" });
+            _masqarade.BeforeRequest += Raise.EventWith(_masqarade, new ProxyRequestEventArgs() { Method = "GET", RelativePath = "thisaddress" });
         }
 
         private void boomerang_OnReceivedRequest(object sender, ProxyRequestEventArgs e)

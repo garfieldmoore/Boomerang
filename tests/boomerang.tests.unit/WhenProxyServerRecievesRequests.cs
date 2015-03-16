@@ -51,7 +51,9 @@ namespace boomerang.tests.unit
 
         private void GivenProxyIsRunning()
         {
-            boomerang = new BoomarangImpl(masqarade, _responseRepository);
+            var hostSettings = new HostSettings();
+            hostSettings.Prefixes.Add("http:anyaddress");
+            boomerang = new BoomarangImpl(masqarade, hostSettings,()=> _responseRepository);
             boomerang.Start();
         }
 

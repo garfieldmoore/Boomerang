@@ -26,28 +26,17 @@
         /// </summary>
         public BoomarangImpl()
         {
+            requestHandlerFactory = () => new ResponseRepository();
+            RequestHandlers.Handler = requestHandlerFactory();
         }
 
         /// <summary>
         /// Creates a a manager for the supplied proxy server implementation
         /// </summary>
         /// <param name="proxy">proxy server implementation</param>
-        public BoomarangImpl(IMasqarade proxy)
+        public BoomarangImpl(IMasqarade proxy):this()
         {
             this.proxy = proxy;
-            requestHandlerFactory=()=>new ResponseRepository();
-            RequestHandlers.Handler = requestHandlerFactory();
-        }
-
-        /// <summary>
-        /// Used for testing
-        /// </summary>
-        /// <param name="proxy">Proxy server to use</param>
-        /// <param name="responses">Responses expected</param>
-        internal BoomarangImpl(IMasqarade proxy, IResponseRepository responses)
-        {
-            this.proxy = proxy;
-            RequestHandlers.Handler = responses;
         }
 
         public BoomarangImpl(IMasqarade proxy, HostSettings settings)
@@ -79,7 +68,7 @@
         public BoomerangExitCode Start()
         {
             AppDomain.CurrentDomain.DomainUnload += OnCurrentDomainUnload;
-            proxy.Start(settings.Prefixes[0]);
+            proxy.Start(settings.Prefixes[0]); // TODO add a validate method for setting so we check an address has been supplied
             proxy.BeforeRequest += OnProxyBeforeRequest;
 
             return 0;

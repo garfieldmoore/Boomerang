@@ -16,7 +16,10 @@
         [Test]
         public void Starts_returns_ok()
         {
-            var proxy = new BoomarangImpl(Substitute.For<IMasqarade>());
+            var hostSettings = new HostSettings();
+            hostSettings.Prefixes.Add("http://localhost");
+            var proxy = new BoomarangImpl(Substitute.For<IMasqarade>(), hostSettings);
+
             proxy.Start().ShouldBe(BoomerangExitCode.Ok);
         }
     }
