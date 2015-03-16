@@ -45,6 +45,7 @@
     <Compile Include="BoomarangImpl.cs" />
     <Compile Include="Boomerang.cs" />
     <Compile Include="BoomerangExitCode.cs" />
+    <Compile Include="Configuration\ConfigurationExtensions.cs" />
     <Compile Include="DefaultConfigurationFactory.cs" />
     <Compile Include="Configuration\HostConfigurator.cs" />
     <Compile Include="HostSettings.cs" />

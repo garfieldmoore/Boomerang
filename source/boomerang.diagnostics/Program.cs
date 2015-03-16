@@ -6,6 +6,8 @@ namespace boomerang.diagnostics
 
     class Program
     {
+        private static IBoomerang _webHost;
+
         static void Main(string[] args)
         {
             var listeningOnPort = 5100;
@@ -13,7 +15,8 @@ namespace boomerang.diagnostics
             Console.WriteLine("Starting boomerang server at http://localhost:{0}", listeningOnPort);
             DisplayInstructions();
 
-            Boomerang.Server(listeningOnPort).OnReceivedRequest += OnReceivedRequest_Display;
+            _webHost = Boomerang.Create(x => x.AtAddress("http://myserver:8080"));
+            _webHost.OnReceivedRequest += OnReceivedRequest_Display;
 
             while (true)
             {
@@ -54,7 +57,7 @@ namespace boomerang.diagnostics
             var statusCodeText = Console.ReadLine() + "";
             var statusCode = int.Parse(statusCodeText);
 
-            Boomerang.Server(5100).Request(address, method).Returns(response, statusCode);
+            _webHost.Request(address, method).Returns(response, statusCode);
 
             Console.Clear();
             DisplayInstructions();

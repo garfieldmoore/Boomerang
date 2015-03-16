@@ -63,20 +63,6 @@
         }
 
         /// <summary>
-        /// Start the proxy server
-        /// </summary>
-        /// <param name="port">The port number to listen on</param>
-        [Obsolete("Use parameterless Start() method after configuring server with settings ")]
-        public virtual BoomerangExitCode Start(int port)
-        {
-            AppDomain.CurrentDomain.DomainUnload += OnCurrentDomainUnload;
-            proxy.Start(port);
-            proxy.BeforeRequest += OnProxyBeforeRequest;
-
-            return 0;
-        }
-
-        /// <summary>
         /// Starts the web server.
         /// </summary>
         /// <example>
@@ -100,7 +86,7 @@
         }
 
         /// <summary>
-        /// Stops the proxy server
+        /// Stops the listener and disposes of any resources
         /// </summary>
         public virtual void Stop()
         {

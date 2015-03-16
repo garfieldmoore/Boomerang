@@ -7,14 +7,12 @@ namespace boomerang.tests.acceptance
     using Rainbow.Testing.Boomerang.Host;
 
     public class Examples
-    {
-        #region Public Methods and Operators
-
+    {       
         [Test]
         [Ignore]
         public void Get_register_multiple_responses()
         {
-            Boomerang.Server(5100)
+            Boomerang.Create(x => x.AtAddress(Spec.HostAddress))
                      .Get(Spec.HostAddress+ "anaddress")
                      .Returns("response body", 200)
                      .Get("anotheraddress")
@@ -23,13 +21,5 @@ namespace boomerang.tests.acceptance
             Spec.WhenGetRequestSent("anaddress");
             Spec.StatusCode.ShouldBe("ok");
         }
-
-        [Test]
-        [Ignore]
-        public void Get_with_single_registration()
-        {
-            Boomerang.Server(5100).Get("myaddress").Returns("my response body", 200);
-        }        
-        #endregion
-    }
+     }
 }

@@ -5,7 +5,7 @@
     /// <summary>
     /// Handles registering responses to requests
     /// </summary>
-    internal interface IResponseRepository
+    public interface IResponseRepository
     {
         /// <summary>
         /// Registers a HTTP request to intercept

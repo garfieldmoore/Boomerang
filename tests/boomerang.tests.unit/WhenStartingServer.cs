@@ -1,4 +1,6 @@
-﻿namespace boomerang.tests.unit
+﻿using NSubstitute.Routing.Handlers;
+
+namespace boomerang.tests.unit
 {
     using System;
 
@@ -20,9 +22,9 @@
             var proxy = Substitute.For<IMasqarade>();
             var boomer = new BoomarangImpl(proxy);
 
-            boomer.Start(5100);
+            boomer.Start();
 
-            proxy.Received(1).Start(5100);
+            proxy.Received(1).Start(@"http://localhost:5100");
         }
 
         [Test]
@@ -30,24 +32,9 @@
         {
             GivenConfigurationFactoryCreatesProxyListener();
 
-            Boomerang.Initialize(boomerangConfigurationFactory);
-            Boomerang.Server();
+            Boomerang.Create(x => x.UseHostBuilder(() => proxy));
 
-            proxy.Received(1).Start(5100);
-        }
-
-        [Test]
-        public void Should_create_new_proxy_after_reinitialise()
-        {
-            GivenConfigurationFactoryCreatesProxyListener();
-
-            Boomerang.Initialize(boomerangConfigurationFactory);
-            Boomerang.Server();
-
-            Boomerang.Initialize(boomerangConfigurationFactory);
-            Boomerang.Server();
-
-            boomerangConfigurationFactory.Received(2).Create();
+            proxy.Received(1).Start("http://localhost:5100");
         }
 
         [Test]
@@ -55,11 +42,9 @@
         {
             GivenConfigurationFactoryCreatesProxyListener();
 
-            Boomerang.Initialize(boomerangConfigurationFactory);
-            Boomerang.Server();
+            Boomerang.Create(x => x.UseHostBuilder(() => proxy));
 
-            Boomerang.Initialize(boomerangConfigurationFactory);
-            Boomerang.Server();
+            proxy.Received(1).Start("http://localhost:5100");
 
             proxy.Received(1).Stop();
         }

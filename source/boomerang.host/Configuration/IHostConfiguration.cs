@@ -8,25 +8,21 @@
     public interface IHostConfiguration
     {
         /// <summary>
-        /// Provides a function to create the proxy server implementation
+        /// Sets the http listener that listens for web requests
         /// </summary>
-        /// <param name="hostFactory">The function that returns an IMasquarade object</param>
-        /// <see cref="IMasqarade"/>
-        void UseHostBuilder(Func<IMasqarade> hostFactory);
+        /// <param name="hostFactoryFunc"></param>
+        void UseHostBuilder(Func<IMasqarade> hostFactoryFunc);
 
         /// <summary>
-        /// The url to start the server at
+        /// Defines the address the proxy is listening at
         /// </summary>
-        /// <param name="url">The URL.</param>
+        /// <param name="url"></param>
         void AtAddress(string url);
 
         /// <summary>
-        /// Uses the single response per request handler.
-        /// <remarks>
-        /// By default Boomerang allows registeration of multiple responses for requests and returns a 404 when no more responses are available.
-        /// Using this changes the behaviour to always returning one request.  if more than one request is configured, the last one will be used.
-        /// </remarks>
+        /// Sets a factory used to create the request handler.
         /// </summary>
-        void UseSingleResponsePerRequestHandler();
+        /// <param name="responseRepositoryFactory"></param>
+        void UseRequestHandlerFactory(Func<IResponseRepository> responseRepositoryFactory);
     }
 }

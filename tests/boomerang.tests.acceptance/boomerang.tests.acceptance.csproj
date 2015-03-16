@@ -68,7 +68,6 @@
     <Compile Include="HostConfiguration\CollectingEventsWithEventMethod.cs" />
     <Compile Include="HostConfiguration\CollectingEventsWithExtensionSpecs.cs" />
     <Compile Include="HostConfiguration\ConfigurationBuilderSpecs.cs" />
-    <Compile Include="PerformanceTests.cs" />
     <Compile Include="PostSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PutSpecs.cs" />

@@ -2,8 +2,9 @@
 {
     using System;
 
-    using Rainbow.Testing.Boomerang.Host.HttpListenerProxy;
-
+    /// <summary>
+    /// Used to configure framework
+    /// </summary>
     public class HostConfigurator : IHostConfiguration
     {
         HostSettings settings;
@@ -11,28 +12,46 @@
         private Func<IResponseRepository> requestHandlerFactory;
         private Func<IMasqarade> hostFactoryFunc;
 
-
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public HostConfigurator()
         {
             settings = new HostSettings();
             requestHandlerFactory = () => new ResponseRepository();
         }
 
+        /// <summary>
+        /// Sets the http listener that listens for web requests
+        /// </summary>
+        /// <param name="hostFactoryFunc"></param>
         public void UseHostBuilder(Func<IMasqarade> hostFactoryFunc)
         {
             this.hostFactoryFunc = hostFactoryFunc;
         }
 
+        /// <summary>
+        /// Defines the address the proxy is listening at
+        /// </summary>
+        /// <param name="url"></param>
         public void AtAddress(string url)
         {
             settings.Prefixes.Add(url);
         }
 
-        public void UseSingleResponsePerRequestHandler()
+        /// <summary>
+        /// Sets a factory used to create the request handler.
+        /// </summary>
+        /// <param name="responseRepositoryFactory"></param>
+        public void UseRequestHandlerFactory(Func<IResponseRepository> responseRepositoryFactory)
         {
-            requestHandlerFactory = () => new SingleResponseRepository();
+            requestHandlerFactory = responseRepositoryFactory;
         }
 
+        /// <summary>
+        /// Creates the host
+        /// </summary>
+        /// <returns>An instance of the Boomerang host that allows configuring of http requests</returns>
         public IBoomerang CreateHost()
         {
             return new BoomarangImpl(hostFactoryFunc(), settings, requestHandlerFactory);

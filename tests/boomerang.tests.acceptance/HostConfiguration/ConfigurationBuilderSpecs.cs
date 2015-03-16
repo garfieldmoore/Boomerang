@@ -1,4 +1,7 @@
-﻿namespace boomerang.tests.acceptance.HostConfiguration
+﻿using System.Collections.Generic;
+using Rainbow.Testing.Boomerang.Host.Configuration;
+
+namespace boomerang.tests.acceptance.HostConfiguration
 {
     using System.Net;
 
@@ -70,6 +73,34 @@
 
             proxy2.Start();
             proxy2.Stop();
+        }
+
+        [Test]
+        public void Should_set_request_handler()
+        {
+            Boomerang.Create(x => x.UseRequestHandlerFactory(()=>new AcceptanceTestRequestHandler()));
+        }
+
+    }
+
+    public class AcceptanceTestRequestHandler: IResponseRepository
+    {
+        public void AddAddress(Request request)
+        {
+           
+        }
+
+        public void AddResponse(string body, int statusCode)
+        {
+        }
+
+        public void AddResponse(string body, int statusCode, IDictionary<string, string> headers)
+        {
+        }
+
+        public Response GetNextResponseFor(string method, string addressTarget)
+        {
+            return new Response();
         }
     }
 }

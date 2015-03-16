@@ -9,17 +9,11 @@
 
     internal class Spec
     {
-        #region Static Fields
-
         public static readonly string HostAddress = "http://localhost:5100/";
 
         public static IDictionary<string, string> ResponseHeaders;
 
         private static IBoomerang defaultServer;
-
-        #endregion
-
-        #region Public Properties
 
         public static IList<Request> ReceivedRequests
         {
@@ -33,10 +27,6 @@
 
         public static string StatusCode { get; set; }
         public static object Data { get; set; }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         public static void WhenDeleteSentTo(string webAddress)
         {
@@ -100,17 +90,11 @@
             ResponseText = response.Content;
         }
 
-        #endregion
-
-        #region Methods
-
         internal static IBoomerang GivenAServerOnSpecificPort()
         {
             // Starts on specific port so conflicts will be easier to detect in tests
-            defaultServer = Boomerang.Server(5100);
+            defaultServer = Boomerang.Create(x => x.AtAddress(HostAddress));
             return defaultServer;
         }
-
-        #endregion
     }
 }

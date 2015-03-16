@@ -22,7 +22,7 @@
             wasCalled = 0;
             boomerang.OnReceivedRequest += boomerang_OnReceivedRequest;
 
-            boomerang.Start(1);
+            boomerang.Start();
 
             masqarade.BeforeRequest += Raise.EventWith(masqarade, new ProxyRequestEventArgs() { Method = "GET", RelativePath = "thisaddress" });
 
@@ -35,7 +35,7 @@
             var masqarade = Substitute.For<IMasqarade>();
             var boomerang = new BoomarangImpl(masqarade);
 
-            boomerang.Start(1);
+            boomerang.Start();
 
             masqarade.BeforeRequest += Raise.EventWith(masqarade, new ProxyRequestEventArgs() { Method = "GET", RelativePath = "thisaddress" });
         }
