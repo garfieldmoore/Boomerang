@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "boomerang.host", "source\boomerang.host\boomerang.host.csproj", "{D319B04C-384A-40F7-BAF9-12557EFCB29C}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "boomerang.tests.unit", "tests\boomerang.tests.unit\boomerang.tests.unit.csproj", "{76104EAE-4EC9-409A-9096-85110DD1D946}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "boomerang.diagnostics", "source\boomerang.diagnostics\boomerang.diagnostics.csproj", "{F129C6E8-654D-482F-A532-82C67217B1C0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boomerang.Extensions", "source\Boomerang.Extensions\Boomerang.Extensions.csproj", "{D8348CD0-EB13-427C-BD36-892FDA050976}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +33,6 @@ Global
 		{F129C6E8-654D-482F-A532-82C67217B1C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F129C6E8-654D-482F-A532-82C67217B1C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F129C6E8-654D-482F-A532-82C67217B1C0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D8348CD0-EB13-427C-BD36-892FDA050976}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8348CD0-EB13-427C-BD36-892FDA050976}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D8348CD0-EB13-427C-BD36-892FDA050976}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D8348CD0-EB13-427C-BD36-892FDA050976}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

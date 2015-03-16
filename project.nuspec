@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/garfieldmoore/Boomerang</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>framework for faking external web services for acceptance tests</description>
-    <releaseNotes>Fixed defect collecting events with GetAllReceivedEvents() method</releaseNotes>
+    <releaseNotes>Removed obsolete methods and added extension points for request handlers</releaseNotes>
     <summary>Extensible framework to improve acceptance testing by allowing developers to specify fake http responses.</summary>
     <copyright>Copyright 2013</copyright>
     <dependencies>
@@ -19,8 +19,7 @@
   </metadata>
    <files>
         <file src="source\boomerang.host\bin\Release\Boomerang.dll" target="lib\net40\Boomerang.dll" />
-        <file src="source\Boomerang.Extensions\bin\Release\Boomerang.Extensions.dll" target="lib\net40\Boomerang.Extensions.dll" />
         <file src="source\boomerang.host\bin\Release\Boomerang.xml" target="lib\net40\Boomerang.xml" />
-        <file src="source\boomerang.Extensions\bin\Release\Boomerang.Extensions.xml" target="lib\net40\Boomerang.Extensions.xml" />
+        <file src="source\boomerang.diagnostics\bin\Release\boomerang.diagnostics.exe" target="Content\boomerang.diagnostics.exe" />
     </files>
 </package>
