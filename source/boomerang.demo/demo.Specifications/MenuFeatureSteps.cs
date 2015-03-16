@@ -23,12 +23,14 @@ namespace CoffeTime.Specifications
             _headersWithJson = new Dictionary<string, string>() { { "content-type", "application/json" } };
             _server = Boomerang.Create(x => x.AtAddress("http://localhost:5100"));
             _server.Start();
+
         }
 
         [AfterScenario]
         public void AfterAllTests()
         {
-         _server.Stop();   
+            _server.Stop();
+            var requests = _server.GetAllReceivedRequests();            
         }
 
         [Given(@"A cafe only serves '(.*)' with description '(.*)'")]
@@ -36,9 +38,10 @@ namespace CoffeTime.Specifications
         {
             var products = new List<Product>();
             products.Add(new Product() { Name = productName, Description = productDescription, Id = 1 });
-            
+
             var serializeObject = JsonConvert.SerializeObject(products);
             _server.Get("/api/menu").Returns(serializeObject, 200, _headersWithJson);
+
         }
 
         [When(@"bobbie asks for the menu")]
