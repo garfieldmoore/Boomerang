@@ -14,16 +14,31 @@ namespace CoffeTime.Specifications
     [Binding]
     public class MenuFeatureSteps
     {
+        private IBoomerang _server;
+        private Dictionary<string, string> _headersWithJson;
+
+        [BeforeScenario]
+        public void BeforeAnyTest()
+        {
+            _headersWithJson = new Dictionary<string, string>() { { "content-type", "application/json" } };
+            _server = Boomerang.Create(x => x.AtAddress("http://localhost:5100"));
+            _server.Start();
+        }
+
+        [AfterScenario]
+        public void AfterAllTests()
+        {
+         _server.Stop();   
+        }
+
         [Given(@"A cafe only serves '(.*)' with description '(.*)'")]
         public void GivenACafeOnlyServesWithDescription(string productName, string productDescription)
         {
             var products = new List<Product>();
             products.Add(new Product() { Name = productName, Description = productDescription, Id = 1 });
             
-            var dictionary = new Dictionary<string, string>() { { "content-type", "application/json" } };
-
             var serializeObject = JsonConvert.SerializeObject(products);
-            Boomerang.Server(5100).Get("/api/menu").Returns(serializeObject, 200, dictionary);
+            _server.Get("/api/menu").Returns(serializeObject, 200, _headersWithJson);
         }
 
         [When(@"bobbie asks for the menu")]
