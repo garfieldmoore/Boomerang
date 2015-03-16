@@ -94,7 +94,13 @@
         {
             // Starts on specific port so conflicts will be easier to detect in tests
             defaultServer = Boomerang.Create(x => x.AtAddress(HostAddress));
+            defaultServer.Start();
             return defaultServer;
+        }
+
+        public static void StopServer()
+        {
+            defaultServer.Stop();
         }
     }
 }

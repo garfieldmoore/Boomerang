@@ -16,7 +16,7 @@ namespace boomerang.tests.acceptance.Repeat
             Spec.WhenGetRequestSent(Spec.HostAddress + "test");
             Spec.ResponseText.ShouldBe("test2");
             Spec.StatusCode.ShouldBe("Created");
-
+            Spec.StopServer();
 //            Spec.WhenGetRequestSent(Spec.HostAddress + "test");
 //            Spec.ResponseText.ShouldBe("test2");
 //            Spec.StatusCode.ShouldBe("Created");

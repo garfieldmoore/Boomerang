@@ -19,6 +19,9 @@
 
             Spec.ResponseText.ShouldBe("data updated response");
             Spec.StatusCode.ShouldBe("OK");
+
+            Spec.StopServer();
+
         }
 
         [Test]
@@ -35,6 +38,9 @@
             Spec.WhenPutSentTo(Spec.HostAddress + "address2", "my data");
             Spec.ResponseText.ShouldBe("response 2");
             Spec.StatusCode.ShouldBe("OK");
+
+            Spec.StopServer();
+
         }
 
         [Test]
@@ -51,6 +57,9 @@
             Spec.WhenPutSentTo(Spec.HostAddress + "address1", "my data");
             Spec.ResponseText.ShouldBe("response 2");
             Spec.StatusCode.ShouldBe("OK");
+
+            Spec.StopServer();
+
         }
         #endregion
     }

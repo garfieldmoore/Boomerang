@@ -17,6 +17,7 @@ namespace boomerang.tests.acceptance
             Spec.GivenAServerOnSpecificPort().Post("myentity").Returns("this is my response", 201);
 
             Spec.WhenPostsSentTo(Spec.HostAddress + "myentity", "my data");
+            Spec.StopServer();
 
             Spec.ResponseText.ShouldBe("this is my response");
             Spec.StatusCode.ShouldBe("Created");
@@ -34,8 +35,11 @@ namespace boomerang.tests.acceptance
             Spec.StatusCode.ShouldBe("Created");
 
             Spec.WhenPostsSentTo(Spec.HostAddress + "address2", "my data");
+            Spec.StopServer();
+
             Spec.ResponseText.ShouldBe("response 2");
             Spec.StatusCode.ShouldBe("OK");
+
         }
 
         [Test]
@@ -50,19 +54,22 @@ namespace boomerang.tests.acceptance
             Spec.StatusCode.ShouldBe("Created");
 
             Spec.WhenPostsSentTo(Spec.HostAddress + "address1", "my data");
+            Spec.StopServer();
+
             Spec.ResponseText.ShouldBe("response 2");
             Spec.StatusCode.ShouldBe("OK");
         }
 
-        [Test]
+        [Test, Ignore]
         public void Should_set_request_body()
         {
-            Spec.GivenAServerOnSpecificPort()
+            var server = Spec.GivenAServerOnSpecificPort()
                 .Post("myaddress1").Returns("response 1", 201);
 
             Spec.WhenPostsSentTo(Spec.HostAddress + "myaddress1", "my data");
 
-            var received = Spec.GivenAServerOnSpecificPort().GetAllReceivedRequests().Where(x=>x.Method=="POST" && x.Address=="/myaddress1").ToList();
+            var received = Spec.GivenAServerOnSpecificPort().GetAllReceivedRequests().Where(x => x.Method == "POST" && x.Address == "/myaddress1").ToList();
+            Spec.StopServer();
 
             received[0].Method.ShouldBe("POST");
             received[0].Address.ShouldBe("/myaddress1");

@@ -19,6 +19,8 @@ namespace boomerang.tests.acceptance
                      .Returns("another response body", 201);
 
             Spec.WhenGetRequestSent("anaddress");
+            Spec.StopServer();
+
             Spec.StatusCode.ShouldBe("ok");
         }
      }

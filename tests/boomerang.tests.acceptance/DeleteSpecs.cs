@@ -14,7 +14,7 @@
             Spec.GivenAServerOnSpecificPort().Delete("resourceAddress").Returns("202 (Accepted)", 202);
 
             Spec.WhenDeleteSentTo(Spec.HostAddress + "resourceAddress");
-
+            Spec.StopServer();
             Spec.ResponseText.ShouldBe("202 (Accepted)");
             Spec.StatusCode.ShouldBe("Accepted");
         }

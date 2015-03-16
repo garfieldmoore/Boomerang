@@ -20,7 +20,7 @@ namespace boomerang.tests.acceptance
 
             Spec.GivenAServerOnSpecificPort().Get("address21").Returns("body", 200, headers);
             Spec.WhenGetRequestSent(Spec.HostAddress + "address21");
-
+            Spec.StopServer();
             string header;
             Spec.ResponseHeaders.TryGetValue("Content-Type", out header).ShouldBe(true);
             header.ShouldBe("application/json");

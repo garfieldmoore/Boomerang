@@ -13,13 +13,12 @@
         [Test]
         public void Should_start_host_on_specified_port()
         {
-            _host = Boomerang.Create(x => x.AtAddress("http://localhost:5000"));
-            _host.Get("address").Returns("started again", 201);
+            Spec.GivenAServerOnSpecificPort().Get("address").Returns("started again", 201);
 
-            Spec.WhenGetRequestSent("http://localhost:5000/" + "address");
+            Spec.WhenGetRequestSent(Spec.HostAddress + "address");
+            Spec.StopServer();
 
             Spec.ResponseText.ShouldBe("started again");
-            Spec.GivenAServerOnSpecificPort();
         }
 
         [Test, Ignore]
@@ -28,7 +27,7 @@
             _host.Get("address").Returns("started", 201);
 
             Spec.WhenGetRequestSent(Spec.HostAddress + "address");
-
+            Spec.StopServer();
             Spec.ResponseText.ShouldBe("started");
         }
     }

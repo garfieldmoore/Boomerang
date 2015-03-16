@@ -16,6 +16,7 @@
             Spec.GivenAServerOnSpecificPort().Get(string.Empty).Returns("Boomerang interception", 200);
 
             Spec.WhenGetRequestSent(Spec.HostAddress);
+            Spec.StopServer();
 
             Spec.ResponseText.ShouldBe("Boomerang interception");
             Spec.StatusCode.ShouldBe("OK");
@@ -32,6 +33,7 @@
             Spec.StatusCode.ShouldBe(HttpStatusCode.OK.ToString());
 
             Spec.WhenGetRequestSent(Spec.HostAddress + "address1");
+            Spec.StopServer();
 
             Spec.ResponseText.ShouldBe("body2");
             Spec.StatusCode.ShouldBe(HttpStatusCode.Created.ToString());
@@ -46,6 +48,7 @@
             Spec.GivenAServerOnSpecificPort().Get("address1").Returns("body1", 200);
 
             Spec.WhenGetRequestSent(Spec.HostAddress + "address1");
+            Spec.StopServer();
 
             Spec.StatusCode.ShouldBe(HttpStatusCode.OK.ToString());
             Spec.ResponseText.ShouldBe("body1");
@@ -62,6 +65,7 @@
             Spec.ResponseText.ShouldBe("body1");
 
             Spec.WhenGetRequestSent(Spec.HostAddress + "address2");
+            Spec.StopServer();
 
             Spec.ResponseText.ShouldBe("body2");
             Spec.StatusCode.ShouldBe(HttpStatusCode.Unauthorized.ToString());

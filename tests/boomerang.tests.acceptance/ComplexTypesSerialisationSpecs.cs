@@ -42,6 +42,7 @@ namespace boomerang.tests.acceptance
             Spec.GivenAServerOnSpecificPort().Get("address").Returns(serializeObject, 200, headers);
 
             Spec.WhenGetRequestSentOf<List<Coffee>>(Spec.HostAddress + "address");
+            Spec.StopServer();
             Spec.Data.ShouldBeTypeOf<List<Coffee>>();
             ((List<Coffee>)Spec.Data)[0].Name.ShouldBe(coffee[0].Name);
         }
