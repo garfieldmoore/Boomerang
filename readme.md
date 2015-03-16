@@ -14,9 +14,6 @@ To get started simply add the package to your application;
 
 Then take a look at the [wiki](https://github.com/garfieldmoore/Boomerang/wiki) to see how to configure request/responses.
 
-https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WJZHDCG8WU8YS
-
-
 Aknowledgments
 --------------
 Our build servers have been provided by the awesome [CodeBetter](http://www.codebetter.com) and [JetBrains](http://www.jetbrains.com)
