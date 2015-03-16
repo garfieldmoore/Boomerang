@@ -3,7 +3,7 @@ Boomerang
 ---------
 [![Build Status](http://teamcity.codebetter.com/app/rest/builds/buildType:%28id:bt1142%29/statusIcon)](http://teamcity.codebetter.com/viewType.html?buildTypeId=bt1142&guest=1)
 
-Boomerang is a micro-kernel framework for faking external web services in acceptance/integration tests.  
+Boomerang is a framework for faking responses from external web services in acceptance/integration tests.  
 
 The philosophy behind Boomerang is simplicity and extensibility.
 
