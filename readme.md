@@ -16,6 +16,10 @@ To get started simply add the package to your application;
 
 Then take a look at the [wiki](https://github.com/garfieldmoore/Boomerang/wiki) to see how to configure request/responses.
 
+Release Policy
+--------------
+* Public interface members that are obsoleted will remain for 90 days. After this, they will be removed.
+
 Aknowledgments
 --------------
 Our build servers have been provided by the awesome [CodeBetter](http://www.codebetter.com) and [JetBrains](http://www.jetbrains.com)
