@@ -5,7 +5,11 @@ Boomerang
 
 Boomerang is a framework for faking responses from external web services in acceptance/integration tests.  
 
-The philosophy behind Boomerang is simplicity and extensibility.
+Boomerang makes testing your applications easier by enabling you to fake HTTP services your code depends upon.
+
+This makes tests faster and less brittle, allowing you to get consistent and fast feedback from your tests.
+
+The philosophy behind Boomerang is simplicity and extensibility.  Take a look at our [wiki](https://github.com/garfieldmoore/Boomerang/wiki) to see how to use and extend Boomerang.
 
 Getting started
 ---------------
