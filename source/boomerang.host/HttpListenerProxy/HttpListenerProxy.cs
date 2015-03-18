@@ -111,16 +111,9 @@
         public void Stop()
         {
             running = false;
-            if (null != listener && listener.IsListening)
+            if (null != listener)
             {
-                try
-                {
-                    listener.Stop();
-                }
-                catch (Exception e)
-                {
-                    listener.Close();
-                }
+                listener.Close();
             }
         }
 

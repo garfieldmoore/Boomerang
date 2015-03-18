@@ -24,16 +24,16 @@
         /// <summary>
         /// Sets the http listener that listens for web requests
         /// </summary>
-        /// <param name="hostFactoryFunc"></param>
-        public void UseHostBuilder(Func<IMasqarade> hostFactoryFunc)
+        /// <param name="hostbuilder">A function that creates an IMasquarade listener implementation</param>
+        public void UseHostBuilder(Func<IMasqarade> hostbuilder)
         {
-            this.hostFactoryFunc = hostFactoryFunc;
+            this.hostFactoryFunc = hostbuilder;
         }
 
         /// <summary>
         /// Defines the address the proxy is listening at
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="url">The url to listen for requests on</param>
         public void AtAddress(string url)
         {
             settings.Prefixes.Add(url);

@@ -208,14 +208,12 @@ namespace Rainbow.Testing.Boomerang.Host
             if (!proxyReferences.ContainsKey(host))
             {
                 proxyReferences.Add(host, new List<Request>());
+                AddReceivedRequestEventHandler(host);
             }
-
-            EnsureTrackingEventsOnce(host);
         }
 
-        private static void EnsureTrackingEventsOnce(IBoomerang host)
-        {
-            host.OnReceivedRequest -= host_OnReceivedRequest;
+        private static void AddReceivedRequestEventHandler(IBoomerang host)
+        {            
             host.OnReceivedRequest += host_OnReceivedRequest;
         }
 

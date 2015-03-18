@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Rainbow.Testing.Boomerang.Host;
+using Rainbow.Testing.Boomerang.Host.Configuration;
 
 namespace Rainbow.Testing.Boomerang.Extensions
 {
@@ -26,5 +28,5 @@ namespace Rainbow.Testing.Boomerang.Extensions
 
             return host;
         }
-    }
+    }   
 }

@@ -19,6 +19,7 @@
 
         public void Start(int portNumber)
         {
+            //TODO remove static localhost
             server.Start(string.Format("http://localhost:{0}", portNumber));
         }
 

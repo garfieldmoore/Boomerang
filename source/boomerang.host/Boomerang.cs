@@ -26,7 +26,9 @@ namespace Rainbow.Testing.Boomerang.Host
         /// </summary>
         /// <param name="configuration">Allows configuration of the host</param>
         /// <returns>Instance of the host</returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <exception cref="OsVersionException">
+        /// Thrown if working on an unsupported operating system. Use <see cref="IHostConfiguration.UseHostBuilder();"/> to inject an implementation.
+        /// </exception>
         public static IBoomerang Create(Action<IHostConfiguration> configuration)
         {
             var hostConfigurator = new HostConfigurator();
